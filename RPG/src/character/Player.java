@@ -5,6 +5,8 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import main.GamePanel;
 import main.KeyInput;
+import object.Item_Iron_Sword;
+import object.Item_Wooden_Shield;
 
 public class Player extends Character{
 
@@ -15,6 +17,9 @@ public class Player extends Character{
 	
 	boolean right = true;
 	int FrameCounter = 0;
+	int AnimCounter = 0;
+	int AttackCooldown = 0;
+	int gold;
 	
 	public Player(GamePanel gp, KeyInput key) {
 		super(gp);
@@ -22,12 +27,12 @@ public class Player extends Character{
 		this.gp = gp;
 		this.key = key;
 		
-		lv = 1;
 		
 		//Middle of the screen
 		screenX = gp.screenWidth/2 - (gp.tileSize/2);
 		screenY = gp.screenHeight/2 - (gp.tileSize/2);
 		
+		//Collision setting
 		collisionBox = new Rectangle();
 		collisionBox.x = 12;
 		collisionBox.y = 16;
@@ -36,6 +41,9 @@ public class Player extends Character{
 		collisionBox.width = 24;
 		collisionBox.height = 32;
 		
+		//Melee setting
+		attackBox.width = 36;
+		attackBox.height = 36;
 		
 		setDefaultValues();
 		graphic.getImage("/player","humanoid");
@@ -50,11 +58,30 @@ public class Player extends Character{
 		direction = "down"; //default spawn direction
 		
 		//Stat
-		MaxHP = 10;
-		HP = 10;
+		lv = 1;
+		MaxHP = 100;
+		HP = 100;
 		MaxMP = 200;
-		MP = 120;	
+		MP = 120;
+		ATK = 5;
+		DEF = 0;
+		exp = 0;
+		NextLvexp = 0;
+		gold = 50;
+		OnhandWP = new Item_Iron_Sword(gp);
+		Shield = new Item_Wooden_Shield(gp);
+		ATK += getGearStat("Weapon");
+		DEF += getGearStat("Shield");
+	}
+	public int getGearStat(String type) {
+		switch(type) {
+		case"Weapon":
+			return OnhandWP.ATK;
+		case"Shield":
+			return Shield.DEF;
 		}
+		return 0;
+	}
 
 	//update player location
 	public void update() {
@@ -68,9 +95,6 @@ public class Player extends Character{
 				MP++;
 				FrameCounter = 0;
 			}
-		}
-        if(attacking == true) {
-			
 		}
 		if(key.up == true ||key.down == true ||key.right == true||key.left == true ||key.interactKey == true) {
 			if(key.up == true) {
@@ -128,6 +152,125 @@ public class Player extends Character{
 			gp.obj[i].interact(i);
 		}	
 	}
+	void attacking(Graphics2D g2) {
+		//Move collisionBox to the attack direction( attack Box location )
+		
+		//Save current WorldX,Y,collision Box size
+		int currentWorldX = worldX;
+		int currentWorldY = worldY;
+		int collisionBoxW = collisionBox.width;
+		int collisionBoxH = collisionBox.height;
+		
+		switch(direction) {
+		case"up":   worldY -= attackBox.height; break;
+		case"down": worldY += attackBox.height; break;
+		case"left": worldX -= attackBox.width; break;
+		case"right":worldX += attackBox.width; break;
+		}
+		
+		//collision Box move to attack Box location
+		collisionBox.width = attackBox.width;
+		collisionBox.height = attackBox.height;
+		//
+		int monsterIndex = gp.Colchecker.checkCharacter(this, gp.npc);
+		graphic.drawCollision(g2, screenX+collisionBox.x, screenY+collisionBox.y, collisionBox.width,collisionBox.height);
+		if(monsterIndex != 999) {
+			gp.npc[monsterIndex].hitted(ATK,monsterIndex); //deal dmg
+		}
+		else {
+		}
+		//restore original collision setting
+		worldX = currentWorldX;
+		worldY = currentWorldY;
+		collisionBox.width = collisionBoxW;
+		collisionBox.height = collisionBoxH;
+	}
+	public void MeleeAttack(Graphics2D g2) {
+		if(attacking == true) {
+		switch(direction) {
+        case "up":
+    			AnimCounter++;
+    			if(AnimCounter == 1) {
+					attacking(g2);
+				}
+    			if(AnimCounter <= 5) {
+    				graphic.attack(g2,7,this,-24,-72);
+    			}
+    			if(AnimCounter > 5 && AnimCounter < 15) {
+    				graphic.attack(g2,8,this,-24,-72);
+    			}
+    			if(AnimCounter >= 15 && AnimCounter < 20) {
+    				graphic.attack(g2,9,this,-24,-72);
+    			}
+    			if(AnimCounter >= 20) {
+    				AnimCounter = 0;
+    				attacking = false;
+    			}
+			break;
+		case "down":
+    			AnimCounter++;
+    			if(AnimCounter == 1) {
+					attacking(g2);
+				}
+    			if(AnimCounter <= 5) {
+    				graphic.attack(g2,1,this,-24,15);
+    			}
+    			if(AnimCounter > 5 && AnimCounter < 15) {
+    				graphic.attack(g2,2,this,-24,15);
+    				    			}
+    			if(AnimCounter >= 15 && AnimCounter < 20) {
+    				graphic.attack(g2,3,this,-24,15);
+    			}
+    			if(AnimCounter >= 20) {
+    				AnimCounter = 0;
+    				attacking = false;
+    			}
+			break;
+		case "left":
+    			AnimCounter++;
+    			if(AnimCounter == 1) {
+					attacking(g2);
+				}
+    			if(AnimCounter <= 5) {
+    				graphic.attack(g2,10,this,-68,-24);
+    			}
+    			if(AnimCounter > 5 && AnimCounter < 15) {
+    				graphic.attack(g2,11,this,-68,-24);
+    				
+    			}
+    			if(AnimCounter >= 15 && AnimCounter < 20) {
+    				graphic.attack(g2,12,this,-68,-24);
+    			}
+    			if(AnimCounter >= 20) {
+    				AnimCounter = 0;
+    				attacking = false;
+    			}
+			break;
+		case "right":
+    			AnimCounter++;
+    			if(AnimCounter == 1) {
+					attacking(g2);
+				}
+    			attacking(g2);
+    			if(AnimCounter <= 5) {
+    				graphic.attack(g2,4,this,15,-24);
+    			}
+    			if(AnimCounter > 5 && AnimCounter < 15) {
+    				graphic.attack(g2,5,this,15,-24);
+    				
+    			}
+    			if(AnimCounter >= 15 && AnimCounter < 20) {
+    				graphic.attack(g2,6,this,15,-24);
+    			}
+    			if(AnimCounter >= 20) {
+    				AnimCounter = 0;
+    				attacking = false;
+    			}
+			break;
+		    }
+		}
+	}
+
 	private void interactNPC(int i) {
 		if(i != 999) {
 			if(gp.key.interactKey == true) {
@@ -141,9 +284,15 @@ public class Player extends Character{
 	}
 	//Update player image/animation
 	public void draw(Graphics2D g2) {
+		//System.out.println(AnimCounter);
 		//System.out.println(graphic.spriteNum);
 		graphic.drawPlayer(this, g2);
-		graphic.drawCollision(g2, screenX+collisionBox.x, screenY+collisionBox.y, collisionBox.width,collisionBox.height);
+		//graphic.drawCollision(g2, screenX+collisionBox.x, screenY+collisionBox.y, collisionBox.width,collisionBox.height);
 		graphic.drawName(this, g2, "Lv."+ lv, gp, 15, Color.WHITE);
+		MeleeAttack(g2);
+		if(gp.GameState == gp.statState) {
+			graphic.drawStatHUD(gp,g2);
+		}
+		//Melee Animation
 	}
 }

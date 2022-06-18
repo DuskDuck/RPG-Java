@@ -71,13 +71,12 @@ public class EventHandler {
 	public void damagePit(int col,int row) {
 		if(FrameCounter == 0) {
 			if(gp.player.HP > 0 ) {
-				gp.player.HP -= 1;
+				gp.player.HP -= 15;
 			}
 		}
 	}
 	//OnTouch & PressKey Event
 	public void healingWell(int col,int row) {
-		//System.out.println("Frame: "+FrameCounter);
 		if(gp.key.interactKey == true) {
 			if(gp.player.HP < gp.player.MaxHP) {
 				gp.player.HP += 1;
@@ -85,11 +84,4 @@ public class EventHandler {
 		}
 		gp.key.interactKey = false;
 	}
-	//public void interactOnKey(int i) {
-	//	System.out.printf("Pressed");
-	//	if(gp.key.interactKey == true) {
-	//		gp.obj[i].interact(i);
-	//		System.out.println("Worked!");
-	//	}
-	//}
 }

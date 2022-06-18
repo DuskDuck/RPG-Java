@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -22,7 +23,8 @@ public class UI {
 	int messageDuration = 0;//frame counter
 	public String currentDialog = "";
 	BufferedImage StatBox = null;
-	
+	ArrayList<String> notice = new ArrayList<>();
+	ArrayList<Integer> noticeCounter = new ArrayList<>();
 	int counter;
 	int spriteNum;
 	
@@ -45,6 +47,10 @@ public class UI {
 		message = text;
 		messageOn = true;
 	}
+	public void addMessage(String text) {
+		notice.add(text);
+		noticeCounter.add(0);
+	}
 	
 	public void draw(Graphics2D g2) {
 		this.g2 = g2;
@@ -54,6 +60,7 @@ public class UI {
 		//g2.drawString("x " +gp.player.Key,80,60);
 		if(gp.GameState == gp.playState) {
 			drawHUD();
+			drawMessage();
 		}
 		if(gp.GameState == gp.pauseState) {
 			drawPauseScreen();
@@ -63,8 +70,11 @@ public class UI {
 			drawDialogScreen();
 			drawHUD();
 		}
+		if(gp.GameState == gp.statState) {
+			drawHUD();
+		}
 		if(messageOn == true) {
-			g2.setFont(g2.getFont().deriveFont(15F));
+			g2.setFont(new Font("Teko", Font.PLAIN, 26));
 			g2.drawString(message, gp.tileSize*10, gp.tileSize*8);
 			
 			messageDuration++;
@@ -75,6 +85,28 @@ public class UI {
 			}
 		}
 	}
+	private void drawMessage() {
+		
+		int messageX = 200;
+		int messageY = 600;
+		g2.setFont(new Font("Teko", Font.PLAIN, 26));
+		for(int i = 0; i < notice.size(); i++) {
+			if(notice.get(i) != null) {
+				g2.setColor(Color.WHITE);
+				g2.drawString(notice.get(i), messageX, messageY);
+				
+				int counter =noticeCounter.get(i) + 1; //message Counter ++
+				noticeCounter.set(i, counter); //set counter to array
+				messageY += 20;
+				
+				if(noticeCounter.get(i) > 180) {
+					notice.remove(i);
+					noticeCounter.remove(i);
+				}
+			}
+		}
+	}
+
 	//HUD(mp and hp)
 	public void drawHUD() {
 		g2.drawImage(StatBox,10, 5, null);

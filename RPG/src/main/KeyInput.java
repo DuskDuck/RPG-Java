@@ -48,11 +48,21 @@ public class KeyInput implements KeyListener{
 			if(code == KeyEvent.VK_F) {
 				interactKey = true;
 			}
+			if(code == KeyEvent.VK_B) {
+				if(gp.GameState == gp.statState) {
+					gp.GameState = gp.playState;
+				}else if(gp.GameState == gp.playState){
+					gp.GameState = gp.statState;
+				}
+			}
 			if(code == KeyEvent.VK_SPACE) {
+				if(gp.player.attacking == false) {
+					gp.player.attacking = true;
+				}
 			}
 		}
 		//Pause State
-		else if(gp.GameState == gp.pauseState) {
+		else if(gp.GameState == gp.pauseState || gp.GameState == gp.statState) {
 			if(code == KeyEvent.VK_ESCAPE) {
 				gp.GameState = gp.playState;
 			}
@@ -93,7 +103,7 @@ public class KeyInput implements KeyListener{
 		}
 		if(code == KeyEvent.VK_SPACE) {
 			//gp.player.speed = 4;
-			gp.player.lv ++;
+			//gp.player.attacking = false;
 		}
 			
 	}

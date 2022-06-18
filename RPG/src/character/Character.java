@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 
 
 import main.GamePanel;
+import object.MasterObject;
 
 public class Character {
 	
@@ -16,6 +17,7 @@ public class Character {
 	public String direction;
 	String name;
 	public Rectangle collisionBox = new Rectangle(0,0,48,48);
+	public Rectangle attackBox = new Rectangle(0,0,0,0);
 	public int collisionDefaultX ,collisionDefaultY;
 	public boolean collisionOn = false;
 	public boolean attacking = false;
@@ -35,6 +37,10 @@ public class Character {
 	public int DEF;
 	public int Stamina;
 	public int lv;
+	public int exp;
+	public int NextLvexp;
+	public MasterObject OnhandWP;
+	public MasterObject Shield;
 	
 	public Character(GamePanel gp) {
 		this.gp = gp;
@@ -55,6 +61,9 @@ public class Character {
 		
 	}
 	public void contact(Character c) {
+		
+	}
+	public void hitted(int dmg,int i) {
 		
 	}
 }

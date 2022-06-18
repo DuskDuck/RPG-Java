@@ -23,11 +23,12 @@ public class Item_HP_Potion_S extends MasterObject{
 		collision = true;
 	}
 	public void interact(int i) {
+		gp.player.HP += 35;
 		if(gp.player.HP < gp.player.MaxHP) {
-			gp.player.HP += 1;
-			gp.ui.showMessage("HP +1");
+			gp.ui.showMessage("HP +35");
 		}else {
 			gp.ui.showMessage("HP Full");
+			gp.player.HP = gp.player.MaxHP;
 		}
 		gp.obj[i] = null;
 		gp.playSound(1);
