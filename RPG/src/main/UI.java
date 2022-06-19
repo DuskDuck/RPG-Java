@@ -50,6 +50,7 @@ public class UI {
 	public void addMessage(String text) {
 		notice.add(text);
 		noticeCounter.add(0);
+		
 	}
 	
 	public void draw(Graphics2D g2) {
@@ -87,11 +88,13 @@ public class UI {
 	}
 	private void drawMessage() {
 		
-		int messageX = 200;
-		int messageY = 600;
-		g2.setFont(new Font("Teko", Font.PLAIN, 26));
+		int messageX = 800;
+		int messageY = 400;
+		g2.setFont(new Font("Teko", Font.PLAIN, 18));
 		for(int i = 0; i < notice.size(); i++) {
 			if(notice.get(i) != null) {
+				g2.setColor(Color.BLACK);
+				g2.drawString(notice.get(i), messageX+2, messageY+2);
 				g2.setColor(Color.WHITE);
 				g2.drawString(notice.get(i), messageX, messageY);
 				
@@ -99,7 +102,7 @@ public class UI {
 				noticeCounter.set(i, counter); //set counter to array
 				messageY += 20;
 				
-				if(noticeCounter.get(i) > 180) {
+				if(noticeCounter.get(i) > 90) {
 					notice.remove(i);
 					noticeCounter.remove(i);
 				}

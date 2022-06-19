@@ -21,7 +21,7 @@ public class GreenSlime extends Character{
 		this.name = "Green Slime";
 		direction = "down";
 		speed = 1;
-		lv = 15;
+		lv = 1;
 		MaxHP = 40;
 		HP = MaxHP;
 		ATK = 10;
@@ -117,9 +117,12 @@ public class GreenSlime extends Character{
 		OnmapIndex = i;
 		hpbarOn = true;
 		direction = gp.player.direction;
-		gp.ui.addMessage("-" + dmg);
+		gp.ui.addMessage(""+dmg);
 		hpbartimer = 0;
 		if(HP <= 0) {
+			gp.player.exp += 2*lv;
+			gp.player.LevelUp();
+			gp.ui.addMessage("+ "+ 2*lv+" exp");
 			death = true;
 			speed = 0;
 		}

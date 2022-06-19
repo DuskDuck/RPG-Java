@@ -3,9 +3,11 @@ package main;
 
 import character.GreenSlime;
 import character.NPC_1;
-
+import object.Item_Blood_Katana;
+import object.Item_HP_Potion_B;
 import object.Item_HP_Potion_S;
 import object.Item_Key;
+import object.Item_LightSaber;
 import object.Item_Speed_Potion;
 
 public class ItemGenerator {
@@ -32,6 +34,18 @@ public class ItemGenerator {
 		gp.obj[3] = new Item_HP_Potion_S(gp);
 		gp.obj[3].worldX = 8 * gp.tileSize;
 		gp.obj[3].worldY = 8 * gp.tileSize;
+
+		gp.obj[4] = new Item_HP_Potion_B(gp);
+		gp.obj[4].worldX = 7 * gp.tileSize;
+		gp.obj[4].worldY = 7 * gp.tileSize;
+		
+		gp.obj[5] = new Item_Blood_Katana(gp);
+		gp.obj[5].worldX = 7 * gp.tileSize;
+		gp.obj[5].worldY = 8 * gp.tileSize;
+		
+		gp.obj[6] = new Item_LightSaber(gp);
+		gp.obj[6].worldX = 17 * gp.tileSize;
+		gp.obj[6].worldY = 8 * gp.tileSize;
 	}
 	public void setNPC() {
 		

@@ -10,6 +10,7 @@ import main.Utility;
 public class MasterObject {
 	
 	public BufferedImage image;
+	public BufferedImage InventoryImage;
 	public String name;
 	public boolean collision = false;
 	public int worldX,worldY;
@@ -17,10 +18,14 @@ public class MasterObject {
 	public int collisionBoxDefaultX = 0;
 	public int collisionBoxDefaultY = 0;
 	public Utility utility = new Utility();
+	public String downFX,upFX,leftFX,rightFX;
+	public String discription = "";
 	
 	//Stat
 	public int DEF;
 	public int ATK;
+	public int range;
+	public String type;
 	
 	public void draw(Graphics2D g2, GamePanel gp) {
 		int screenX = worldX - gp.player.worldX + gp.player.screenX;
@@ -37,6 +42,9 @@ public class MasterObject {
 		
 	}
 	public void interact(int i) {
+		
+	}
+	public void effect(character.Character c) {
 		
 	}
 

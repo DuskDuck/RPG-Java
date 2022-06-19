@@ -4,11 +4,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+
 import javax.swing.JPanel;
 
 //import character.Enemy;
 import character.Player;
 import object.MasterObject;
+import skill.Projectile;
 import tile.Map;
 import tile.TileManager;
 
@@ -47,6 +50,8 @@ public class GamePanel extends JPanel implements Runnable{
 	public MasterObject obj[] = new MasterObject[10];
 	public character.Character npc[] = new character.Character[10];
 	public character.Character mob[] = new character.Character[20];
+	
+	public ArrayList<Projectile> projectileList = new ArrayList<>();
 	
 	public int GameState;
 	public final int playState = 1;
@@ -135,7 +140,14 @@ public class GamePanel extends JPanel implements Runnable{
 					mob[i].update();
 				}
 			}
-			
+			for(int i = 0;i < projectileList.size();i++) {
+				if(projectileList.get(i) != null) {
+					projectileList.get(i).update();
+				}
+				if(projectileList.get(i).active == false) {
+					projectileList.remove(i);
+				}
+			}
 		}
 		if(GameState == pauseState) {
 			//Stop every action
@@ -161,6 +173,11 @@ public class GamePanel extends JPanel implements Runnable{
 		for(int i = 0; i < mob.length;i++) {
 			if(mob[i] != null) {
 				mob[i].draw(g2);
+			}
+		}
+		for(int i = 0; i < projectileList.size();i++) {
+			if(projectileList.get(i) != null) {
+				projectileList.get(i).draw(g2);
 			}
 		}
 		player.draw(g2);

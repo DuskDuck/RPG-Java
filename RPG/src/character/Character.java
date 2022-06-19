@@ -26,7 +26,7 @@ public class Character {
 	GamePanel gp;
 	
 	//Graphic
-	PlayerGraphic graphic = new PlayerGraphic();
+	public PlayerGraphic graphic = new PlayerGraphic();
 	//Stat	
 	public int speed;
 	public int MaxHP;

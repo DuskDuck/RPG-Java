@@ -3,10 +3,13 @@ package character;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.util.ArrayList;
+
 import main.GamePanel;
 import main.KeyInput;
 import object.Item_Iron_Sword;
 import object.Item_Wooden_Shield;
+import object.MasterObject;
 
 public class Player extends Character{
 
@@ -20,6 +23,9 @@ public class Player extends Character{
 	int AnimCounter = 0;
 	int AttackCooldown = 0;
 	int gold;
+	
+	public ArrayList<MasterObject> inventory = new ArrayList<>();
+	public final int InventorySize = 42;
 	
 	public Player(GamePanel gp, KeyInput key) {
 		super(gp);
@@ -42,8 +48,8 @@ public class Player extends Character{
 		collisionBox.height = 32;
 		
 		//Melee setting
-		attackBox.width = 36;
-		attackBox.height = 36;
+		//attackBox.width = 36;
+		//attackBox.height = 36;
 		
 		setDefaultValues();
 		graphic.getImage("/player","humanoid");
@@ -66,12 +72,15 @@ public class Player extends Character{
 		ATK = 5;
 		DEF = 0;
 		exp = 0;
-		NextLvexp = 0;
+		NextLvexp = 5;
 		gold = 50;
 		OnhandWP = new Item_Iron_Sword(gp);
 		Shield = new Item_Wooden_Shield(gp);
 		ATK += getGearStat("Weapon");
 		DEF += getGearStat("Shield");
+		//attackBox.width = getGearStat("Range");
+		//attackBox.height = getGearStat("Range");
+		setItem();
 	}
 	public int getGearStat(String type) {
 		switch(type) {
@@ -79,6 +88,8 @@ public class Player extends Character{
 			return OnhandWP.ATK;
 		case"Shield":
 			return Shield.DEF;
+		case"Range":
+			return OnhandWP.range;
 		}
 		return 0;
 	}
@@ -137,7 +148,6 @@ public class Player extends Character{
 		//interactNPC(mobIndex);
 		
 		graphic.updateDirection(this, 10, 2);	
-		
 		//System.out.println(direction);
 		//Test
 		}
@@ -149,12 +159,21 @@ public class Player extends Character{
 		if(i != 999) {
 			//i not 999 mean character just touch an object -> pick it up and it disappear on ground
 			//String objectName = gp.obj[i].name;
-			gp.obj[i].interact(i);
+			if(inventory.size() != InventorySize) {
+				inventory.add(gp.obj[i]);
+			}
+			gp.obj[i] = null;
 		}	
 	}
+	public void setItem() {
+		inventory.add(OnhandWP);
+		inventory.add(Shield);	
+	}
 	void attacking(Graphics2D g2) {
+		OnhandWP.effect(this);
 		//Move collisionBox to the attack direction( attack Box location )
-		
+		attackBox.width = getGearStat("Range");
+		attackBox.height = getGearStat("Range");		
 		//Save current WorldX,Y,collision Box size
 		int currentWorldX = worldX;
 		int currentWorldY = worldY;
@@ -173,9 +192,10 @@ public class Player extends Character{
 		collisionBox.height = attackBox.height;
 		//
 		int monsterIndex = gp.Colchecker.checkCharacter(this, gp.npc);
-		graphic.drawCollision(g2, screenX+collisionBox.x, screenY+collisionBox.y, collisionBox.width,collisionBox.height);
+		//graphic.drawCollision(g2, screenX+collisionBox.x, screenY+collisionBox.y, collisionBox.width,collisionBox.height);
 		if(monsterIndex != 999) {
 			gp.npc[monsterIndex].hitted(ATK,monsterIndex); //deal dmg
+			//Get Weapon Effect
 		}
 		else {
 		}
@@ -194,7 +214,8 @@ public class Player extends Character{
 					attacking(g2);
 				}
     			if(AnimCounter <= 5) {
-    				graphic.attack(g2,7,this,-24,-72);
+    				//graphic.attack(g2,7,this,-24,-72);
+    				graphic.SpecialAtkFX(g2,OnhandWP.upFX,this,-24,-72);
     			}
     			if(AnimCounter > 5 && AnimCounter < 15) {
     				graphic.attack(g2,8,this,-24,-72);
@@ -213,7 +234,8 @@ public class Player extends Character{
 					attacking(g2);
 				}
     			if(AnimCounter <= 5) {
-    				graphic.attack(g2,1,this,-24,15);
+    				//graphic.attack(g2,1,this,-24,15);
+    				graphic.SpecialAtkFX(g2,OnhandWP.downFX,this,-24,15);
     			}
     			if(AnimCounter > 5 && AnimCounter < 15) {
     				graphic.attack(g2,2,this,-24,15);
@@ -232,7 +254,8 @@ public class Player extends Character{
 					attacking(g2);
 				}
     			if(AnimCounter <= 5) {
-    				graphic.attack(g2,10,this,-68,-24);
+    				//graphic.attack(g2,10,this,-68,-24);
+    				graphic.SpecialAtkFX(g2,OnhandWP.leftFX,this,-68,-24);
     			}
     			if(AnimCounter > 5 && AnimCounter < 15) {
     				graphic.attack(g2,11,this,-68,-24);
@@ -251,9 +274,9 @@ public class Player extends Character{
     			if(AnimCounter == 1) {
 					attacking(g2);
 				}
-    			attacking(g2);
     			if(AnimCounter <= 5) {
-    				graphic.attack(g2,4,this,15,-24);
+    				//graphic.attack(g2,4,this,15,-24);
+    				graphic.SpecialAtkFX(g2,OnhandWP.rightFX,this,15,-24);
     			}
     			if(AnimCounter > 5 && AnimCounter < 15) {
     				graphic.attack(g2,5,this,15,-24);
@@ -294,5 +317,29 @@ public class Player extends Character{
 			graphic.drawStatHUD(gp,g2);
 		}
 		//Melee Animation
+	}
+	public void LevelUp() {
+		if(exp >= NextLvexp) {
+			lv++;
+			NextLvexp = NextLvexp*2;
+		}
+	}
+	public void selectItem() {
+		int itemIndex = graphic.getItemIndexSlot();
+		if(itemIndex < inventory.size()) {
+			MasterObject selectedItem = inventory.get(itemIndex);
+			if(selectedItem.type == "weapon") {
+				OnhandWP = selectedItem;
+				ATK += getGearStat("Weapon");			
+			}
+			if(selectedItem.type == "shield") {
+				Shield = selectedItem;
+				DEF += getGearStat("Shield");
+			}
+			if(selectedItem.type == "consumable") {
+				selectedItem.interact(itemIndex);
+				inventory.remove(itemIndex);
+			}
+		}
 	}
 }

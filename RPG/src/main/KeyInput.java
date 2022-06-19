@@ -49,11 +49,10 @@ public class KeyInput implements KeyListener{
 				interactKey = true;
 			}
 			if(code == KeyEvent.VK_B) {
-				if(gp.GameState == gp.statState) {
-					gp.GameState = gp.playState;
-				}else if(gp.GameState == gp.playState){
-					gp.GameState = gp.statState;
-				}
+				gp.GameState = gp.statState;
+			}
+			if(code == KeyEvent.VK_1) {
+				
 			}
 			if(code == KeyEvent.VK_SPACE) {
 				if(gp.player.attacking == false) {
@@ -71,6 +70,31 @@ public class KeyInput implements KeyListener{
 		if(gp.GameState == gp.dialogState) {
 			if(code == KeyEvent.VK_SPACE) {
 				gp.GameState = gp.playState;
+			}
+		}
+		if(gp.GameState == gp.statState) {
+			if(code == KeyEvent.VK_W) {
+				if(gp.player.graphic.slotRow != 0) {
+					gp.player.graphic.slotRow--;
+				}
+			}
+			if(code == KeyEvent.VK_D) {
+				if(gp.player.graphic.slotCol != 6) {
+					gp.player.graphic.slotCol++;
+				}
+			}
+			if(code == KeyEvent.VK_S) {
+				if(gp.player.graphic.slotRow != 5) {
+					gp.player.graphic.slotRow++;
+				}
+			}
+			if(code == KeyEvent.VK_A) {
+				if(gp.player.graphic.slotCol != 0) {
+					gp.player.graphic.slotCol--;
+				}
+			}
+			if(code == KeyEvent.VK_SPACE) {
+				gp.player.selectItem();
 			}
 		}
 	}

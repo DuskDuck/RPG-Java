@@ -21,6 +21,7 @@ public class Item_Speed_Potion extends MasterObject{
 			e.printStackTrace();
 		}
 		collision = true;
+		type = "consumable";
 	}
 	public void interact(int i) {
 		gp.player.speed += 2;

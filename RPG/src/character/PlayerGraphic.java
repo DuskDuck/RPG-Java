@@ -21,6 +21,8 @@ public class PlayerGraphic {
 	public int spriteCounter = 0;
 	public int spriteNum = 1;
 	public BufferedImage onhand;
+	public int slotCol = 0;
+	public int slotRow = 0;
 	
 	public PlayerGraphic() {
 	}
@@ -260,6 +262,9 @@ public class PlayerGraphic {
 	public void attack(Graphics2D g2,int i,Player p,int offsetX,int offsetY) {
 		g2.drawImage(switchOnHand("slash"+i),p.screenX+offsetX,p.screenY+offsetY,96,96,null);
 	}
+	public void SpecialAtkFX(Graphics2D g2,String name,Player p,int offsetX,int offsetY) {
+		g2.drawImage(switchOnHand(name),p.screenX+offsetX,p.screenY+offsetY,96,96,null);
+	}
 	public BufferedImage switchOnHand(String type) {
 		onhand = setup("/FX/" + type );
 		return onhand;
@@ -293,6 +298,15 @@ public class PlayerGraphic {
 		g2.drawString("INFORMATION",205, 150);
 		g2.drawString("EQUIPMENT",210, 200);
 		g2.drawString("STAT",235, 470);
+		g2.drawRect(20, frameY+10, frameW-20, frameH-20);
+		g2.drawRect(30, frameY+20, frameW-40, 50);
+		g2.drawRect(170, frameY+120, 160, 200);
+		//Left
+		g2.drawRect(30, frameY+120, 95, 95);
+		g2.drawRect(30, frameY+225, 95, 95);
+		//Right
+		g2.drawRect(375, frameY+120, 95, 95);
+		g2.drawRect(375, frameY+225, 95, 95);
 		
 		int textX = 30;
 		int textY = frameY + 420 ;
@@ -311,7 +325,7 @@ public class PlayerGraphic {
 		textY += lineheight;
 		g2.drawString("EXP ", textX, textY);
 		textY += lineheight;
-		g2.drawString("Next Lv Exp ", textX, textY);
+		g2.drawString("Speed ", textX, textY);
 		textY += lineheight;
 		g2.drawString("Gold ", textX, textY);
 		textY += lineheight;
@@ -340,11 +354,11 @@ public class PlayerGraphic {
 		textX = AlignTextToRight(value,tailX,g2);
 		g2.drawString(value, textX, textY);
 		textY += lineheight;
-		value = String.valueOf(gp.player.exp);
+		value = String.valueOf(gp.player.exp + "/" + gp.player.NextLvexp);
 		textX = AlignTextToRight(value,tailX,g2);
 		g2.drawString(value, textX, textY);
 		textY += lineheight;
-		value = String.valueOf(gp.player.NextLvexp);
+		value = String.valueOf(gp.player.speed);
 		textX = AlignTextToRight(value,tailX,g2);
 		g2.drawString(value, textX, textY);
 		textY += lineheight;
@@ -352,28 +366,84 @@ public class PlayerGraphic {
 		textX = AlignTextToRight(value,tailX,g2);
 		g2.drawString(value, textX, textY);
 	
+		drawInventory(gp,g2);
+	}
+	public void drawInventory(GamePanel gp,Graphics g2) {
+		//Frame
+		final int frameX = 500;
+		final int frameY = gp.tileSize*2;
+		final int frameW = gp.tileSize*15-15;
+		final int frameH = gp.tileSize*15;
+		drawSubWindow(gp,g2,frameX, frameY, frameW, frameH);
+		g2.setColor(Color.WHITE);
+		g2.drawRect(510, frameY+10, frameW-20, frameH-20);
+		g2.drawRect(520, frameY+20, frameW-40, 50);
+		//Slot
+		final int slotXstart = frameX + 20;
+		final int slotYstart = frameY + 120;
+		int slotX = slotXstart;
+		int slotY = slotYstart;
+		//draw item
+		for(int i = 0; i < gp.player.inventory.size(); i++) {
+			
+			//Highlight the equipped item.
+			if(gp.player.inventory.get(i) == gp.player.OnhandWP || 
+					gp.player.inventory.get(i) == gp.player.Shield) {
+				g2.setColor(new Color(240,190,90));
+				g2.fillRect(slotX, slotY, 95, 95);
+			}
+			g2.drawImage(gp.player.inventory.get(i).InventoryImage, slotX, slotY,95,95, null);
+			slotX += 95;
+			if(i == 6 || i == 13 || i == 20 || i == 27 || i == 34 || i == 41) {
+				slotX = slotXstart;
+				slotY += 95;
+			}
+		}
+		//Cursor
+		int cursorX = slotXstart + (95 * slotCol);
+		int cursorY = slotYstart + (95 * slotRow);
+		int cursorWidth = 95;
+		int cursorHeight = 95;
+		g2.setColor(Color.GRAY);
+		((Graphics2D) g2).setStroke(new BasicStroke(10));
+		//g2.drawRect(cursorX, cursorY, cursorWidth, cursorHeight);
+		g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight,10, 10);
 		
+		//Description Box
+		int DframeX = 1215;
+		int DframeY = gp.tileSize*2;
+		int DframeW = 305;
+		int DframeH = gp.tileSize*8;
+		//description text
+		int textY = gp.tileSize*2+120;
+		int itemIndex = getItemIndexSlot();
+		if(itemIndex < gp.player.inventory.size()) {
+			drawSubWindow(gp,g2,DframeX, DframeY, DframeW, DframeH);
+			g2.setColor(Color.WHITE);
+			((Graphics2D) g2).setStroke(new BasicStroke(1));
+			g2.drawRect(1225, DframeY+10, DframeW-20, DframeH-20);
+			g2.drawRect(1235, DframeY+20, DframeW-40, 50);
+			g2.drawString("[ "+gp.player.inventory.get(itemIndex).name+" ]", 1250, textY);
+			for(String line: gp.player.inventory.get(itemIndex).discription.split("\n")) {
+				g2.drawString(line, 1250, textY+32);
+				textY += 32;
+			}
+		}
+	}
+	public int getItemIndexSlot() {
+		int itemIndex = slotCol + (slotRow*5);
+		return itemIndex;
 	}
 	public int AlignTextToRight(String text, int tailX, Graphics g2) {
 		int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
 		int x = tailX - length;
 		return x;
 	}
+	
 	public void drawSubWindow(GamePanel gp,Graphics g2,int x,int y,int width,int height) {
 		//Using Paint to define correct RGB,A is for opacity
 		Color c = new Color(15,15,15,255);
 		g2.setColor(c);
 		g2.fillRect(x, y, width, height);	
-		g2.setColor(Color.WHITE);
-		g2.drawRect(20, y+10, width-20, height-20);
-		g2.drawRect(30, y+20, width-40, 50);
-		g2.drawRect(170, y+120, 160, 200);
-		//Left
-		g2.drawRect(30, y+120, 95, 95);
-		g2.drawRect(30, y+225, 95, 95);
-		//Right
-		g2.drawRect(375, y+120, 95, 95);
-		g2.drawRect(375, y+225, 95, 95);
-		
 	}
 }
