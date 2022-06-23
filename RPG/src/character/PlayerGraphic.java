@@ -293,7 +293,7 @@ public class PlayerGraphic {
 		g2.drawImage(gp.player.Shield.image, 30, frameY+225, 95, 95,null);
 		g2.drawImage(idle1, 180, 250, 140, 140, null);
 		g2.setColor(Color.WHITE);
-		g2.setFont(new Font("Teko", Font.PLAIN, 24));
+		g2.setFont(new Font("x12y16pxMaruMonica", Font.PLAIN, 26));
 		//Window Text
 		g2.drawString("INFORMATION",205, 150);
 		g2.drawString("EQUIPMENT",210, 200);
@@ -376,6 +376,7 @@ public class PlayerGraphic {
 		final int frameH = gp.tileSize*15;
 		drawSubWindow(gp,g2,frameX, frameY, frameW, frameH);
 		g2.setColor(Color.WHITE);
+		g2.drawString("INVENTORY", 800,150);
 		g2.drawRect(510, frameY+10, frameW-20, frameH-20);
 		g2.drawRect(520, frameY+20, frameW-40, 50);
 		//Slot
@@ -417,9 +418,11 @@ public class PlayerGraphic {
 		//description text
 		int textY = gp.tileSize*2+120;
 		int itemIndex = getItemIndexSlot();
+		System.out.println(itemIndex);
 		if(itemIndex < gp.player.inventory.size()) {
 			drawSubWindow(gp,g2,DframeX, DframeY, DframeW, DframeH);
 			g2.setColor(Color.WHITE);
+			g2.drawString("DESCRIPTION", 1310,150);
 			((Graphics2D) g2).setStroke(new BasicStroke(1));
 			g2.drawRect(1225, DframeY+10, DframeW-20, DframeH-20);
 			g2.drawRect(1235, DframeY+20, DframeW-40, 50);
@@ -431,7 +434,7 @@ public class PlayerGraphic {
 		}
 	}
 	public int getItemIndexSlot() {
-		int itemIndex = slotCol + (slotRow*5);
+		int itemIndex = slotCol + (slotRow*7);
 		return itemIndex;
 	}
 	public int AlignTextToRight(String text, int tailX, Graphics g2) {

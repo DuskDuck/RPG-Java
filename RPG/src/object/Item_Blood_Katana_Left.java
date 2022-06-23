@@ -8,11 +8,11 @@ import main.GamePanel;
 import skill.Bloodslash;
 import skill.Projectile;
 
-public class Item_Blood_Katana extends MasterObject{
+public class Item_Blood_Katana_Left extends MasterObject{
     GamePanel gp;
     Projectile slash;
     
-	public Item_Blood_Katana(GamePanel gp) {
+	public Item_Blood_Katana_Left(GamePanel gp) {
 		
 		this.gp = gp;
 		downFX = "slashblood1";
@@ -31,7 +31,7 @@ public class Item_Blood_Katana extends MasterObject{
 		collision = true;
 		ATK = 250;
 		range = 50;
-		type = "weapon";
+		type = "shield";
 		discription = "An Ancient cursed weapon. \nComsume user blood to \nchanneling energy.";
 	}
 	public void effect(character.Character c) {

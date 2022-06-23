@@ -7,10 +7,11 @@ import main.GamePanel;
 
 public class Bloodslash extends Projectile{
     int counter = 0;
+    boolean hitted = false;
 	public Bloodslash(GamePanel gp) {
 		super(gp);
 		speed = 15;
-		graphic.setImage("/skill");
+		graphic.setImage("/skill/Bloodslash");
 		active = true;
 		direction = gp.player.direction;
 		// TODO Auto-generated constructor stub
@@ -25,7 +26,11 @@ public class Bloodslash extends Projectile{
 		avatar.worldY = y;
 		int mobIndex = gp.Colchecker.checkCharacter(avatar, gp.npc);
 		if(mobIndex != 999) {
-			gp.npc[mobIndex].hitted(50,mobIndex);
+			if(hitted == false) {
+				gp.npc[mobIndex].hitted(50,mobIndex);
+				hitted = true;
+				active = false;
+			}
 		}
 	}
 	public void draw(Graphics2D g2) {
@@ -36,7 +41,6 @@ public class Bloodslash extends Projectile{
 		active = true;
 		this.x = x;
 		this.y = y;
-		
 		this.direction = direction;
 	}
 	

@@ -36,7 +36,7 @@ public class UI {
 		Item_Key key = new Item_Key(gp);
 		//KeyImage = key.image;
 		try {
-			StatBox = ImageIO.read(getClass().getResource("/UI/StatBox.png"));
+			StatBox = ImageIO.read(getClass().getResource("/UI/LvCircle.png"));
 		} 
 		catch (IOException e) {
 		    e.printStackTrace();
@@ -112,9 +112,13 @@ public class UI {
 
 	//HUD(mp and hp)
 	public void drawHUD() {
-		g2.drawImage(StatBox,10, 5, null);
 		//gp.player.HUD(g2);
 		PlayerHUD(g2);
+		g2.setFont(new Font("x12y16pxMaruMonica", Font.PLAIN, 28));
+		g2.drawImage(StatBox,10, 5, 100, 100, null);
+		g2.drawString("Lv."+gp.player.lv, 45, 65);
+		g2.setColor(Color.BLACK);
+		g2.drawString("Lv."+gp.player.lv, 47, 67);
 	}
 	public void drawPauseScreen() {
 		String text = "PAUSED";
@@ -169,19 +173,19 @@ public class UI {
 	public void PlayerHUD(Graphics2D g2) {
 
 		//Health bar
-		double hpscale = (double)gp.tileSize*6/gp.player.MaxHP;
+		double hpscale = (double)gp.tileSize*10/gp.player.MaxHP;
 		double hpbarValue = hpscale*gp.player.HP;
 		g2.setColor(new Color(130,0,0,200));
-		g2.fillRect(90, 20, gp.tileSize*6, 20);
+		g2.fillRect(100, 35, gp.tileSize*10, 20);
 		g2.setColor(new Color(215,0,0));
-		g2.fillRect(90, 20, (int)hpbarValue, 20);
+		g2.fillRect(100, 35, (int)hpbarValue, 20);
 		//Mana bar
 		double mpscale = (double)gp.tileSize*6/gp.player.MaxMP;
 		double mpbarValue = mpscale*gp.player.MP;
 		g2.setColor(new Color(0,24,83,200));
-		g2.fillRect(90, 45, gp.tileSize*6, 20);
+		g2.fillRect(100, 60, gp.tileSize*6, 10);
 		g2.setColor(new Color(14,86,254));
-		g2.fillRect(90, 45, (int)mpbarValue, 20);
+		g2.fillRect(100, 60, (int)mpbarValue, 10);
 		g2.setColor(Color.white);
 	}
 	public void animation(Graphics2D g2,String directory,int x,int y,BufferedImage image,int interval,int NumIndex) {

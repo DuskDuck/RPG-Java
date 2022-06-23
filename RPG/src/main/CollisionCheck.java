@@ -347,4 +347,51 @@ public class CollisionCheck {
 		gp.player.collisionBox.y = gp.player.collisionDefaultY;	
 	
 	}
+	public boolean checkPlayerCol(character.Character character) {
+		boolean isPlayer = false;
+		character.collisionBox.x = character.worldX + character.collisionDefaultX;
+		character.collisionBox.y = character.worldY + character.collisionDefaultY;
+		
+		//get object collision position
+		gp.player.collisionBox.x = gp.player.worldX + gp.player.collisionBox.x;
+		gp.player.collisionBox.y = gp.player.worldY + gp.player.collisionBox.y;
+		
+		
+		//if char touch object then i will shift to non 999 number
+		switch(character.direction) {
+		case"up":
+			character.collisionBox.y -= character.speed;
+			if(character.collisionBox.intersects(gp.player.collisionBox)) {
+				character.collisionOn = true;	
+				isPlayer = true;	
+			}	
+			break;
+		case"down":
+			character.collisionBox.y += character.speed;
+			if(character.collisionBox.intersects(gp.player.collisionBox)) {
+				character.collisionOn = true;	
+				isPlayer = true;	
+			}
+			break;
+		case"left":
+			character.collisionBox.x -= character.speed;
+			if(character.collisionBox.intersects(gp.player.collisionBox)) {
+				character.collisionOn = true;	
+				isPlayer = true;	
+			}
+			break;
+		case"right":
+			character.collisionBox.x += character.speed;
+			if(character.collisionBox.intersects(gp.player.collisionBox)) {
+				character.collisionOn = true;	
+				isPlayer = true;	
+			}	
+			break;
+		}
+		character.collisionBox.x = character.collisionDefaultX;
+		character.collisionBox.y = character.collisionDefaultY;
+		gp.player.collisionBox.x = gp.player.collisionDefaultX;
+		gp.player.collisionBox.y = gp.player.collisionDefaultY;	
+		return isPlayer;
+	}
 }

@@ -2,10 +2,10 @@ package character;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-
-
+import java.util.Random;
 
 import main.GamePanel;
+import object.Item_Coin;
 import object.MasterObject;
 
 public class Character {
@@ -27,6 +27,7 @@ public class Character {
 	
 	//Graphic
 	public PlayerGraphic graphic = new PlayerGraphic();
+	public ItemPicker itemPicker;
 	//Stat	
 	public int speed;
 	public int MaxHP;
@@ -44,6 +45,7 @@ public class Character {
 	
 	public Character(GamePanel gp) {
 		this.gp = gp;
+		itemPicker = new ItemPicker(gp);
 	}
 	public void setAction() {
 		
@@ -65,5 +67,47 @@ public class Character {
 	}
 	public void hitted(int dmg,int i) {
 		
+	}
+	public void TookDMG(int i) {
+		
+	}
+	public void CostMP(int i) {
+		MP -= i; 
+		if(MP < 0) {
+			MP = 0;
+		}
+	}
+	public void DropItem(MasterObject item) {
+		for(int i = 0; i <gp.obj.length;i++) {
+			if(gp.obj[i] == null) {
+				gp.obj[i] = item;
+				gp.obj[i].worldX = worldX; 
+			    gp.obj[i].worldY = worldY;
+			    break;
+			}
+		}
+		
+	}
+	public void CheckDrop() {
+        int i = new Random().nextInt(100)+1;
+		
+		if(i < 40) {
+			DropItem(itemPicker.picker("common"));
+		}
+		if(i >= 40 && i < 65) {
+			DropItem(itemPicker.picker("standard"));
+		}
+		if(i >= 65 && i < 80 ) {
+			DropItem(itemPicker.picker("rare"));
+		}
+		if(i >= 80 && i < 90 ) {
+			DropItem(itemPicker.picker("superior"));
+		}
+		if(i >= 90 && i < 97 ) {
+			DropItem(itemPicker.picker("high-end"));
+		}
+		if(i >= 97 && i <= 100 ) {
+			DropItem(itemPicker.picker("exotic"));
+		}
 	}
 }

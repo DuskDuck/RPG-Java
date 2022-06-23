@@ -6,16 +6,23 @@ import java.awt.Rectangle;
 import java.util.Random;
 
 import main.GamePanel;
+import object.Item_Coin;
+import skill.Bloodslash;
+import skill.PoisonSpit;
+import skill.Projectile;
 
 public class GreenSlime extends Character{
 	public int ActionCounter;
 	int AnimCounter;
+	int AtkCounter;
 	int cooldown;
 	boolean activated = false;
 	boolean hpbarOn;
 	int hpbartimer;
 	int OnmapIndex;
 	boolean death = false;
+	Random randomatk = new Random();
+	int j = randomatk.nextInt(120)+40;
 	public GreenSlime(GamePanel gp) {
 		super(gp);
 		this.name = "Green Slime";
@@ -39,8 +46,16 @@ public class GreenSlime extends Character{
 	}
 	public void setAction() {
 		ActionCounter++;
+		AtkCounter++;		
+		if(AtkCounter == j) {
+			Projectile poison = new PoisonSpit(gp);
+			gp.projectileList.add(poison);
+			poison.set(worldX,worldY,direction,this);
+			AtkCounter = 0;
+		}
 		if(ActionCounter == 60) {
 			ActionCounter = 0;
+			
 			Random random = new Random();
 			int i = random.nextInt(100)+1;// get a number from 1 to 100
 			if(i <= 25) {
@@ -91,14 +106,14 @@ public class GreenSlime extends Character{
 				graphic.AnimFX(g2,1,screenX,screenY);			
 			}
 			if(AnimCounter > 5 && AnimCounter < 15) {
-				graphic.AnimFX(g2,2,screenX,screenY);
-				
+				graphic.AnimFX(g2,2,screenX,screenY);	
 			}
 			if(AnimCounter >= 15 && AnimCounter < 20) {
 				graphic.AnimFX(g2,3,screenX,screenY);
 			}
 			if(AnimCounter >= 20) {
 				AnimCounter = 0;
+				CheckDrop();
 				gp.npc[OnmapIndex] = null;
 			}
 		}
@@ -127,5 +142,4 @@ public class GreenSlime extends Character{
 			speed = 0;
 		}
 	}
-
 }

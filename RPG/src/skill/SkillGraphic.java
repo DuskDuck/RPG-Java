@@ -1,6 +1,7 @@
 package skill;
 
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -15,14 +16,14 @@ public class SkillGraphic {
 	int spriteCounter;
 	int spriteNum;
 	public void setImage(String filename) {
-		up1 = setup(filename + "/Bloodslash3");
-		up2 = setup(filename + "/Bloodslash3");
-		down1 = setup(filename + "/Bloodslash1");
-		down2 = setup(filename + "/Bloodslash1");
-		left1 = setup(filename + "/Bloodslash4");
-		left2 = setup(filename + "/Bloodslash4");
-		right1 = setup(filename + "/Bloodslash2");
-		right2 = setup(filename + "/Bloodslash2");
+		up1 = setup(filename + "3");
+		up2 = setup(filename + "3");
+		down1 = setup(filename + "1");
+		down2 = setup(filename + "1");
+		left1 = setup(filename + "4");
+		left2 = setup(filename + "4");
+		right1 = setup(filename + "2");
+		right2 = setup(filename + "2");
 	}
 	public BufferedImage setup(String imagename) {
     	Utility utility = new Utility();
@@ -53,6 +54,13 @@ public class SkillGraphic {
 			}
 			spriteCounter = 0;
 		}
+	}
+	public void AnimFX(Graphics2D g2,int i, int x, int y) {
+		g2.drawImage(switchOnHand("slime_ex"+i),x,y,null);
+	}
+	public BufferedImage switchOnHand(String type) {
+		BufferedImage onhand = setup("/FX/" + type );
+		return onhand;
 	}
 	public void draw(Graphics2D g2,GamePanel gp, Projectile c) {
 		BufferedImage image = null;

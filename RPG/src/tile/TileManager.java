@@ -51,6 +51,7 @@ public class TileManager {
 		setup(21,"Floor_3",false);
 		setup(22,"Floor_3_Manhole",false);
 		setup(23,"Floor_1_Blob",false);
+		setup(24,"crate",true);
 		//setup(23,"Floor_4",false);
 	}
 	

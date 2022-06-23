@@ -26,7 +26,7 @@ public class Projectile {
 	public void update() {
 		
 	}
-	public void set(int x,int y, String direction, Character c) {
+	public void set(int x,int y, String direction, character.Character c) {
 		
 	}
     public void set(int x,int y, String direction, Player p) {

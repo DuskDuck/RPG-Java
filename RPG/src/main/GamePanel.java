@@ -47,8 +47,8 @@ public class GamePanel extends JPanel implements Runnable{
 	public Player player = new Player(this,key);
 	public UI ui = new UI(this);
 	
-	public MasterObject obj[] = new MasterObject[10];
-	public character.Character npc[] = new character.Character[10];
+	public MasterObject obj[] = new MasterObject[100];
+	public character.Character npc[] = new character.Character[50];
 	public character.Character mob[] = new character.Character[20];
 	
 	public ArrayList<Projectile> projectileList = new ArrayList<>();

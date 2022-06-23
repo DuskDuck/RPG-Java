@@ -29,7 +29,7 @@ public class Item_Iron_Sword extends MasterObject{
 		ATK = 5;
 		range = 36;
 		type = "weapon";
-		discription = "An old odinary melee weapon of a\n warrior. Nothing special.";
+		discription = "An old odinary melee \nweapon of a warrior. \nNothing special.";
 	}
 
 }

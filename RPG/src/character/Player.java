@@ -22,7 +22,7 @@ public class Player extends Character{
 	int FrameCounter = 0;
 	int AnimCounter = 0;
 	int AttackCooldown = 0;
-	int gold;
+	public int gold;
 	
 	public ArrayList<MasterObject> inventory = new ArrayList<>();
 	public final int InventorySize = 42;
@@ -160,7 +160,11 @@ public class Player extends Character{
 			//i not 999 mean character just touch an object -> pick it up and it disappear on ground
 			//String objectName = gp.obj[i].name;
 			if(inventory.size() != InventorySize) {
-				inventory.add(gp.obj[i]);
+				if(gp.obj[i].type == "coin") {
+					gp.obj[i].interact(i);
+				}else {
+					inventory.add(gp.obj[i]);
+				}
 			}
 			gp.obj[i] = null;
 		}	
@@ -171,6 +175,7 @@ public class Player extends Character{
 	}
 	void attacking(Graphics2D g2) {
 		OnhandWP.effect(this);
+		Shield.effect(this);
 		//Move collisionBox to the attack direction( attack Box location )
 		attackBox.width = getGearStat("Range");
 		attackBox.height = getGearStat("Range");		
@@ -293,6 +298,12 @@ public class Player extends Character{
 		    }
 		}
 	}
+	public void TookDMG(int dmg) {
+		HP -= dmg;
+		if(HP - dmg < 0) {
+			HP = 0;
+		}
+	}
 
 	private void interactNPC(int i) {
 		if(i != 999) {
@@ -311,7 +322,7 @@ public class Player extends Character{
 		//System.out.println(graphic.spriteNum);
 		graphic.drawPlayer(this, g2);
 		//graphic.drawCollision(g2, screenX+collisionBox.x, screenY+collisionBox.y, collisionBox.width,collisionBox.height);
-		graphic.drawName(this, g2, "Lv."+ lv, gp, 15, Color.WHITE);
+		//graphic.drawName(this, g2, "Lv."+ lv, gp, 15, Color.WHITE);
 		MeleeAttack(g2);
 		if(gp.GameState == gp.statState) {
 			graphic.drawStatHUD(gp,g2);

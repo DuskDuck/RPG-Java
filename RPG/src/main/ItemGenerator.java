@@ -4,6 +4,9 @@ package main;
 import character.GreenSlime;
 import character.NPC_1;
 import object.Item_Blood_Katana;
+import object.Item_Blood_Katana_Left;
+import object.Item_Coin;
+import object.Item_Crusader_Shield;
 import object.Item_HP_Potion_B;
 import object.Item_HP_Potion_S;
 import object.Item_Key;
@@ -46,37 +49,49 @@ public class ItemGenerator {
 		gp.obj[6] = new Item_LightSaber(gp);
 		gp.obj[6].worldX = 17 * gp.tileSize;
 		gp.obj[6].worldY = 8 * gp.tileSize;
+		
+		gp.obj[7] = new Item_Coin(gp);
+		gp.obj[7].worldX = 19 * gp.tileSize;
+		gp.obj[7].worldY = 8 * gp.tileSize;
+		
+		gp.obj[8] = new Item_Crusader_Shield(gp);
+		gp.obj[8].worldX = 19 * gp.tileSize;
+		gp.obj[8].worldY = 10 * gp.tileSize;
+		
+		gp.obj[8] = new Item_Blood_Katana_Left(gp);
+		gp.obj[8].worldX = 21 * gp.tileSize;
+		gp.obj[8].worldY = 5 * gp.tileSize;
 	}
 	public void setNPC() {
-		
-		gp.npc[0] = new NPC_1(gp, "Markus");
-		gp.npc[0].worldX = gp.tileSize*18;
-		gp.npc[0].worldY = gp.tileSize*18;
-		
-		gp.npc[1] = new NPC_1(gp, "Levian");
-		gp.npc[1].worldX = gp.tileSize*17;
-		gp.npc[1].worldY = gp.tileSize*18;
-		
-		gp.npc[2] = new NPC_1(gp, "Jonathan");
-		gp.npc[2].worldX = gp.tileSize*16;
-		gp.npc[2].worldY = gp.tileSize*18;
-		
-		gp.npc[3] = new NPC_1(gp, "Ewon");
-		gp.npc[3].worldX = gp.tileSize*5;
-		gp.npc[3].worldY = gp.tileSize*9;
-		
-		gp.npc[4] = new GreenSlime(gp);
-		gp.npc[4].worldX = gp.tileSize*18;
-		gp.npc[4].worldY = gp.tileSize*18;
-	
-		gp.npc[5] = new GreenSlime(gp);
-		gp.npc[5].worldX = gp.tileSize*7;
-		gp.npc[5].worldY = gp.tileSize*7;
-		
-		gp.npc[6] = new GreenSlime(gp);
-		gp.npc[6].worldX = gp.tileSize*7;
-		gp.npc[6].worldY = gp.tileSize*17;
-		
+		int i = 0;
+		gp.npc[i] = new NPC_1(gp, "Markus");
+		gp.npc[i].worldX = gp.tileSize*18;
+		gp.npc[i].worldY = gp.tileSize*18;
+		i++;
+		gp.npc[i] = new GreenSlime(gp);
+		gp.npc[i].worldX = gp.tileSize*17;
+		gp.npc[i].worldY = gp.tileSize*18;
+		i++;
+		gp.npc[i] = new GreenSlime(gp);
+		gp.npc[i].worldX = gp.tileSize*16;
+		gp.npc[i].worldY = gp.tileSize*18;
+		i++;
+		gp.npc[i] = new GreenSlime(gp);
+		gp.npc[i].worldX = gp.tileSize*5;
+		gp.npc[i].worldY = gp.tileSize*9;
+		i++;
+		gp.npc[i] = new GreenSlime(gp);
+		gp.npc[i].worldX = gp.tileSize*18;
+		gp.npc[i].worldY = gp.tileSize*18;
+		i++;
+		gp.npc[i] = new GreenSlime(gp);
+		gp.npc[i].worldX = gp.tileSize*7;
+		gp.npc[i].worldY = gp.tileSize*7;
+		i++;
+		gp.npc[i] = new GreenSlime(gp);
+		gp.npc[i].worldX = gp.tileSize*7;
+		gp.npc[i].worldY = gp.tileSize*17;
+		i++;
     }
 }
 
