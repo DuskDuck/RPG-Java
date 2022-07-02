@@ -100,7 +100,7 @@ public class GreenSlime extends Character{
 			graphic.drawName(this, g2, name, gp, 22,Color.WHITE);
 			graphic.drawLv(this, g2, lv, gp);
 		}else {
-			//Death Anim
+			//Death Animation
 			AnimCounter++;
 			if(AnimCounter <= 5 ) {
 				graphic.AnimFX(g2,1,screenX,screenY);			
@@ -114,7 +114,7 @@ public class GreenSlime extends Character{
 			if(AnimCounter >= 20) {
 				AnimCounter = 0;
 				CheckDrop();
-				gp.npc[OnmapIndex] = null;
+				gp.npc[gp.currentMap][OnmapIndex] = null;
 			}
 		}
 		if(hpbarOn == true) {

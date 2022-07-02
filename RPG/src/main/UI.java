@@ -9,11 +9,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
 
 import object.Item_Key;
 
 public class UI {
-	
 	GamePanel gp;
 	Graphics2D g2;
 	Font arial_30;
@@ -23,11 +23,14 @@ public class UI {
 	int messageDuration = 0;//frame counter
 	public String currentDialog = "";
 	BufferedImage StatBox = null;
+	BufferedImage A,D,ENTER;
 	ArrayList<String> notice = new ArrayList<>();
 	ArrayList<Integer> noticeCounter = new ArrayList<>();
 	int counter;
 	int spriteNum;
-	
+	public int i=0;
+	int SelectionCount = 1;
+	BufferedImage background;
 	
 	public UI (GamePanel gp) {
 		this.gp = gp;
@@ -37,6 +40,10 @@ public class UI {
 		//KeyImage = key.image;
 		try {
 			StatBox = ImageIO.read(getClass().getResource("/UI/LvCircle.png"));
+			A = ImageIO.read(getClass().getResource("/Key/A.png"));
+			D = ImageIO.read(getClass().getResource("/Key/D.png"));
+			ENTER = ImageIO.read(getClass().getResource("/Key/Enter.png"));
+			background = ImageIO.read(getClass().getResource("/UI/background.jpg"));
 		} 
 		catch (IOException e) {
 		    e.printStackTrace();
@@ -59,6 +66,9 @@ public class UI {
 		g2.setColor(Color.white);
 		//g2.drawImage(KeyImage, gp.tileSize/2, gp.tileSize/2, gp.tileSize, gp.tileSize, null);
 		//g2.drawString("x " +gp.player.Key,80,60);
+		if(gp.GameState == gp.titleState) {
+			drawTitle();
+		}
 		if(gp.GameState == gp.playState) {
 			drawHUD();
 			drawMessage();
@@ -74,6 +84,14 @@ public class UI {
 		if(gp.GameState == gp.statState) {
 			drawHUD();
 		}
+		if(gp.GameState == gp.gameoverState) {
+			if(i == 255) {
+			//stop count	
+			}else {
+				i+=3;
+			}
+			drawGameOver(i);
+		}
 		if(messageOn == true) {
 			g2.setFont(new Font("Teko", Font.PLAIN, 26));
 			g2.drawString(message, gp.tileSize*10, gp.tileSize*8);
@@ -86,11 +104,107 @@ public class UI {
 			}
 		}
 	}
+	private void drawTitle() {
+		//Title
+		//g2.drawImage(background, 0, 0,48*32,48*18, null);
+		g2.setFont(new Font("x12y16pxMaruMonica", Font.BOLD, 180));
+		String text = "GAME'S TITLE";
+		
+		int x = 100;
+		int y = 240;
+		g2.setColor(Color.WHITE);
+		g2.drawString(text,x,y);
+		y += 180; 
+		g2.setFont(new Font("x12y16pxMaruMonica", Font.BOLD, 60));
+		
+		//Button
+		g2.setColor(new Color(230,146,6));
+		g2.fillRoundRect(x-15, y+25, 400, 70, 10, 10);
+		g2.fillRoundRect(x-15, y+105, 400, 70, 10, 10);
+		g2.fillRoundRect(x-15, y+185, 400, 70, 10, 10);
+		
+		//Button's text
+		g2.setColor(Color.BLACK);
+		text = "NEW GAME";
+		y += 80; 
+		g2.drawString(text, x, y);
+		text = "LOAD GAME";
+		y += 80; 		
+		g2.drawString(text, x, y);		
+		text = "QUIT";
+		y += 80;		
+		g2.drawString(text, x, y);
+		
+		y = 420;
+		//Outline current choice
+		((Graphics2D) g2).setStroke(new BasicStroke(5));
+		g2.setColor(new Color(255,205,34));
+		if(SelectionCount == 1) {
+			g2.drawRoundRect(x-15, y+25, 400, 70, 10, 10);
+		}
+		if(SelectionCount == 2) {
+			g2.drawRoundRect(x-15, y+105, 400, 70, 10, 10);
+		}
+		if(SelectionCount == 3) {
+			g2.drawRoundRect(x-15, y+185, 400, 70, 10, 10);
+		}
+	}
+
+	private void drawGameOver(int i) {
+		// TODO Auto-generated method stub
+		g2.setColor(new Color(0,0,0,i));
+		g2.fillRect(0, 0, gp.screenWidth,gp.screenHeight);
+		int x;
+		int y;
+		
+		String text;
+		g2.setFont(new Font("x12y16pxMaruMonica", Font.PLAIN, 120));
+		text = "YOU DIED";
+		x = 600;
+		y = gp.tileSize * 8;
+		g2.setColor(Color.DARK_GRAY);
+		g2.drawString(text, x, y);
+		g2.setColor(Color.RED);
+		g2.drawString(text, x-4, y-4);
+		
+		if(i == 255) {
+			//Instruction
+			g2.drawImage(A,30, 750, 35, 35, null);
+			g2.drawImage(D,70, 750, 35, 35, null);
+			g2.drawImage(ENTER,240, 750, 35, 35, null);
+			g2.setColor(Color.WHITE);
+			g2.setFont(new Font("x12y16pxMaruMonica", Font.PLAIN, 26));
+			g2.drawString("Move Cursor", 110, 775);
+			g2.drawString("Select", 280, 775);
+			
+			//Button
+			g2.setColor(new Color(230,146,6));
+			g2.fillRoundRect(x-145, y+220, 200, 40, 10, 10);
+			g2.fillRoundRect(x+275, y+220, 200, 40, 10, 10);
+			g2.setColor(Color.BLACK);
+			g2.setFont(new Font("Teko", Font.PLAIN, 35));
+			text = "RESPAWN";
+			g2.drawString(text, x-100, y+250);
+			text = "EXIT TO TITLE";
+			g2.drawString(text, x+310, y+250);
+			
+			//Outline current choice
+			((Graphics2D) g2).setStroke(new BasicStroke(5));
+			g2.setColor(new Color(255,205,34));
+			if(SelectionCount == 1) {
+				g2.drawRoundRect(x-145, y+220, 200, 40, 10, 10);
+			}
+			if(SelectionCount == 2) {
+				g2.drawRoundRect(x+275, y+220, 200, 40, 10, 10);
+			}
+		}
+	}
+
 	private void drawMessage() {
 		
 		int messageX = 800;
 		int messageY = 400;
-		g2.setFont(new Font("Teko", Font.PLAIN, 18));
+		g2.setFont(new Font("x12y16pxMaruMonica", Font.PLAIN, 18));
 		for(int i = 0; i < notice.size(); i++) {
 			if(notice.get(i) != null) {
 				g2.setColor(Color.BLACK);

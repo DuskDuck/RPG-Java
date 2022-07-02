@@ -11,7 +11,7 @@ public class Map {
 	}
 	
 	public void loadMap(String name) {
-		tile.loadMap("/map/"+ name);
+		tile.loadMap("/map/"+ name,0);
 	}
 
 }

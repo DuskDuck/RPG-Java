@@ -1,5 +1,6 @@
 package main;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 
 public class Main {
@@ -22,7 +23,6 @@ public class Main {
 		window.pack();
 		window.setLocationRelativeTo(null);//set to null will auto set it to middle of screen.
 		window.setVisible(true);
-		
 		
 
 	}

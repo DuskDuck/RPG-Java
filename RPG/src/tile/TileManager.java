@@ -13,15 +13,16 @@ public class TileManager {
 	
 	GamePanel gp;
 	public Tile[] tile;
-	public int mapTileNum[][];
+	public int mapTileNum[][][];
 	
 	public TileManager(GamePanel gp) {
 		this.gp = gp;
 		tile = new Tile[100];
-		mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
+		mapTileNum = new int[10][gp.maxWorldCol][gp.maxWorldRow];
 		
 		getTileImage();
-		loadMap("/map/Level1.txt");
+		loadMap("/map/Level1.txt",0);
+		loadMap("/map/trader_room1",1);
 	}
 	
     //get data of each type of Tile
@@ -51,8 +52,7 @@ public class TileManager {
 		setup(21,"Floor_3",false);
 		setup(22,"Floor_3_Manhole",false);
 		setup(23,"Floor_1_Blob",false);
-		setup(24,"crate",true);
-		//setup(23,"Floor_4",false);
+		setup(24,"plank",false);
 	}
 	
 	//Scale texture before hand	
@@ -68,7 +68,7 @@ public class TileManager {
 		}
 	}
 	//Load text file into map
-	public void loadMap(String map) {
+	public void loadMap(String map, int mapindex) {
 		
 		try {
 			InputStream is = getClass().getResourceAsStream(map);
@@ -87,7 +87,7 @@ public class TileManager {
 					//scan and split each line
 					String numbers[] = line.split(" ");
 					int num = Integer.parseInt(numbers[col]);
-					mapTileNum[col][row] = num;
+					mapTileNum[gp.currentMap][col][row] = num;
 					col++;
 				}
 				//when hit the line limit jump to next line 
@@ -111,7 +111,7 @@ public class TileManager {
 		//calculate where is the tile at if the player is the (0,0) of the 2D graph
 		while(worldcol < gp.maxWorldCol && worldrow < gp.maxWorldRow) {
 			
-			int tileNum = mapTileNum[worldcol][worldrow];
+			int tileNum = mapTileNum[gp.currentMap][worldcol][worldrow];
 			
 			int worldX = worldcol * gp.tileSize;
 			int worldY = worldrow * gp.tileSize;

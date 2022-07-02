@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 //import character.Enemy;
 import character.Player;
 import object.MasterObject;
+import overlay_object.MasterOverlay;
 import skill.Projectile;
 import tile.Map;
 import tile.TileManager;
@@ -24,8 +25,10 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int tileSize = originalTileSize * scale; // 48x1
 	public final int maxScreenCol = 32; //32x48
 	public final int maxScreenRow = 18; //18x48
-	public final int screenWidth = tileSize * maxScreenCol; //48x24
-	public final int screenHeight = tileSize * maxScreenRow; //48x16
+	public final int screenWidth = tileSize * maxScreenCol; //48x32
+	public final int screenHeight = tileSize * maxScreenRow; //48x18
+	
+	public int currentMap = 0;
 	
 	//setting for world
 	public final int maxWorldCol = 50;
@@ -47,17 +50,21 @@ public class GamePanel extends JPanel implements Runnable{
 	public Player player = new Player(this,key);
 	public UI ui = new UI(this);
 	
-	public MasterObject obj[] = new MasterObject[100];
-	public character.Character npc[] = new character.Character[50];
-	public character.Character mob[] = new character.Character[20];
+	public MasterObject obj[][] = new MasterObject[10][100];
+	public MasterOverlay ovl[][] = new MasterOverlay[10][20];
+	public character.Character npc[][] = new character.Character[10][50];
+	public character.Character mob[][] = new character.Character[10][20];
 	
 	public ArrayList<Projectile> projectileList = new ArrayList<>();
+	public ArrayList<Particle> particleList = new ArrayList<>(); 
 	
 	public int GameState;
 	public final int playState = 1;
 	public final int pauseState = 2;
 	public final int dialogState = 3;
 	public final int statState = 4;
+	public final int gameoverState = 5;
+	public final int titleState = 6;
 	
 	
 	public GamePanel() {
@@ -72,9 +79,10 @@ public class GamePanel extends JPanel implements Runnable{
 	public void SetUpGame() {
 		ItemGen.setObject();
 		ItemGen.setNPC();
+		ItemGen.setOverlay();
 		//map.loadMap("Level1.txt");
 		//playBGM(0);
-		GameState = playState;
+		GameState = titleState;
 	}
 	
 	public void startGameThread() {
@@ -130,14 +138,14 @@ public class GamePanel extends JPanel implements Runnable{
 			player.update();
 			Event.checkEvent();
 			
-			for(int i = 0;i < npc.length;i++) {
-				if(npc[i] != null) {
-					npc[i].update();
+			for(int i = 0;i < npc[1].length;i++) {
+				if(npc[currentMap][i] != null) {
+					npc[currentMap][i].update();
 				}
 			}
-			for(int i = 0;i < mob.length;i++) {
-				if(mob[i] != null) {
-					mob[i].update();
+			for(int i = 0;i < mob[1].length;i++) {
+				if(mob[currentMap][i] != null) {
+					mob[currentMap][i].update();
 				}
 			}
 			for(int i = 0;i < projectileList.size();i++) {
@@ -157,34 +165,42 @@ public class GamePanel extends JPanel implements Runnable{
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D)g;
-		
-		tile.draw(g2);
-		
-		for(int i = 0; i < obj.length ;i++) {
-			if(obj[i] != null) {
-				obj[i].draw(g2, this);
+		if(GameState == titleState) {
+			ui.draw(g2);
+		}else {
+			tile.draw(g2);
+			
+			for(int i = 0; i < obj[1].length ;i++) {
+				if(obj[currentMap][i] != null) {
+					obj[currentMap][i].draw(g2, this);
+				}
 			}
-		}
-		for(int i = 0; i < npc.length;i++) {
-			if(npc[i] != null) {
-				npc[i].draw(g2);
+			for(int i = 0; i < npc[1].length;i++) {
+				if(npc[currentMap][i] != null) {
+					npc[currentMap][i].draw(g2);
+				}
 			}
-		}
-		for(int i = 0; i < mob.length;i++) {
-			if(mob[i] != null) {
-				mob[i].draw(g2);
+			for(int i = 0; i < mob[1].length;i++) {
+				if(mob[currentMap][i] != null) {
+					mob[currentMap][i].draw(g2);
+				}
 			}
-		}
-		for(int i = 0; i < projectileList.size();i++) {
-			if(projectileList.get(i) != null) {
-				projectileList.get(i).draw(g2);
+			for(int i = 0;i < ovl[1].length;i++) {
+				if(ovl[currentMap][i] != null) {
+					ovl[currentMap][i].draw(g2, this);
+				}
 			}
+			for(int i = 0; i < projectileList.size();i++) {
+				if(projectileList.get(i) != null) {
+					projectileList.get(i).draw(g2);
+				}
+			}
+			player.draw(g2);
+			//Paint player component
+			ui.draw(g2);
+			g2.dispose();//save memory
+			
 		}
-		player.draw(g2);
-		//Paint player component
-		ui.draw(g2);
-		g2.dispose();//save memory
-		
 	}
 	
 	//Sound Stuff
@@ -202,6 +218,14 @@ public class GamePanel extends JPanel implements Runnable{
 	public void playSound(int i) {
 		soundFX.setFile(i);
 		soundFX.play();
+	}
+	public void reset() {
+		ItemGen.setNPC();
+	}
+	public void restart() {
+		ItemGen.setObject();
+		ItemGen.setNPC();
+		player.inventory.clear();
 	}
 	
 }

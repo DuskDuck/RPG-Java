@@ -35,6 +35,7 @@ public class EventHandler {
 	
 	}
 	int i;
+	boolean executed;
 	public void checkEvent() {
 		FrameCounter++;
 		if(FrameCounter == 40) {
@@ -42,6 +43,22 @@ public class EventHandler {
 		}
 		if( hit(5,6) == true ) {damagePit(5,6);}
 		if( hit(6,7) == true ) {healingWell(6,7);}
+		if( hit(8,8) == true ) {
+			setspawnpoint(8,8);
+			if(executed == false) {
+				executed = true;
+				gp.ui.addMessage("F to set spawn point");
+				}
+		}else {executed = false;}
+	}
+	private void setspawnpoint(int col,int row) {
+		// TODO Auto-generated method stub
+		if(gp.key.interactKey == true) {
+			gp.ui.addMessage("Spawn point set");
+			gp.player.spawnX = gp.tileSize*col;
+			gp.player.spawnY = gp.tileSize*row;
+		}
+		gp.key.interactKey = false;
 	}
 	public boolean hit(int col,int row) {
 		

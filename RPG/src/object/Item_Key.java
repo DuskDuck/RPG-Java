@@ -25,7 +25,7 @@ public class Item_Key extends MasterObject{
 		type = "key";
 	}
 	public void interact(int i) {
-		gp.obj[i] = null;//disappear
+		gp.obj[gp.currentMap][i] = null;//disappear
 		gp.playSound(1);// i is the sound index in sound.java
 		gp.ui.showMessage("key +1");
 	}

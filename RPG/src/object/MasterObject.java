@@ -13,6 +13,7 @@ public class MasterObject {
 	public BufferedImage InventoryImage;
 	public String name;
 	public boolean collision = false;
+	public boolean item = true;
 	public int worldX,worldY;
 	public Rectangle collisionBox = new Rectangle(0,0,48,48);
 	public int collisionBoxDefaultX = 0;

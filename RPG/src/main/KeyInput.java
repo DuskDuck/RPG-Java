@@ -97,6 +97,47 @@ public class KeyInput implements KeyListener{
 				gp.player.selectItem();
 			}
 		}
+		if(gp.GameState == gp.titleState) {
+			if(code == KeyEvent.VK_W) {
+				gp.ui.SelectionCount--;
+				if(gp.ui.SelectionCount < 1) {
+					gp.ui.SelectionCount = 3;
+				}
+			}
+			if(code == KeyEvent.VK_S) {
+				gp.ui.SelectionCount++;
+				if(gp.ui.SelectionCount > 3) {
+					gp.ui.SelectionCount = 1;
+				}
+			}
+			if(code == KeyEvent.VK_ENTER) {
+				if(gp.ui.SelectionCount == 1) {//NEW GAME
+					gp.player.restart();
+				}
+				if(gp.ui.SelectionCount == 2) {//LOAD GAME
+					gp.player.respawn();
+				}
+				if(gp.ui.SelectionCount == 3) {//EXIT GAME
+					System.exit(0);
+				}
+			}
+		}
+		if(gp.GameState == gp.gameoverState) {
+			if(code == KeyEvent.VK_A) {
+				gp.ui.SelectionCount = 1;
+			}
+			if(code == KeyEvent.VK_D) {
+				gp.ui.SelectionCount = 2;
+			}
+			if(code == KeyEvent.VK_ENTER) {
+				if(gp.ui.SelectionCount == 1) {//RESPAWN
+					gp.player.respawn();
+				}
+				if(gp.ui.SelectionCount == 2) {//EXIT TO TITLE
+					gp.GameState = gp.titleState;
+				}
+			}
+		}
 	}
 
 	@Override

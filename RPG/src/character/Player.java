@@ -23,6 +23,7 @@ public class Player extends Character{
 	int AnimCounter = 0;
 	int AttackCooldown = 0;
 	public int gold;
+	public int spawnX,spawnY;
 	
 	public ArrayList<MasterObject> inventory = new ArrayList<>();
 	public final int InventorySize = 42;
@@ -58,8 +59,8 @@ public class Player extends Character{
 	//Spawn default information
 	public void setDefaultValues() {
 		//Starting Spawn Location
-		worldX = gp.tileSize*5;
-		worldY = gp.tileSize*5;
+		spawnX = worldX = gp.tileSize*5;
+		spawnY = worldY = gp.tileSize*5;
 		speed = 6;	//move 4 pixel each frame
 		direction = "down"; //default spawn direction
 		
@@ -148,6 +149,9 @@ public class Player extends Character{
 		//interactNPC(mobIndex);
 		
 		graphic.updateDirection(this, 10, 2);	
+		if(HP <= 0) {
+			gp.GameState = gp.gameoverState;
+		}
 		//System.out.println(direction);
 		//Test
 		}
@@ -160,13 +164,13 @@ public class Player extends Character{
 			//i not 999 mean character just touch an object -> pick it up and it disappear on ground
 			//String objectName = gp.obj[i].name;
 			if(inventory.size() != InventorySize) {
-				if(gp.obj[i].type == "coin") {
-					gp.obj[i].interact(i);
+				if(gp.obj[gp.currentMap][i].type == "coin") {
+					gp.obj[gp.currentMap][i].interact(i);
 				}else {
-					inventory.add(gp.obj[i]);
+					inventory.add(gp.obj[gp.currentMap][i]);
 				}
 			}
-			gp.obj[i] = null;
+			gp.obj[gp.currentMap][i] = null;
 		}	
 	}
 	public void setItem() {
@@ -199,7 +203,7 @@ public class Player extends Character{
 		int monsterIndex = gp.Colchecker.checkCharacter(this, gp.npc);
 		//graphic.drawCollision(g2, screenX+collisionBox.x, screenY+collisionBox.y, collisionBox.width,collisionBox.height);
 		if(monsterIndex != 999) {
-			gp.npc[monsterIndex].hitted(ATK,monsterIndex); //deal dmg
+			gp.npc[gp.currentMap][monsterIndex].hitted(ATK,monsterIndex); //deal dmg
 			//Get Weapon Effect
 		}
 		else {
@@ -309,9 +313,9 @@ public class Player extends Character{
 		if(i != 999) {
 			if(gp.key.interactKey == true) {
 				//gp.Event.interactOnKey(i);
-				gp.npc[i].interact();
+				gp.npc[gp.currentMap][i].interact();
 			}else {
-				gp.npc[i].contact(this);
+				gp.npc[gp.currentMap][i].contact(this);
 			}
 			gp.key.interactKey = false;
 		}
@@ -352,5 +356,27 @@ public class Player extends Character{
 				inventory.remove(itemIndex);
 			}
 		}
+	}
+	public void respawn() {
+		gp.GameState = gp.playState;
+		HP = MaxHP;
+		MP = MaxMP;
+		worldX = gp.player.spawnX;
+		worldY = gp.player.spawnY;
+		gp.ui.i = 0;
+		gp.reset();
+		gold = 0;
+	}
+	public void restart() {
+		gp.GameState = gp.playState;
+		HP = MaxHP;
+		MP = MaxMP;
+		worldX = gp.tileSize*5;
+		worldY = gp.tileSize*5;
+		gp.ui.i = 0;
+		gp.restart();
+		gold = 0;
+		inventory.add(Shield);
+		inventory.add(OnhandWP);
 	}
 }
