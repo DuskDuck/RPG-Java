@@ -39,6 +39,7 @@ public class PlayerGraphic {
 		try {
 			Image = ImageIO.read(getClass().getResourceAsStream(imagename + ".png"));
 			Image = utility.scaleImage(Image,48,48);
+			coin = ImageIO.read(getClass().getResourceAsStream("/object/coin.png"));
 			
 		}catch(IOException e) {
 			e.printStackTrace();
@@ -415,6 +416,8 @@ public class PlayerGraphic {
 				slotY += 95;
 			}
 		}
+		g2.drawString(""+gp.player.gold, 570, gp.tileSize*4+10);
+		g2.drawImage(coin,520,gp.tileSize*4-20,50,50,null);
 		if(cursor == true) {
 			//Cursor
 			int cursorX = slotXstart + (95 * slotCol);
@@ -458,7 +461,7 @@ public class PlayerGraphic {
 		g2.setFont(new Font("x12y16pxMaruMonica", Font.PLAIN, 26));
 		drawSubWindow(gp,g2,frameX, frameY, frameW, frameH);
 		g2.setColor(Color.WHITE);
-		g2.drawString("INVENTORY", 150,150);
+		g2.drawString("TRADER", 190,150);
 		((Graphics2D) g2).setStroke(new BasicStroke(3));
 		g2.drawRect(20, frameY+10, frameW-20, frameH-20);
 		g2.drawRect(30, frameY+20, frameW-40, 50);
@@ -507,9 +510,12 @@ public class PlayerGraphic {
 				g2.drawString(line, 1250, textY+32);
 				textY += 32;
 			}
+			//Price window
 			drawSubWindow(gp,g2,DframeX, DframeY+gp.tileSize*8+10, DframeW, gp.tileSize*2);
 			g2.setColor(Color.WHITE);
-			g2.drawString(""+gp.player.currentInteractNPC.inventory.get(itemIndex).price, 1250, DframeY+gp.tileSize*9+20);
+			g2.drawString(""+gp.player.currentInteractNPC.inventory.get(itemIndex).price, 1350, DframeY+gp.tileSize*9+20);
+			g2.drawString("Price: ", 1250, DframeY+gp.tileSize*9+20);
+			g2.drawImage(coin,1300,DframeY+gp.tileSize*9-10,50,50,null);
 			g2.drawRect(1225, DframeY+gp.tileSize*8+20, DframeW-20, gp.tileSize*2-20);
 		}
 	}
@@ -538,7 +544,7 @@ public class PlayerGraphic {
 	}
 	public void drawSubWindow(GamePanel gp,Graphics g2,int x,int y,int width,int height) {
 		//Using Paint to define correct RGB,A is for opacity
-		Color c = new Color(15,15,15,255);
+		Color c = new Color(15,15,15,225);
 		g2.setColor(c);
 		g2.fillRect(x, y, width, height);	
 	}

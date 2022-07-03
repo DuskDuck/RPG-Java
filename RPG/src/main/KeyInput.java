@@ -122,7 +122,7 @@ public class KeyInput implements KeyListener{
 						gp.player.graphic.traderslotCol--;
 					}
 				}
-				if(code == KeyEvent.VK_ENTER) {
+				if(code == KeyEvent.VK_SPACE) {
 					gp.player.BuyItem();
 				}
 				if(code == KeyEvent.VK_ESCAPE) {

@@ -86,7 +86,7 @@ public class Player extends Character{
 		DEF = 0;
 		exp = 0;
 		NextLvexp = 5;
-		gold = 50;
+		gold = 50000;
 		OnhandWP = new Item_Iron_Sword(gp);
 		Shield = new Item_Wooden_Shield(gp);
 		ATK += getGearStat("Weapon");
@@ -383,7 +383,6 @@ public class Player extends Character{
 		worldY = gp.player.spawnY;
 		gp.ui.i = 0;
 		gp.reset();
-		gold = 0;
 	}
 	public void restart() {
 		gp.GameState = gp.playState;
@@ -393,15 +392,17 @@ public class Player extends Character{
 		worldY = gp.tileSize*5;
 		gp.ui.i = 0;
 		gp.restart();
-		gold = 0;
 		inventory.add(Shield);
 		inventory.add(OnhandWP);
 	}
 	public void BuyItem() {
 		int itemIndex = graphic.getItemIndexSlot(4,graphic.traderslotCol,graphic.traderslotRow);
 		if(itemIndex < inventory.size()) {
-			if(inventory.size() < 42) {
-				inventory.add(currentInteractNPC.inventory.get(itemIndex));
+			if(gold - currentInteractNPC.inventory.get(itemIndex).price >= 0) {
+				if(inventory.size() < 42) {
+					inventory.add(currentInteractNPC.inventory.get(itemIndex));
+					gold -= currentInteractNPC.inventory.get(itemIndex).price;
+				}
 			}
 		}
 	}
