@@ -1,6 +1,7 @@
 package main;
 
 
+import character.BossSlime;
 import character.GreenSlime;
 import character.NPC_1;
 import character.NPC_Trader;
@@ -107,6 +108,10 @@ public class ItemGenerator {
 		gp.npc[0][i] = new GreenSlime(gp);
 		gp.npc[0][i].worldX = gp.tileSize*7;
 		gp.npc[0][i].worldY = gp.tileSize*17;
+		i++;
+		gp.npc[0][i] = new BossSlime(gp);
+		gp.npc[0][i].worldX = gp.tileSize*19;
+		gp.npc[0][i].worldY = gp.tileSize*8;
 		i++;
     }
 }

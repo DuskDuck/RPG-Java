@@ -205,9 +205,9 @@ public class UI {
 
 	private void drawMessage() {
 		
-		int messageX = 800;
-		int messageY = 400;
-		g2.setFont(new Font("x12y16pxMaruMonica", Font.PLAIN, 18));
+		int messageX = 1300;
+		int messageY = 60;
+		g2.setFont(new Font("x12y16pxMaruMonica", Font.BOLD, 22));
 		for(int i = 0; i < notice.size(); i++) {
 			if(notice.get(i) != null) {
 				g2.setColor(Color.BLACK);
@@ -219,7 +219,7 @@ public class UI {
 				noticeCounter.set(i, counter); //set counter to array
 				messageY += 20;
 				
-				if(noticeCounter.get(i) > 90) {
+				if(noticeCounter.get(i) > 120) {
 					notice.remove(i);
 					noticeCounter.remove(i);
 				}

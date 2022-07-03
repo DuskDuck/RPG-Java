@@ -21,6 +21,7 @@ public class MasterObject {
 	public Utility utility = new Utility();
 	public String downFX,upFX,leftFX,rightFX;
 	public String discription = "";
+	public int amount;
 	
 	//Stat
 	public int DEF;

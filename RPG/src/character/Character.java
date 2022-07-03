@@ -87,8 +87,17 @@ public class Character {
 			    gp.obj[gp.currentMap][i].worldY = worldY;
 			    break;
 			}
-		}
-		
+		}	
+	}
+	public void DropItem(MasterObject item,int x,int y) {
+		for(int i = 0; i <gp.obj[1].length;i++) {
+			if(gp.obj[gp.currentMap][i] == null) {
+				gp.obj[gp.currentMap][i] = item;
+				gp.obj[gp.currentMap][i].worldX = x; 
+			    gp.obj[gp.currentMap][i].worldY = y;
+			    break;
+			}
+		}	
 	}
 	public void CheckDrop() {
         int i = new Random().nextInt(100)+1;

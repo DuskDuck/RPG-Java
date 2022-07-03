@@ -182,8 +182,10 @@ public class Player extends Character{
 			if(inventory.size() != InventorySize) {
 				if(gp.obj[gp.currentMap][i].type == "coin") {
 					gp.obj[gp.currentMap][i].interact(i);
+					gp.ui.addMessage("+ " + gp.obj[gp.currentMap][i].amount +" "+ gp.obj[gp.currentMap][i].name);
 				}else {
 					inventory.add(gp.obj[gp.currentMap][i]);
+					gp.ui.addMessage("+ " + gp.obj[gp.currentMap][i].name);
 				}
 			}
 			gp.obj[gp.currentMap][i] = null;
@@ -363,11 +365,11 @@ public class Player extends Character{
 			MasterObject selectedItem = inventory.get(itemIndex);
 			if(selectedItem.type == "weapon") {
 				OnhandWP = selectedItem;
-				ATK += getGearStat("Weapon");			
+				ATK = getGearStat("Weapon");			
 			}
 			if(selectedItem.type == "shield") {
 				Shield = selectedItem;
-				DEF += getGearStat("Shield");
+				DEF = getGearStat("Shield");
 			}
 			if(selectedItem.type == "consumable") {
 				selectedItem.interact(itemIndex);

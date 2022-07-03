@@ -23,7 +23,8 @@ public class Item_Coin extends MasterObject{
 		type = "coin";
 	}
 	public void interact(int i) {
-		int amount = (int) ((Math.random() * (500 - 10)) + 10);
+		int amount = (int) ((Math.random() * (1000 - 10)) + 10);
+		this.amount = amount;
 		gp.player.gold += amount;
 	}
 }
