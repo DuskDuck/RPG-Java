@@ -407,6 +407,8 @@ public class Player extends Character{
 		}
 	}
 	public void SellItem() {
-		
+		int itemIndex = graphic.getItemIndexSlot(7,graphic.slotCol,graphic.slotRow);
+		gold += inventory.get(itemIndex).price/10;
+		inventory.remove(itemIndex);
 	}
 }

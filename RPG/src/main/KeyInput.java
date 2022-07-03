@@ -129,6 +129,34 @@ public class KeyInput implements KeyListener{
 					gp.GameState = gp.playState;
 				}
 			}
+			if(gp.player.graphic.subState == 2) {
+				if(code == KeyEvent.VK_W) {
+					if(gp.player.graphic.slotRow != 0) {
+						gp.player.graphic.slotRow--;
+					}
+				}
+				if(code == KeyEvent.VK_D) {
+					if(gp.player.graphic.slotCol != 6) {
+						gp.player.graphic.slotCol++;
+					}
+				}
+				if(code == KeyEvent.VK_S) {
+					if(gp.player.graphic.slotRow != 5) {
+						gp.player.graphic.slotRow++;
+					}
+				}
+				if(code == KeyEvent.VK_A) {
+					if(gp.player.graphic.slotCol != 0) {
+						gp.player.graphic.slotCol--;
+					}
+				}
+				if(code == KeyEvent.VK_SPACE) {
+					gp.player.SellItem();
+				}
+				if(code == KeyEvent.VK_ESCAPE) {
+					gp.GameState = gp.playState;
+				}
+			}
 		}
 		
 		//Show Inventory

@@ -389,6 +389,7 @@ public class PlayerGraphic {
 		final int frameY = gp.tileSize*2;
 		final int frameW = gp.tileSize*15-15;
 		final int frameH = gp.tileSize*15;
+		g2.setFont(new Font("x12y16pxMaruMonica", Font.PLAIN, 26));
 		drawSubWindow(gp,g2,frameX, frameY, frameW, frameH);
 		g2.setColor(Color.WHITE);
 		g2.drawString("INVENTORY", 800,150);
@@ -563,7 +564,7 @@ public class PlayerGraphic {
 	}
 
 	private void trade_sell(GamePanel gp,Graphics g2) {
-	
+		drawInventory(gp,g2,true);
 	}
 
 	private void trade_select(GamePanel gp,Graphics g2) {
