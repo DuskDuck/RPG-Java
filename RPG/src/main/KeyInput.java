@@ -72,6 +72,66 @@ public class KeyInput implements KeyListener{
 				gp.GameState = gp.playState;
 			}
 		}
+		
+		//Trading State
+		if(gp.GameState == gp.tradeState) {
+			if(gp.player.graphic.subState == 0) {
+				if(code == KeyEvent.VK_W) {
+					gp.player.graphic.SelectionCount--;
+					if(gp.player.graphic.SelectionCount < 1) {
+						gp.player.graphic.SelectionCount = 3;
+					}
+				}
+				if(code == KeyEvent.VK_S) {
+					gp.player.graphic.SelectionCount++;
+					if(gp.player.graphic.SelectionCount > 3) {
+						gp.player.graphic.SelectionCount = 1;
+					}
+				}
+				if(code == KeyEvent.VK_ENTER) {
+					if(gp.player.graphic.SelectionCount == 1) {//buy
+						gp.player.graphic.subState = 1;
+					}
+	                if(gp.player.graphic.SelectionCount == 2) {//sell
+	                	gp.player.graphic.subState = 2;
+					}
+	                if(gp.player.graphic.SelectionCount == 3) {//leave
+	                	gp.player.currentInteractNPC = null;
+	                	gp.GameState = gp.playState;
+	                }
+				}
+			}
+			if(gp.player.graphic.subState == 1) {
+				if(code == KeyEvent.VK_W) {
+					if(gp.player.graphic.traderslotRow != 0) {
+						gp.player.graphic.traderslotRow--;
+					}
+				}
+				if(code == KeyEvent.VK_D) {
+					if(gp.player.graphic.traderslotCol != 3) {
+						gp.player.graphic.traderslotCol++;
+					}
+				}
+				if(code == KeyEvent.VK_S) {
+					if(gp.player.graphic.traderslotRow != 3) {
+						gp.player.graphic.traderslotRow++;
+					}
+				}
+				if(code == KeyEvent.VK_A) {
+					if(gp.player.graphic.traderslotCol != 0) {
+						gp.player.graphic.traderslotCol--;
+					}
+				}
+				if(code == KeyEvent.VK_ENTER) {
+					gp.player.BuyItem();
+				}
+				if(code == KeyEvent.VK_ESCAPE) {
+					gp.GameState = gp.playState;
+				}
+			}
+		}
+		
+		//Show Inventory
 		if(gp.GameState == gp.statState) {
 			if(code == KeyEvent.VK_W) {
 				if(gp.player.graphic.slotRow != 0) {

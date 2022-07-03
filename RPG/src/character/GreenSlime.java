@@ -32,17 +32,18 @@ public class GreenSlime extends Character{
 		MaxHP = 40;
 		HP = MaxHP;
 		ATK = 10;
-		/*
-		collisionBox = new Rectangle();
-		collisionBox.x = 3;
-		collisionBox.y = 16;
-		collisionDefaultX = collisionBox.x;
-		collisionDefaultY = collisionBox.y;
-		collisionBox.width = 42;
-		collisionBox.height = 24;
-		*/
-		graphic.getImage("/monster","slime");	
-
+		
+		//Set Image
+		graphic.up1 = graphic.setup("/monster/slime1");
+		graphic.up2 = graphic.setup("/monster/slime2");
+		graphic.down1 = graphic.setup("/monster/slime1");
+		graphic.down2 = graphic.setup("/monster/slime2");
+		graphic.left1 = graphic.setup("/monster/slime1");
+		graphic.left2 = graphic.setup("/monster/slime2");
+		graphic.right1 = graphic.setup("/monster/slime1");
+		graphic.right2 = graphic.setup("/monster/slime2");
+		graphic.idle1 = graphic.setup("/monster/slime1");
+		graphic.idle2 = graphic.setup("/monster/slime2");
 	}
 	public void setAction() {
 		ActionCounter++;

@@ -2,6 +2,7 @@ package character;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 import java.util.Random;
 
 import main.GamePanel;
@@ -21,6 +22,7 @@ public class Character {
 	public int collisionDefaultX ,collisionDefaultY;
 	public boolean collisionOn = false;
 	public boolean attacking = false;
+	public ArrayList<MasterObject> inventory = new ArrayList<>();
 	
 	//public boolean PlayerIn = false;
 	GamePanel gp;

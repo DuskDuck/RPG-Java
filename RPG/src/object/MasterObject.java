@@ -26,6 +26,7 @@ public class MasterObject {
 	public int DEF;
 	public int ATK;
 	public int range;
+	public int price;
 	public String type;
 	
 	public void draw(Graphics2D g2, GamePanel gp) {

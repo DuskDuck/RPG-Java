@@ -24,6 +24,7 @@ public class Player extends Character{
 	int AttackCooldown = 0;
 	public int gold;
 	public int spawnX,spawnY;
+	public character.Character currentInteractNPC;
 	
 	public ArrayList<MasterObject> inventory = new ArrayList<>();
 	public final int InventorySize = 42;
@@ -53,7 +54,18 @@ public class Player extends Character{
 		//attackBox.height = 36;
 		
 		setDefaultValues();
-		graphic.getImage("/player","humanoid");
+		
+		//Set Image
+		graphic.up1 = graphic.setup("/player/back_1");
+		graphic.up2 = graphic.setup("/player/back_2");
+		graphic.down1 = graphic.setup("/player/idle_2");
+		graphic.down2 = graphic.setup("/player/idle_3");
+		graphic.left1 = graphic.setup("/player/idle_L");
+		graphic.left2 = graphic.setup("/player/idle_L_2");
+		graphic.right1 = graphic.setup("/player/idle_R");
+		graphic.right2 = graphic.setup("/player/idle_R_2");
+		graphic.idle1 = graphic.setup("/player/idle1");
+		graphic.idle2 = graphic.setup("/player/idle_2");
 		graphic.getAtkImage("/player");
 	}
 	//Spawn default information
@@ -98,6 +110,8 @@ public class Player extends Character{
 	//update player location
 	public void update() {
 		//Mana generation
+		//System.out.println("row"+worldX/gp.tileSize);
+		//System.out.println("col"+worldY/gp.tileSize);
 		if(MP < 0) {
 			MP = 0;
 		}
@@ -121,7 +135,7 @@ public class Player extends Character{
 		else if(key.right == true) {
 			direction = "right";
 		}
-			/*
+		/*
 		if(key.up == true && key.right == true) {
 			direction = "upright";
 		}
@@ -139,12 +153,14 @@ public class Player extends Character{
 		collisionOn = false;
 		gp.Colchecker.checkTile(this);
 		
-		//check entity collision
+		//Check entity Collision
 		int objIndex = gp.Colchecker.CheckObject(this, true);
 		pickupObject(objIndex);
+		
 		//Check NPC/Mob Collision
 		int npcIndex = gp.Colchecker.checkCharacter(this, gp.npc);
 		interactNPC(npcIndex);
+		
 		//int mobIndex = gp.Colchecker.checkCharacter(this, gp.mob);
 		//interactNPC(mobIndex);
 		
@@ -308,7 +324,6 @@ public class Player extends Character{
 			HP = 0;
 		}
 	}
-
 	private void interactNPC(int i) {
 		if(i != 999) {
 			if(gp.key.interactKey == true) {
@@ -330,8 +345,11 @@ public class Player extends Character{
 		MeleeAttack(g2);
 		if(gp.GameState == gp.statState) {
 			graphic.drawStatHUD(gp,g2);
+			graphic.drawInventory(gp, g2, true);
 		}
-		//Melee Animation
+		if(gp.GameState == gp.tradeState) {
+			graphic.drawTraderInventory(gp, g2);
+		}
 	}
 	public void LevelUp() {
 		if(exp >= NextLvexp) {
@@ -340,7 +358,7 @@ public class Player extends Character{
 		}
 	}
 	public void selectItem() {
-		int itemIndex = graphic.getItemIndexSlot();
+		int itemIndex = graphic.getItemIndexSlot(7,graphic.slotCol,graphic.slotRow);
 		if(itemIndex < inventory.size()) {
 			MasterObject selectedItem = inventory.get(itemIndex);
 			if(selectedItem.type == "weapon") {
@@ -378,5 +396,16 @@ public class Player extends Character{
 		gold = 0;
 		inventory.add(Shield);
 		inventory.add(OnhandWP);
+	}
+	public void BuyItem() {
+		int itemIndex = graphic.getItemIndexSlot(4,graphic.traderslotCol,graphic.traderslotRow);
+		if(itemIndex < inventory.size()) {
+			if(inventory.size() < 42) {
+				inventory.add(currentInteractNPC.inventory.get(itemIndex));
+			}
+		}
+	}
+	public void SellItem() {
+		
 	}
 }

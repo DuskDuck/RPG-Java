@@ -3,11 +3,13 @@ package main;
 
 import character.GreenSlime;
 import character.NPC_1;
+import character.NPC_Trader;
 import object.Item_Blood_Katana;
 import object.Item_Blood_Katana_Left;
 import object.Item_Coin;
 import object.Item_Crusader_Shield;
 import object.Item_HP_Potion_B;
+import object.Item_HP_Potion_M;
 import object.Item_HP_Potion_S;
 import object.Item_I_Crate;
 import object.Item_Key;
@@ -41,9 +43,9 @@ public class ItemGenerator {
 		gp.obj[0][i].worldX = 8 * gp.tileSize;
 		gp.obj[0][i].worldY = 8 * gp.tileSize;
 		i++;
-		gp.obj[0][i] = new Item_HP_Potion_B(gp);
-		gp.obj[0][i].worldX = 7 * gp.tileSize;
-		gp.obj[0][i].worldY = 7 * gp.tileSize;
+		gp.obj[0][i] = new Item_HP_Potion_M(gp);
+		gp.obj[0][i].worldX = 4 * gp.tileSize;
+		gp.obj[0][i].worldY = 3 * gp.tileSize;
 		i++;
 		gp.obj[0][i] = new Item_Blood_Katana(gp);
 		gp.obj[0][i].worldX = 7 * gp.tileSize;
@@ -69,11 +71,15 @@ public class ItemGenerator {
 	public void setOverlay() {
 		int i = 0;
 		gp.ovl[0][i] = new Hut();
-		gp.ovl[0][i].worldX = gp.tileSize*2;
+		gp.ovl[0][i].worldX = 80;
 		gp.ovl[0][i].worldY = gp.tileSize*0;
 	}
 	public void setNPC() {
 		int i = 0;
+		gp.npc[1][i] = new NPC_Trader(gp);
+		gp.npc[1][i].worldX = gp.tileSize*25;
+		gp.npc[1][i].worldY = gp.tileSize*18;
+		i++;
 		gp.npc[0][i] = new NPC_1(gp, "Markus");
 		gp.npc[0][i].worldX = gp.tileSize*18;
 		gp.npc[0][i].worldY = gp.tileSize*18;

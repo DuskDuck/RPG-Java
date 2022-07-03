@@ -13,6 +13,7 @@ public class Item_HP_Potion_S extends MasterObject{
 	public Item_HP_Potion_S(GamePanel gp) {
 		
 		this.gp = gp;
+		price = 1000;
 		name = "Small Health Potion";
 		try {
 			InventoryImage = ImageIO.read(getClass().getResourceAsStream("/inventory/HP_Potion_S.png"));
@@ -24,6 +25,7 @@ public class Item_HP_Potion_S extends MasterObject{
 		}
 		collision = true;
 		type = "consumable";
+		discription = "Use to restore your health";
 	}
 	public void interact(int i) {
 		gp.player.HP += 15;

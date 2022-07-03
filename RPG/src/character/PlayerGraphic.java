@@ -15,14 +15,19 @@ import main.Utility;
 
 public class PlayerGraphic {
 	
-	private static final String OnHand  = null;
+	private static final String OnHand = null;
 	public BufferedImage up1,up2,down1,down2,left1,left2,right1,right2,idle1,idle2;
 	public BufferedImage atkup1,atkup2,atkdown1,atkdown2,atkleft1,atkleft2,atkright1,atkright2;
+	public BufferedImage coin;
 	public int spriteCounter = 0;
 	public int spriteNum = 1;
 	public BufferedImage onhand;
 	public int slotCol = 0;
 	public int slotRow = 0;
+	public int subState = 0;
+	public int SelectionCount = 1;
+	public int traderslotCol = 2;
+	public int traderslotRow = 0;
 	
 	public PlayerGraphic() {
 	}
@@ -54,6 +59,18 @@ public class PlayerGraphic {
 		}   	   	
     	return Image;   	
 		
+	}
+	public void setImage(String filename, String picname) {
+		up1 = setup(filename + "/back_1");
+		up2 = setup(filename + "/back_2");
+		down1 = setup(filename + "/idle_2");
+		down2 = setup(filename + "/idle_3");
+		left1 = setup(filename + "/idle_L");
+		left2 = setup(filename + "/idle_L_2");
+		right1 = setup(filename + "/idle_R");
+		right2 = setup(filename + "/idle_R_2");
+		idle1 = setup(filename + "/idle1");
+		idle2 = setup(filename + "/idle_2");
 	}
 	public void getImage(String filename, String type) {
 		switch(type) {
@@ -182,13 +199,10 @@ public class PlayerGraphic {
 		BufferedImage image = null;
 		switch(c.direction) {
 		case "up":
-			
 				if(spriteNum == 1) {image = up1;}
 			    if(spriteNum == 2) {image = up2;}
-			
 			break;
 		case "down":
-			
 				if(spriteNum == 1) {image = down1;}
 			    if(spriteNum == 2) {image = down2;}
 			break;
@@ -255,7 +269,7 @@ public class PlayerGraphic {
 				if(spriteNum == 2) {image = right2;}
 				break;
 			}
-			g2.drawImage(image,screenX,screenY,gp.tileSize,gp.tileSize,null);
+			g2.drawImage(image,screenX,screenY,null);
 	
 		}
 	}
@@ -298,6 +312,7 @@ public class PlayerGraphic {
 		g2.drawString("INFORMATION",205, 150);
 		g2.drawString("EQUIPMENT",210, 200);
 		g2.drawString("STAT",235, 470);
+		((Graphics2D) g2).setStroke(new BasicStroke(3));
 		g2.drawRect(20, frameY+10, frameW-20, frameH-20);
 		g2.drawRect(30, frameY+20, frameW-40, 50);
 		g2.drawRect(170, frameY+120, 160, 200);
@@ -366,9 +381,8 @@ public class PlayerGraphic {
 		textX = AlignTextToRight(value,tailX,g2);
 		g2.drawString(value, textX, textY);
 	
-		drawInventory(gp,g2);
 	}
-	public void drawInventory(GamePanel gp,Graphics g2) {
+	public void drawInventory(GamePanel gp,Graphics g2,boolean cursor) {
 		//Frame
 		final int frameX = 500;
 		final int frameY = gp.tileSize*2;
@@ -377,6 +391,7 @@ public class PlayerGraphic {
 		drawSubWindow(gp,g2,frameX, frameY, frameW, frameH);
 		g2.setColor(Color.WHITE);
 		g2.drawString("INVENTORY", 800,150);
+		((Graphics2D) g2).setStroke(new BasicStroke(3));
 		g2.drawRect(510, frameY+10, frameW-20, frameH-20);
 		g2.drawRect(520, frameY+20, frameW-40, 50);
 		//Slot
@@ -400,9 +415,71 @@ public class PlayerGraphic {
 				slotY += 95;
 			}
 		}
+		if(cursor == true) {
+			//Cursor
+			int cursorX = slotXstart + (95 * slotCol);
+			int cursorY = slotYstart + (95 * slotRow);
+			int cursorWidth = 95;
+			int cursorHeight = 95;
+			g2.setColor(Color.GRAY);
+			((Graphics2D) g2).setStroke(new BasicStroke(10));
+			//g2.drawRect(cursorX, cursorY, cursorWidth, cursorHeight);
+			g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight,10, 10);
+			
+			//Description Box
+			int DframeX = 1215;
+			int DframeY = gp.tileSize*2;
+			int DframeW = 305;
+			int DframeH = gp.tileSize*8;
+			//description text
+			int textY = gp.tileSize*2+120;
+			int itemIndex = getItemIndexSlot(7,slotCol,slotRow);
+			if(itemIndex < gp.player.inventory.size()) {
+				drawSubWindow(gp,g2,DframeX, DframeY, DframeW, DframeH);
+				g2.setColor(Color.WHITE);
+				g2.drawString("DESCRIPTION", 1310,150);
+				((Graphics2D) g2).setStroke(new BasicStroke(3));
+				g2.drawRect(1225, DframeY+10, DframeW-20, DframeH-20);
+				g2.drawRect(1235, DframeY+20, DframeW-40, 50);
+				g2.drawString("[ "+gp.player.inventory.get(itemIndex).name+" ]", 1250, textY);
+				for(String line: gp.player.inventory.get(itemIndex).discription.split("\n")) {
+					g2.drawString(line, 1250, textY+32);
+					textY += 32;
+				}
+			}
+		}
+	}
+	public void drawInventorytrader(GamePanel gp,Graphics g2) {
+		//Frame
+		final int frameX = 10;
+		final int frameY = gp.tileSize*2;
+		final int frameW = gp.tileSize*9-15;
+		final int frameH = gp.tileSize*15;
+		g2.setFont(new Font("x12y16pxMaruMonica", Font.PLAIN, 26));
+		drawSubWindow(gp,g2,frameX, frameY, frameW, frameH);
+		g2.setColor(Color.WHITE);
+		g2.drawString("INVENTORY", 150,150);
+		((Graphics2D) g2).setStroke(new BasicStroke(3));
+		g2.drawRect(20, frameY+10, frameW-20, frameH-20);
+		g2.drawRect(30, frameY+20, frameW-40, 50);
+		//Slot
+		final int slotXstart = frameX + 20;
+		final int slotYstart = frameY + 120;
+		int slotX = slotXstart;
+		int slotY = slotYstart;
+		//draw item
+		for(int i = 0; i < gp.player.currentInteractNPC.inventory.size(); i++) {
+			g2.drawImage(gp.player.currentInteractNPC.inventory.get(i).InventoryImage, slotX, slotY,95,95, null);
+			slotX += 95;
+			if(i == 3 || i == 7 || i == 11 || i == 15) {
+				slotX = slotXstart;
+				slotY += 95;
+			}
+		}
+		
 		//Cursor
-		int cursorX = slotXstart + (95 * slotCol);
-		int cursorY = slotYstart + (95 * slotRow);
+		int cursorX = slotXstart + (95 * traderslotCol);
+		int cursorY = slotYstart + (95 * traderslotRow);
 		int cursorWidth = 95;
 		int cursorHeight = 95;
 		g2.setColor(Color.GRAY);
@@ -417,24 +494,27 @@ public class PlayerGraphic {
 		int DframeH = gp.tileSize*8;
 		//description text
 		int textY = gp.tileSize*2+120;
-		int itemIndex = getItemIndexSlot();
-		System.out.println(itemIndex);
-		if(itemIndex < gp.player.inventory.size()) {
+		int itemIndex = getItemIndexSlot(4,traderslotCol,traderslotRow);
+		if(itemIndex < gp.player.currentInteractNPC.inventory.size()) {
 			drawSubWindow(gp,g2,DframeX, DframeY, DframeW, DframeH);
 			g2.setColor(Color.WHITE);
 			g2.drawString("DESCRIPTION", 1310,150);
-			((Graphics2D) g2).setStroke(new BasicStroke(1));
+			((Graphics2D) g2).setStroke(new BasicStroke(3));
 			g2.drawRect(1225, DframeY+10, DframeW-20, DframeH-20);
 			g2.drawRect(1235, DframeY+20, DframeW-40, 50);
-			g2.drawString("[ "+gp.player.inventory.get(itemIndex).name+" ]", 1250, textY);
-			for(String line: gp.player.inventory.get(itemIndex).discription.split("\n")) {
+			g2.drawString("[ "+gp.player.currentInteractNPC.inventory.get(itemIndex).name+" ]", 1250, textY);
+			for(String line: gp.player.currentInteractNPC.inventory.get(itemIndex).discription.split("\n")) {
 				g2.drawString(line, 1250, textY+32);
 				textY += 32;
 			}
+			drawSubWindow(gp,g2,DframeX, DframeY+gp.tileSize*8+10, DframeW, gp.tileSize*2);
+			g2.setColor(Color.WHITE);
+			g2.drawString(""+gp.player.currentInteractNPC.inventory.get(itemIndex).price, 1250, DframeY+gp.tileSize*9+20);
+			g2.drawRect(1225, DframeY+gp.tileSize*8+20, DframeW-20, gp.tileSize*2-20);
 		}
 	}
-	public int getItemIndexSlot() {
-		int itemIndex = slotCol + (slotRow*7);
+	public int getItemIndexSlot(int maxrow,int col,int row) {
+		int itemIndex = col + (row*maxrow);
 		return itemIndex;
 	}
 	public int AlignTextToRight(String text, int tailX, Graphics g2) {
@@ -442,11 +522,77 @@ public class PlayerGraphic {
 		int x = tailX - length;
 		return x;
 	}
-	
+	public void drawDialog(Graphics g2,String text,int x,int y) {
+		int textY = y;
+		g2.setFont(new Font("x12y16pxMaruMonica", Font.BOLD, 13));
+		g2.setColor(new Color(0,0,0,180));
+		g2.fillRoundRect(x, y-80, 120, 60,10, 10);
+		g2.setColor(Color.white);
+		((Graphics2D) g2).setStroke(new BasicStroke(3));
+		g2.drawRoundRect(x, y-80, 120, 60, 10, 10);
+	    textY -= 95;
+		for(String line: text.split("\n")) {
+			g2.drawString(line, x+10,textY+32);
+			textY += 12;
+		}
+	}
 	public void drawSubWindow(GamePanel gp,Graphics g2,int x,int y,int width,int height) {
 		//Using Paint to define correct RGB,A is for opacity
 		Color c = new Color(15,15,15,255);
 		g2.setColor(c);
 		g2.fillRect(x, y, width, height);	
+	}
+
+	public void drawTraderInventory(GamePanel gp,Graphics g2) {
+		switch(subState) {
+		case(0): trade_select(gp,g2);break;
+		case(1): trade_buy(gp,g2);break;
+		case(2): trade_sell(gp,g2);break;
+		}
+	}
+
+	private void trade_buy(GamePanel gp,Graphics g2) {
+		drawInventorytrader(gp,g2);
+		drawInventory(gp,g2,false);
+	}
+
+	private void trade_sell(GamePanel gp,Graphics g2) {
+	
+	}
+
+	private void trade_select(GamePanel gp,Graphics g2) {
+		
+		//sub window
+		int x = gp.tileSize * 20;
+		int y = gp.tileSize * 4;
+		int w = gp.tileSize * 3;
+		int h = gp.tileSize * 4-25;
+		g2.setColor(new Color(15,15,15,255));
+		g2.fillRoundRect(x, y, w, h,10,10);
+		g2.setColor(Color.WHITE);
+		((Graphics2D) g2).setStroke(new BasicStroke(3));
+		g2.drawRoundRect(x, y, w, h,10,10);
+		
+		//Button
+		g2.setColor(new Color(195,195,195));
+		g2.fillRoundRect(x+10, y+10, w-20, 45,10,10);
+		g2.fillRoundRect(x+10, y+60, w-20, 45,10,10);
+		g2.fillRoundRect(x+10, y+110, w-20, 45,10,10);
+		//text
+		g2.setFont(new Font("x12y16pxMaruMonica", Font.BOLD, 35));
+		g2.setColor(Color.BLACK);		
+		g2.drawString("BUY", x+30, y+45);		
+		g2.drawString("SELL", x+30, y+95);
+		g2.drawString("LEAVE", x+30, y+145);
+		g2.setColor(Color.WHITE);		
+		if(SelectionCount == 1) {
+			g2.drawRoundRect(x+10, y+10, w-20, 45,10,10);
+		}
+		if(SelectionCount == 2) {
+			g2.drawRoundRect(x+10, y+60, w-20, 45,10,10);
+		}
+		if(SelectionCount == 3) {
+			g2.drawRoundRect(x+10, y+110, w-20, 45,10,10);
+		}
 	}
 }

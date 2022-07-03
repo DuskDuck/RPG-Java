@@ -84,6 +84,9 @@ public class UI {
 		if(gp.GameState == gp.statState) {
 			drawHUD();
 		}
+		if(gp.GameState == gp.tradeState) {
+			//drawHUD();
+		}
 		if(gp.GameState == gp.gameoverState) {
 			if(i == 255) {
 			//stop count	

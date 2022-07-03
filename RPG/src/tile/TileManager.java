@@ -22,7 +22,7 @@ public class TileManager {
 		
 		getTileImage();
 		loadMap("/map/Level1.txt",0);
-		loadMap("/map/trader_room1",1);
+		loadMap("/map/trader_room1.txt",1);
 	}
 	
     //get data of each type of Tile
@@ -87,7 +87,7 @@ public class TileManager {
 					//scan and split each line
 					String numbers[] = line.split(" ");
 					int num = Integer.parseInt(numbers[col]);
-					mapTileNum[gp.currentMap][col][row] = num;
+					mapTileNum[mapindex][col][row] = num;
 					col++;
 				}
 				//when hit the line limit jump to next line 

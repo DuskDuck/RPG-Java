@@ -217,7 +217,6 @@ public class CollisionCheck {
 		return index;
 	}
 	public int checkCharacter(character.Character character,character.Character[][] target) {
-		System.out.println(gp.currentMap);
 		int index = 999;
 		for(int i = 0; i < target[1].length ; i++) {
 			if(target[gp.currentMap][i] != null) {

@@ -11,6 +11,8 @@ public class NPC_1 extends Character{
 	public int ActionCounter;
 	String dialog[] = new String[20];
 	int dialogIndex = 0;
+	boolean speaking = false;
+	int dialogcounter = 0;
 	
 	public NPC_1(GamePanel gp,String name) {
 		super(gp);
@@ -18,7 +20,17 @@ public class NPC_1 extends Character{
 		direction = "down";
 		speed = 1;
 		
-		graphic.getImage("/player","humanoid");
+		//Set Image
+		graphic.up1 = graphic.setup("/player/back_1");
+		graphic.up2 = graphic.setup("/player/back_2");
+		graphic.down1 = graphic.setup("/player/idle_2");
+		graphic.down2 = graphic.setup("/player/idle_3");
+		graphic.left1 = graphic.setup("/player/idle_L");
+		graphic.left2 = graphic.setup("/player/idle_L_2");
+		graphic.right1 = graphic.setup("/player/idle_R");
+		graphic.right2 = graphic.setup("/player/idle_R_2");
+		graphic.idle1 = graphic.setup("/player/idle1");
+		graphic.idle2 = graphic.setup("/player/idle_2");
 		setDialog();
 	}
 	public void setAction() {
@@ -71,8 +83,9 @@ public class NPC_1 extends Character{
 
 	}
 	public void interact() {
-		gp.GameState = gp.dialogState;
-		speak();
+		//gp.GameState = gp.dialogState;
+		speaking = true;
+		//speak();
 	}
 	public void update() {
 		setAction();
@@ -81,7 +94,20 @@ public class NPC_1 extends Character{
 		graphic.updateDirection(this,10,2);
 	}
 	public void draw(Graphics2D g2) {
+		int screenX = worldX - gp.player.worldX + gp.player.screenX;
+		int screenY = worldY - gp.player.worldY + gp.player.screenY;
 		graphic.drawCharacter(this, g2,gp);
 		graphic.drawName(this, g2, name, gp, 15,Color.WHITE);
+		if(speaking == true) {
+			dialogcounter++;
+			graphic.drawDialog(g2,dialog[dialogIndex],screenX,screenY);
+			if(dialogcounter == 120) {
+				dialogIndex++;
+				dialogcounter = 0;
+			}
+			if(dialog[dialogIndex] == null) {
+				speaking = false;
+			}
+		}
 	}
 }

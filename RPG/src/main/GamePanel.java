@@ -65,6 +65,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int statState = 4;
 	public final int gameoverState = 5;
 	public final int titleState = 6;
+	public final int tradeState = 7;
 	
 	
 	public GamePanel() {
@@ -77,9 +78,9 @@ public class GamePanel extends JPanel implements Runnable{
 	}
 	//SET UP
 	public void SetUpGame() {
+		ItemGen.setOverlay();
 		ItemGen.setObject();
 		ItemGen.setNPC();
-		ItemGen.setOverlay();
 		//map.loadMap("Level1.txt");
 		//playBGM(0);
 		GameState = titleState;
@@ -157,6 +158,9 @@ public class GamePanel extends JPanel implements Runnable{
 				}
 			}
 		}
+		if(GameState == tradeState) {
+			player.update();
+		}
 		if(GameState == pauseState) {
 			//Stop every action
 		}
@@ -167,9 +171,23 @@ public class GamePanel extends JPanel implements Runnable{
 		Graphics2D g2 = (Graphics2D)g;
 		if(GameState == titleState) {
 			ui.draw(g2);
-		}else {
+		}else if(GameState == tradeState) {
 			tile.draw(g2);
+			ui.draw(g2);
+			for(int i = 0; i < npc[1].length;i++) {
+				if(npc[currentMap][i] != null) {
+					npc[currentMap][i].draw(g2);
+				}
+			}
+			player.draw(g2);
 			
+		}else{
+			tile.draw(g2);
+			for(int i = 0;i < ovl[1].length;i++) {
+				if(ovl[currentMap][i] != null) {
+					ovl[currentMap][i].draw(g2, this);
+				}
+			}
 			for(int i = 0; i < obj[1].length ;i++) {
 				if(obj[currentMap][i] != null) {
 					obj[currentMap][i].draw(g2, this);
@@ -185,17 +203,12 @@ public class GamePanel extends JPanel implements Runnable{
 					mob[currentMap][i].draw(g2);
 				}
 			}
-			for(int i = 0;i < ovl[1].length;i++) {
-				if(ovl[currentMap][i] != null) {
-					ovl[currentMap][i].draw(g2, this);
-				}
-			}
 			for(int i = 0; i < projectileList.size();i++) {
 				if(projectileList.get(i) != null) {
 					projectileList.get(i).draw(g2);
 				}
 			}
-			player.draw(g2);
+		 	player.draw(g2);
 			//Paint player component
 			ui.draw(g2);
 			g2.dispose();//save memory
