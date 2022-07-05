@@ -107,6 +107,7 @@ public class NPC_1 extends Character{
 			}
 			if(dialog[dialogIndex] == null) {
 				speaking = false;
+				dialogIndex = 0;
 			}
 		}
 	}

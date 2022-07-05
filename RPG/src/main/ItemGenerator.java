@@ -27,6 +27,7 @@ public class ItemGenerator {
 	}
 	
 	public void setObject() {
+		/*
 		int i = 0;
 		gp.obj[0][i] = new Item_Key(gp);
 		gp.obj[0][i].worldX = 5 * gp.tileSize;
@@ -68,6 +69,7 @@ public class ItemGenerator {
 		gp.obj[0][i].worldX = 21 * gp.tileSize;
 		gp.obj[0][i].worldY = 5 * gp.tileSize;
 		i++;
+		*/
 	}
 	public void setOverlay() {
 		int i = 0;

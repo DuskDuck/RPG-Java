@@ -30,7 +30,7 @@ public class UI {
 	int spriteNum;
 	public int i=0;
 	int SelectionCount = 1;
-	BufferedImage background;
+	BufferedImage background,button,pressedbutton;
 	
 	public UI (GamePanel gp) {
 		this.gp = gp;
@@ -44,7 +44,9 @@ public class UI {
 			D = ImageIO.read(getClass().getResource("/Key/D.png"));
 			ENTER = ImageIO.read(getClass().getResource("/Key/Enter.png"));
 			background = ImageIO.read(getClass().getResource("/UI/background.jpg"));
-		} 
+			button = ImageIO.read(getClass().getResource("/UI/button_grey.png"));
+			pressedbutton = ImageIO.read(getClass().getResource("/UI/button_grey_pressed.png"));
+		}
 		catch (IOException e) {
 		    e.printStackTrace();
 		}
@@ -109,48 +111,58 @@ public class UI {
 	}
 	private void drawTitle() {
 		//Title
-		//g2.drawImage(background, 0, 0,48*32,48*18, null);
+		g2.drawImage(background, 0, 0,48*32,48*18, null);
 		g2.setFont(new Font("x12y16pxMaruMonica", Font.BOLD, 180));
-		String text = "GAME'S TITLE";
+		String text = "DUCKBOY ADVENTURE";
 		
 		int x = 100;
 		int y = 240;
+		
+		g2.setColor(Color.BLACK);
+		g2.drawString(text,x+10,y+10);
 		g2.setColor(Color.WHITE);
 		g2.drawString(text,x,y);
+		
 		y += 180; 
 		g2.setFont(new Font("x12y16pxMaruMonica", Font.BOLD, 60));
 		
 		//Button
 		g2.setColor(new Color(230,146,6));
-		g2.fillRoundRect(x-15, y+25, 400, 70, 10, 10);
-		g2.fillRoundRect(x-15, y+105, 400, 70, 10, 10);
-		g2.fillRoundRect(x-15, y+185, 400, 70, 10, 10);
-		
+		g2.drawImage(button, x-15, y+20,  320, 80, null);
+		g2.drawImage(button, x-15, y+105,  320, 80, null);
+		g2.drawImage(button, x-15, y+190,  320, 80, null);
+		//Outline current choice
+		//((Graphics2D) g2).setStroke(new BasicStroke(5));
+		g2.setColor(new Color(255,205,34));
+		if(SelectionCount == 1) {
+			//g2.drawRoundRect(x-15, y+25, 400, 70, 10, 10);
+			g2.drawImage(pressedbutton, x-15, y+20,  320, 80, null);
+		}
+		if(SelectionCount == 2) {
+			//g2.drawRoundRect(x-15, y+105, 400, 70, 10, 10);
+			g2.drawImage(pressedbutton, x-15, y+105,  320, 80, null);
+		}
+		if(SelectionCount == 3) {
+			//g2.drawRoundRect(x-15, y+185, 400, 70, 10, 10);
+			g2.drawImage(pressedbutton, x-15, y+190,  320, 80, null);
+		}
 		//Button's text
 		g2.setColor(Color.BLACK);
 		text = "NEW GAME";
 		y += 80; 
 		g2.drawString(text, x, y);
 		text = "LOAD GAME";
-		y += 80; 		
+		y += 85; 		
 		g2.drawString(text, x, y);		
 		text = "QUIT";
-		y += 80;		
+		y += 85;		
 		g2.drawString(text, x, y);
-		
 		y = 420;
-		//Outline current choice
-		((Graphics2D) g2).setStroke(new BasicStroke(5));
-		g2.setColor(new Color(255,205,34));
-		if(SelectionCount == 1) {
-			g2.drawRoundRect(x-15, y+25, 400, 70, 10, 10);
-		}
-		if(SelectionCount == 2) {
-			g2.drawRoundRect(x-15, y+105, 400, 70, 10, 10);
-		}
-		if(SelectionCount == 3) {
-			g2.drawRoundRect(x-15, y+185, 400, 70, 10, 10);
-		}
+		
+		g2.setColor(Color.BLACK);
+		g2.setFont(new Font("x12y16pxMaruMonica", Font.BOLD, 24));
+		g2.drawString("BETA test version 0.0.3",1300,820);
+		
 	}
 
 	private void drawGameOver(int i) {

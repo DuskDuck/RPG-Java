@@ -114,7 +114,7 @@ public class GreenSlime extends Character{
 			}
 			if(AnimCounter >= 20) {
 				AnimCounter = 0;
-				CheckDrop();
+				CheckDrop(40,65,80,90,97,100);
 				gp.npc[gp.currentMap][OnmapIndex] = null;
 			}
 		}

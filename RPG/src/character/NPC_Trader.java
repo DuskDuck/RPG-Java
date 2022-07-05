@@ -59,7 +59,6 @@ public class NPC_Trader extends Character{
 		gp.player.graphic.subState = 0;
 	}
 	public void update() {
-		//inventory = inventorytrader;
 		gp.Colchecker.checkTile(this);
 		gp.Colchecker.checkPlayer(this);
 		graphic.updateDirection(this,40,2);

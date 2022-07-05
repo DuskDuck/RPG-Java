@@ -99,25 +99,24 @@ public class Character {
 			}
 		}	
 	}
-	public void CheckDrop() {
+	public void CheckDrop(int common,int standard,int rare,int superior,int highend,int exotic) {
         int i = new Random().nextInt(100)+1;
-		
-		if(i < 40) {
+		if(i < common) {
 			DropItem(itemPicker.picker("common"));
 		}
-		if(i >= 40 && i < 65) {
+		if(i >= common && i < standard) {
 			DropItem(itemPicker.picker("standard"));
 		}
-		if(i >= 65 && i < 80 ) {
+		if(i >= standard && i < rare ) {
 			DropItem(itemPicker.picker("rare"));
 		}
-		if(i >= 80 && i < 90 ) {
+		if(i >= rare && i < superior ) {
 			DropItem(itemPicker.picker("superior"));
 		}
-		if(i >= 90 && i < 97 ) {
+		if(i >= superior && i < highend ) {
 			DropItem(itemPicker.picker("high-end"));
 		}
-		if(i >= 97 && i <= 100 ) {
+		if(i >= highend && i <= exotic ) {
 			DropItem(itemPicker.picker("exotic"));
 		}
 	}

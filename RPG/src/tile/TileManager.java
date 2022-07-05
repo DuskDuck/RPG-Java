@@ -23,6 +23,7 @@ public class TileManager {
 		getTileImage();
 		loadMap("/map/Level1.txt",0);
 		loadMap("/map/trader_room1.txt",1);
+		loadMap("/map/Level0.txt",2);
 	}
 	
     //get data of each type of Tile
@@ -53,6 +54,9 @@ public class TileManager {
 		setup(22,"Floor_3_Manhole",false);
 		setup(23,"Floor_1_Blob",false);
 		setup(24,"plank",false);
+		setup(25,"Floor_Gray",false);
+		setup(26,"Grass_1",false);
+		setup(27,"Water",false);
 	}
 	
 	//Scale texture before hand	

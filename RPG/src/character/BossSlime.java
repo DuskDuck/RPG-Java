@@ -95,6 +95,7 @@ public class BossSlime extends Character{
 		if(HP > 0) {
 			graphic.drawCharacter(this, g2,gp);
 		}else {
+			
 			//Death Animation
 			AnimCounter++;
 			if(AnimCounter <= 5 ) {
@@ -108,9 +109,9 @@ public class BossSlime extends Character{
 			}
 			if(AnimCounter >= 20) {
 				AnimCounter = 0;
-				CheckDrop();
-				CheckDrop();
-				CheckDrop();
+				CheckDrop(40,65,80,90,97,100);
+				CheckDrop(40,65,80,90,97,100);
+				CheckDrop(40,65,80,90,97,100);
 				DropItem(new Item_Coin(gp),worldX+10,worldY+17);
 				DropItem(new Item_Coin(gp),worldX+17,worldY+25);
 				DropItem(new Item_Coin(gp),worldX+10,worldY+38);

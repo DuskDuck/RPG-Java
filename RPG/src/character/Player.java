@@ -56,6 +56,7 @@ public class Player extends Character{
 		setDefaultValues();
 		
 		//Set Image
+		/*
 		graphic.up1 = graphic.setup("/player/back_1");
 		graphic.up2 = graphic.setup("/player/back_2");
 		graphic.down1 = graphic.setup("/player/idle_2");
@@ -66,6 +67,17 @@ public class Player extends Character{
 		graphic.right2 = graphic.setup("/player/idle_R_2");
 		graphic.idle1 = graphic.setup("/player/idle1");
 		graphic.idle2 = graphic.setup("/player/idle_2");
+		*/
+		graphic.up1 = graphic.setup("/player/duckboy_B1");
+		graphic.up2 = graphic.setup("/player/duckboy_B2");
+		graphic.down1 = graphic.setup("/player/duckboy_1");
+		graphic.down2 = graphic.setup("/player/duckboy_2");
+		graphic.left1 = graphic.setup("/player/duckboy_L1");
+		graphic.left2 = graphic.setup("/player/duckboy_L2");
+		graphic.right1 = graphic.setup("/player/duckboy_R1");
+		graphic.right2 = graphic.setup("/player/duckboy_R2");
+		graphic.idle1 = graphic.setup("/player/duckboy_1");
+		graphic.idle2 = graphic.setup("/player/duckboy_2");
 		graphic.getAtkImage("/player");
 	}
 	//Spawn default information
