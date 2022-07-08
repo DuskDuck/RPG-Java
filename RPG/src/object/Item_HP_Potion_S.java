@@ -28,7 +28,7 @@ public class Item_HP_Potion_S extends MasterObject{
 		discription = "Use to restore your health";
 	}
 	public void interact(int i) {
-		gp.player.HP += 15;
+		gp.player.HP += 150;
 		if(gp.player.HP < gp.player.MaxHP) {
 		}else {
 			gp.player.HP = gp.player.MaxHP;

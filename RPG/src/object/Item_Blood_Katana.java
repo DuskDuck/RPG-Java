@@ -29,7 +29,7 @@ public class Item_Blood_Katana extends MasterObject{
 			e.printStackTrace();
 		}
 		collision = true;
-		ATK = 250;
+		ATK = 2500;
 		range = 50;
 		type = "weapon";
 		discription = "An Ancient cursed weapon. \nComsume user blood to \nchanneling energy.";

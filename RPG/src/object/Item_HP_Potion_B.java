@@ -27,7 +27,7 @@ public class Item_HP_Potion_B extends MasterObject{
 		type = "consumable";
 	}
 	public void interact(int i) {
-		gp.player.HP += 50;
+		gp.player.HP += 500;
 		if(gp.player.HP < gp.player.MaxHP) {
 		}else {
 			gp.player.HP = gp.player.MaxHP;

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import ai.PathFinder;
 //import character.Enemy;
 import character.Player;
 import object.MasterObject;
@@ -31,14 +32,15 @@ public class GamePanel extends JPanel implements Runnable{
 	public int currentMap = 0;
 	
 	//setting for world
-	public final int maxWorldCol = 50;
-	public final int maxWorldRow = 50;
+	public final int maxWorldCol = 100;
+	public final int maxWorldRow = 100;
 	
 	//System
 	int FPS = 60;//game's refresh rate per second
 	
-	TileManager tile = new TileManager(this);
-	//Map map = new Map(this);
+	public TileManager tile = new TileManager(this);
+	Map map = new Map(this);
+	
 	public KeyInput key = new KeyInput(this);
 	Sound BGM = new Sound();
 	Sound soundFX = new Sound();
@@ -49,6 +51,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public ItemGenerator ItemGen = new ItemGenerator(this);
 	public Player player = new Player(this,key);
 	public UI ui = new UI(this);
+	public PathFinder pf = new PathFinder(this);
 	
 	public MasterObject obj[][] = new MasterObject[10][100];
 	public MasterOverlay ovl[][] = new MasterOverlay[10][20];
@@ -186,6 +189,7 @@ public class GamePanel extends JPanel implements Runnable{
 			for(int i = 0;i < ovl[1].length;i++) {
 				if(ovl[currentMap][i] != null) {
 					ovl[currentMap][i].draw(g2, this);
+					//g2.drawImage(ovl[currentMap][i].image)
 				}
 			}
 			for(int i = 0; i < obj[1].length ;i++) {

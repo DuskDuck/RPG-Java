@@ -26,7 +26,7 @@ public class Item_Iron_Sword extends MasterObject{
 			e.printStackTrace();
 		}
 		collision = true;
-		ATK = 5;
+		ATK = 50;
 		range = 36;
 		type = "weapon";
 		discription = "An old odinary melee \nweapon of a warrior. \nNothing special.";

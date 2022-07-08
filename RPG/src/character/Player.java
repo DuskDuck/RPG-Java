@@ -83,15 +83,15 @@ public class Player extends Character{
 	//Spawn default information
 	public void setDefaultValues() {
 		//Starting Spawn Location
-		spawnX = worldX = gp.tileSize*5;
-		spawnY = worldY = gp.tileSize*5;
+		spawnX = worldX = gp.tileSize*25;
+		spawnY = worldY = gp.tileSize*25;
 		speed = 6;	//move 4 pixel each frame
 		direction = "down"; //default spawn direction
 		
 		//Stat
 		lv = 1;
-		MaxHP = 100;
-		HP = 100;
+		MaxHP = 1000;
+		HP = 1000;
 		MaxMP = 200;
 		MP = 120;
 		ATK = 5;
@@ -333,8 +333,10 @@ public class Player extends Character{
 		}
 	}
 	public void TookDMG(int dmg) {
-		HP -= dmg;
-		if(HP - dmg < 0) {
+		float dmgpost = 0;
+		dmgpost = (float)dmg / (1+((float)DEF / 100));//DEF equation
+		HP -= dmgpost;
+		if(HP - dmgpost < 0) {
 			HP = 0;
 		}
 	}
@@ -354,6 +356,7 @@ public class Player extends Character{
 		//System.out.println(AnimCounter);
 		//System.out.println(graphic.spriteNum);
 		graphic.drawPlayer(this, g2);
+		graphic.drawDebug(g2, this);
 		//graphic.drawCollision(g2, screenX+collisionBox.x, screenY+collisionBox.y, collisionBox.width,collisionBox.height);
 		//graphic.drawName(this, g2, "Lv."+ lv, gp, 15, Color.WHITE);
 		MeleeAttack(g2);
@@ -369,6 +372,8 @@ public class Player extends Character{
 		if(exp >= NextLvexp) {
 			lv++;
 			NextLvexp = NextLvexp*2;
+			MaxHP += 100;
+			MaxMP += 10;
 		}
 	}
 	public void selectItem() {

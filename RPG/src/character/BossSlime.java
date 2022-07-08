@@ -1,15 +1,10 @@
 package character;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.util.Random;
 
 import main.GamePanel;
 import object.Item_Coin;
-import skill.Bloodslash;
-import skill.PoisonSpit;
-import skill.Projectile;
 
 public class BossSlime extends Character{
 	public int ActionCounter;
@@ -26,15 +21,17 @@ public class BossSlime extends Character{
 	public BossSlime(GamePanel gp) {
 		super(gp);
 		this.name = "Boss Slime";
-		collisionBox.width = 100;
-		collisionBox.height = 100;
 		direction = "down";
 		speed = 1;
 		lv = 1;
-		MaxHP = 800;
+		MaxHP = 8000;
 		HP = MaxHP;
-		ATK = 25;
-		
+		ATK = 250;
+		//
+		collisionDefaultX = 12;
+		collisionDefaultY = 20;
+		collisionBox.width = 80;
+		collisionBox.height = 60;
 		//Set Image
 		int size = 100;
 		graphic.up1 = graphic.setup("/monster/slime1",size,size);
@@ -71,7 +68,7 @@ public class BossSlime extends Character{
 	}
 	public void contact(character.Character c) {
 		if(activated == false) {
-			c.HP -= ATK - c.DEF ;
+			c.TookDMG(ATK);
 			activated = true;
 		}
 	}
@@ -109,9 +106,9 @@ public class BossSlime extends Character{
 			}
 			if(AnimCounter >= 20) {
 				AnimCounter = 0;
-				CheckDrop(40,65,80,90,97,100);
-				CheckDrop(40,65,80,90,97,100);
-				CheckDrop(40,65,80,90,97,100);
+				CheckDrop(0,15,60,85,95,100);
+				CheckDrop(0,15,60,85,95,100);
+				CheckDrop(0,15,60,80,95,100);
 				DropItem(new Item_Coin(gp),worldX+10,worldY+17);
 				DropItem(new Item_Coin(gp),worldX+17,worldY+25);
 				DropItem(new Item_Coin(gp),worldX+10,worldY+38);
@@ -132,7 +129,7 @@ public class BossSlime extends Character{
 				hpbarOn = false;
 			}
 		}
-		//graphic.drawCollision(g2, screenX+collisionBox.x, screenY+collisionBox.y, collisionBox.width,collisionBox.height);
+		graphic.drawCollision(g2, screenX+collisionBox.x, screenY+collisionBox.y, collisionBox.width,collisionBox.height);
 	}
 	public void hitted(int dmg,int i) {
 		HP -= dmg; 

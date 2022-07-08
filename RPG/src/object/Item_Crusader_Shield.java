@@ -14,6 +14,7 @@ GamePanel gp;
 		
 		this.gp = gp;
 		name = "Wooden Shield";
+		price = 250000;
 		try {
 			InventoryImage = ImageIO.read(getClass().getResourceAsStream("/inventory/Crusader_Shield.png"));
 			utility.scaleImage(InventoryImage,gp.tileSize,gp.tileSize);
@@ -23,7 +24,7 @@ GamePanel gp;
 			e.printStackTrace();
 		}
 		collision = true;
-		DEF = 1;
+		DEF = 25;
 		type = "shield";
 	}
 

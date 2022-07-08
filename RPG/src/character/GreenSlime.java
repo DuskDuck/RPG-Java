@@ -2,12 +2,9 @@ package character;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.util.Random;
 
 import main.GamePanel;
-import object.Item_Coin;
-import skill.Bloodslash;
 import skill.PoisonSpit;
 import skill.Projectile;
 
@@ -29,9 +26,14 @@ public class GreenSlime extends Character{
 		direction = "down";
 		speed = 1;
 		lv = 1;
-		MaxHP = 40;
+		MaxHP = 400;
 		HP = MaxHP;
-		ATK = 10;
+		ATK = 100;
+		//Collision setting
+		collisionDefaultX = 7;
+		collisionDefaultY = 7;
+		collisionBox.width = 36;
+		collisionBox.height = 32;
 		
 		//Set Image
 		graphic.up1 = graphic.setup("/monster/slime1");
@@ -44,38 +46,46 @@ public class GreenSlime extends Character{
 		graphic.right2 = graphic.setup("/monster/slime2");
 		graphic.idle1 = graphic.setup("/monster/slime1");
 		graphic.idle2 = graphic.setup("/monster/slime2");
+		
 	}
 	public void setAction() {
-		ActionCounter++;
-		AtkCounter++;		
-		if(AtkCounter == j) {
-			Projectile poison = new PoisonSpit(gp);
-			gp.projectileList.add(poison);
-			poison.set(worldX,worldY,direction,this);
-			AtkCounter = 0;
-		}
-		if(ActionCounter == 60) {
-			ActionCounter = 0;
+		if(onPath == true) {
+			AtkCounter++;	
+			int goalCol = (gp.player.worldX + gp.player.collisionBox.x)/gp.tileSize;
+			int goalRow = (gp.player.worldY + gp.player.collisionBox.y)/gp.tileSize;
+			searchPath(goalCol, goalRow);
+			if(AtkCounter == j) {
+				Projectile poison = new PoisonSpit(gp);
+				gp.projectileList.add(poison);
+				poison.set(worldX,worldY,direction,this);
+				AtkCounter = 0;
+			}
 			
-			Random random = new Random();
-			int i = random.nextInt(100)+1;// get a number from 1 to 100
-			if(i <= 25) {
-				direction = "down";
-			}
-			if(i > 25 && i <= 50) {
-				direction = "up";
-			}
-			if(i > 50 && i <= 75) {
-				direction = "left";
-			}
-			if(i > 75 && i <= 100) {
-				direction = "right";
-			}
-		}	
+		}else {
+			ActionCounter++;
+			if(ActionCounter == 60) {
+				ActionCounter = 0;
+				
+				Random random = new Random();
+				int i = random.nextInt(100)+1;// get a number from 1 to 100
+				if(i <= 25) {
+					direction = "down";
+				}
+				if(i > 25 && i <= 50) {
+					direction = "up";
+				}
+				if(i > 50 && i <= 75) {
+					direction = "left";
+				}
+				if(i > 75 && i <= 100) {
+					direction = "right";
+				}
+			}	
+		}
 	}
 	public void contact(character.Character c) {
 		if(activated == false) {
-			c.HP -= ATK - c.DEF ;
+			c.TookDMG(ATK);
 			activated = true;
 		}
 	}
@@ -88,6 +98,7 @@ public class GreenSlime extends Character{
 			}
 		}
 		setAction();
+		checkDistance(5);
 		gp.Colchecker.checkTile(this);
 		gp.Colchecker.checkPlayer(this);
 		graphic.updateDirection(this, 20,2);
@@ -114,7 +125,8 @@ public class GreenSlime extends Character{
 			}
 			if(AnimCounter >= 20) {
 				AnimCounter = 0;
-				CheckDrop(40,65,80,90,97,100);
+				//CheckDrop(40,65,80,90,97,100);
+				CheckDrop(40,40,40,40,100,100);
 				gp.npc[gp.currentMap][OnmapIndex] = null;
 			}
 		}
@@ -126,13 +138,13 @@ public class GreenSlime extends Character{
 				hpbarOn = false;
 			}
 		}
-		//graphic.drawCollision(g2, screenX+collisionBox.x, screenY+collisionBox.y, collisionBox.width,collisionBox.height);
+		graphic.drawCollision(g2, screenX+collisionBox.x, screenY+collisionBox.y, collisionBox.width,collisionBox.height);
 	}
 	public void hitted(int dmg,int i) {
 		HP -= dmg; 
 		OnmapIndex = i;
 		hpbarOn = true;
-		direction = gp.player.direction;
+		onPath = true;
 		gp.ui.addMessage(""+dmg);
 		hpbartimer = 0;
 		if(HP <= 0) {

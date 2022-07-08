@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import main.GamePanel;
-import object.Item_Coin;
 import object.MasterObject;
 
 public class Character {
@@ -23,6 +22,7 @@ public class Character {
 	public boolean collisionOn = false;
 	public boolean attacking = false;
 	public ArrayList<MasterObject> inventory = new ArrayList<>();
+	public boolean onPath = false;
 	
 	//public boolean PlayerIn = false;
 	GamePanel gp;
@@ -44,6 +44,7 @@ public class Character {
 	public int NextLvexp;
 	public MasterObject OnhandWP;
 	public MasterObject Shield;
+	int debug = 0;
 	
 	public Character(GamePanel gp) {
 		this.gp = gp;
@@ -118,6 +119,110 @@ public class Character {
 		}
 		if(i >= highend && i <= exotic ) {
 			DropItem(itemPicker.picker("exotic"));
+		}
+	}
+	public void checkDistance(int distance) { //Compare to Player
+		int xDistance = Math.abs(worldX - gp.player.worldX);
+		int yDistance = Math.abs(worldY - gp.player.worldY);
+		int tileDistance = (xDistance + yDistance)/gp.tileSize;
+		
+		if(onPath == false && tileDistance < distance) {
+			int i = new Random().nextInt(100)+1; //50% 
+			if(i > 50) {
+				onPath = true;
+			}
+		}
+		if(onPath == true && tileDistance > 20) {
+			onPath = false;
+		}
+	}
+	public void searchPath(int goalCol, int goalRow) {
+		int startCol = (worldX + collisionBox.x)/gp.tileSize;
+		int startRow = (worldY + collisionBox.y)/gp.tileSize;
+		
+		gp.pf.setNodes(startCol, startRow, goalCol, goalRow, this);
+		
+		if(gp.pf.search() == true) {
+			//next world X,Y
+			int nextX = gp.pf.pathList.get(0).col * gp.tileSize;
+			int nextY = gp.pf.pathList.get(0).row * gp.tileSize;
+			
+			int cLeftX = worldX + collisionBox.x;
+			int cRightX = worldX + collisionBox.x + collisionBox.width;
+			int cTopY = worldY + collisionBox.y;
+			int cBottomY = worldY + collisionBox.y + collisionBox.height;
+			
+			if(cTopY > nextY && cLeftX >= nextX && cRightX < nextX + gp.tileSize) {
+				direction = "up";
+				debug = 1;
+
+			}else if(cTopY < nextY && cLeftX >= nextX && cRightX < nextX + gp.tileSize) {
+				direction = "down";
+				debug = 2;
+
+			}else if(cTopY >= nextY && cBottomY < nextY + gp.tileSize) {
+				if(cLeftX > nextX) {
+					direction = "left";
+					debug = 3;
+
+				}
+				if(cLeftX < nextX) {
+					direction = "right";
+					debug = 4;
+
+				}
+			}
+			else if(cTopY > nextY && cLeftX > nextX) {
+				//up or left
+				direction = "up";
+				debug = 5;
+				gp.Colchecker.checkTile(this);
+				gp.Colchecker.checkPlayer(this);
+				if(collisionOn == true) {
+					direction = "left";
+				}
+			}
+			else if(cTopY > nextY && cLeftX < nextX) {
+				//up or right
+				direction = "up";
+				debug = 6;
+				gp.Colchecker.checkTile(this);
+				gp.Colchecker.checkPlayer(this);
+				if(collisionOn == true) {
+					direction = "right";
+				}
+			}
+			else if(cTopY < nextY && cLeftX > nextX) {
+				//down or left
+				direction = "down";
+				debug = 7;
+				gp.Colchecker.checkTile(this);
+				gp.Colchecker.checkPlayer(this);
+
+				if(collisionOn == true) {
+					direction = "left";
+				}
+			}
+			else if(cTopY < nextY && cLeftX < nextX) {
+				//down or right
+				direction = "down";
+				debug = 8;
+				gp.Colchecker.checkTile(this);
+				gp.Colchecker.checkPlayer(this);
+				if(collisionOn == true) {
+					direction = "right";
+				}
+			}
+			if(onPath == true) {
+				System.out.println(debug+" "+this.direction);
+			}
+			/*
+			int nextCol = gp.pf.pathList.get(0).col;
+			int nextRow = gp.pf.pathList.get(0).row;
+			if(nextCol == goalCol && nextRow == goalRow) {
+				onPath = false;
+			}
+			*/
 		}
 	}
 }

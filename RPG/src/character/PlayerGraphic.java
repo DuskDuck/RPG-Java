@@ -10,7 +10,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import main.GamePanel;
-import main.UI;
 import main.Utility;
 
 public class PlayerGraphic {
@@ -196,7 +195,7 @@ public class PlayerGraphic {
 		}
 	}
 	public void drawPlayer(Player c ,Graphics2D g2) {
-		int offsetX,offsetY;
+
 		BufferedImage image = null;
 		switch(c.direction) {
 		case "up":
@@ -548,6 +547,13 @@ public class PlayerGraphic {
 		Color c = new Color(15,15,15,225);
 		g2.setColor(c);
 		g2.fillRect(x, y, width, height);	
+	}
+	public void drawDebug(Graphics2D g2, character.Character c) {
+		g2.setFont(new Font("x12y16pxMaruMonica", Font.BOLD, 40));
+		g2.setColor(Color.white);
+		g2.drawString("x: "+ c.worldX/48, 50, 750);
+		g2.drawString("y: "+ c.worldY/48, 50, 800);
+		
 	}
 
 	public void drawTraderInventory(GamePanel gp,Graphics g2) {

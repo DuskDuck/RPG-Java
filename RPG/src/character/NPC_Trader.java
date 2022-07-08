@@ -2,14 +2,11 @@ package character;
 
 
 import java.awt.Graphics2D;
-import java.util.ArrayList;
-
 import main.GamePanel;
 import object.Item_HP_Potion_B;
 import object.Item_HP_Potion_M;
 import object.Item_HP_Potion_S;
 import object.Item_Key;
-import object.MasterObject;
 
 public class NPC_Trader extends Character{
 	

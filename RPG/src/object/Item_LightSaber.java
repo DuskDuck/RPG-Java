@@ -26,7 +26,7 @@ public class Item_LightSaber extends MasterObject{
 			e.printStackTrace();
 		}
 		collision = true;
-		ATK = 50;
+		ATK = 500;
 		range = 40;
 		type = "weapon";
 		discription = "Acient cursed weapon. Comsume user \nblood to channeling energy.";

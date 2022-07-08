@@ -7,10 +7,12 @@ import main.GamePanel;
 import object.Item_Blood_Katana;
 import object.Item_Coin;
 import object.Item_Crusader_Shield;
+import object.Item_God_Skin_Ripper;
 import object.Item_HP_Potion_B;
 import object.Item_HP_Potion_M;
 import object.Item_HP_Potion_S;
 import object.Item_Iron_Sword;
+import object.Item_Katana;
 import object.Item_Key;
 import object.Item_LightSaber;
 import object.Item_Wooden_Shield;
@@ -34,12 +36,14 @@ public class ItemPicker {
 		common.add(new Item_HP_Potion_S(gp));
 		//Standard item
 		standard.add(new Item_HP_Potion_M(gp));
+		standard.add(new Item_Katana(gp));
 		//Rare item
 		rare.add(new Item_HP_Potion_B(gp));
 		//Superior
 		superior.add(new Item_Key(gp));
 		//High-end
 		highend.add(new Item_Crusader_Shield(gp));
+		highend.add(new Item_God_Skin_Ripper(gp));
 		//Exotic item
 		exotic.add(new Item_Blood_Katana(gp));
 		exotic.add(new Item_LightSaber(gp));

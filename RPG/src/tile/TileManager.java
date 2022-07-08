@@ -1,5 +1,6 @@
 package tile;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,6 +15,7 @@ public class TileManager {
 	GamePanel gp;
 	public Tile[] tile;
 	public int mapTileNum[][][];
+	private boolean drawPath = true;
 	
 	public TileManager(GamePanel gp) {
 		this.gp = gp;
@@ -41,6 +43,8 @@ public class TileManager {
 		setup(9,"Stone_Wall_Leak",true);
 		setup(10,"Water_Hole",true);
 		setup(11,"Water_Hole_2",true);
+		
+		//Unused
 		setup(12,"Floor_2",false);
 		setup(13,"Floor_2_L",false);
 		setup(14,"Floor_2_R",false);
@@ -57,6 +61,14 @@ public class TileManager {
 		setup(25,"Floor_Gray",false);
 		setup(26,"Grass_1",false);
 		setup(27,"Water",false);
+		//Map #2 stone path
+		setup(28,"Stone_Path_1",false);
+		setup(29,"Stone_Path_2",false);
+		setup(30,"Stone_Path_3",false);
+		setup(31,"Stone_Path_4",false);
+		setup(32,"Grass_2",false);
+		setup(33,"Grass_1",true);// collision for house
+		setup(99,"debug",false);// tile for debugging 
 	}
 	
 	//Scale texture before hand	
@@ -139,6 +151,17 @@ public class TileManager {
 			}
 			
 		}
+		//if(drawPath == true) {
+			g2.setColor(new Color(255,0,0,70));
+			for(int i = 0; i < gp.pf.pathList.size(); i++) {
+				int worldX = gp.pf.pathList.get(i).col * gp.tileSize;
+				int worldY = gp.pf.pathList.get(i).row * gp.tileSize;
+				int screenX = worldX - gp.player.worldX + gp.player.screenX;
+				int screenY = worldY - gp.player.worldY + gp.player.screenY;
+				
+				g2.fillRect(screenX,screenY,48,48);
+			}
+		//}
 		
 	}
 
