@@ -10,6 +10,9 @@ import main.KeyInput;
 import object.Item_Iron_Sword;
 import object.Item_Wooden_Shield;
 import object.MasterObject;
+import skill.Ice_Missile;
+import skill.PoisonSpit;
+import skill.Projectile;
 
 public class Player extends Character{
 
@@ -29,12 +32,17 @@ public class Player extends Character{
 	
 	public ArrayList<MasterObject> inventory = new ArrayList<>();
 	public final int InventorySize = 42;
+	public int skill;
+	public boolean skillusing = false;
+
+	private int skillcounter;
 	
 	public Player(GamePanel gp, KeyInput key) {
 		super(gp);
 		
 		this.gp = gp;
 		this.key = key;
+		
 		
 		
 		//Middle of the screen
@@ -178,12 +186,24 @@ public class Player extends Character{
 		//interactNPC(mobIndex);
 		
 		graphic.updateDirection(this, 10, 2);	
+		}
 		if(HP <= 0) {
 			gp.GameState = gp.gameoverState;
 		}
 		//System.out.println(direction);
-		//Test
-		}
+		//SKILL
+		if(skill == 1) {
+			if(skillusing == true) {
+				skillcounter++;
+				if(skillcounter == 1) {
+					Projectile ice = new Ice_Missile(gp);
+				    gp.projectileList.add(ice);
+				    ice.set(worldX,worldY,direction,this);
+				    skillcounter = 0;
+				    skillusing = false;
+				    }	
+				}
+			}
 	}
 	
 	//Effect when pick up Items 
@@ -192,17 +212,58 @@ public class Player extends Character{
 		if(i != 999) {
 			//i not 999 mean character just touch an object -> pick it up and it disappear on ground
 			//String objectName = gp.obj[i].name;
-			if(inventory.size() != InventorySize) {
+			if(Obtainable(gp.obj[gp.currentMap][i]) == true) {
 				if(gp.obj[gp.currentMap][i].type == "coin") {
 					gp.obj[gp.currentMap][i].interact(i);
 					gp.ui.addMessage("+ " + gp.obj[gp.currentMap][i].amount +" "+ gp.obj[gp.currentMap][i].name);
 				}else {
-					inventory.add(gp.obj[gp.currentMap][i]);
+					//inventory.add(gp.obj[gp.currentMap][i]);
 					gp.ui.addMessage("+ " + gp.obj[gp.currentMap][i].name);
 				}
 			}
 			gp.obj[gp.currentMap][i] = null;
 		}	
+	}
+	//Search item function(for stacking purposes) through name
+	public int searchItem(String name) {
+		int itemIndex = 999;
+		for(int i = 0; i < inventory.size(); i++) {
+			if(inventory.get(i).name.equals(name)) {
+				itemIndex = i;
+				break;
+			}
+		}
+		return itemIndex;
+	}
+	public boolean Obtainable(MasterObject item) {
+		boolean canObtain = false;
+		if(item.stackable == true) {
+			int index = searchItem(item.name);
+			if(index != 999) {
+				inventory.get(index).amount++;
+				canObtain = true;
+			}
+			else { // new item need to check vacancy
+				if(inventory.size() != InventorySize) {
+					if(item.type == "coin") {
+						canObtain = true;
+					}else {
+						inventory.add(item);
+					    canObtain = true;
+					}			
+				}
+			}
+		}else {
+			if(inventory.size() != InventorySize) {
+				if(item.type == "coin") {
+					canObtain = true;
+				}else {
+					inventory.add(item);
+				    canObtain = true;
+				}	
+			}
+		}
+		return canObtain;
 	}
 	public void setItem() {
 		inventory.add(OnhandWP);
@@ -358,7 +419,7 @@ public class Player extends Character{
 		//System.out.println(graphic.spriteNum);
 		graphic.drawPlayer(this, g2);
 		if(gp.player.debugmode == true) {
-			graphic.drawDebug(g2, this);
+			graphic.drawDebug(gp,g2, this);
 		}
 		//graphic.drawCollision(g2, screenX+collisionBox.x, screenY+collisionBox.y, collisionBox.width,collisionBox.height);
 		//graphic.drawName(this, g2, "Lv."+ lv, gp, 15, Color.WHITE);
@@ -392,8 +453,13 @@ public class Player extends Character{
 				DEF = getGearStat("Shield");
 			}
 			if(selectedItem.type == "consumable") {
-				selectedItem.interact(itemIndex);
-				inventory.remove(itemIndex);
+				if(selectedItem.amount > 1) {
+					selectedItem.interact(itemIndex);
+					selectedItem.amount --;
+				}else {
+					selectedItem.interact(itemIndex);
+					inventory.remove(itemIndex);
+				}
 			}
 		}
 	}
@@ -419,10 +485,10 @@ public class Player extends Character{
 	}
 	public void BuyItem() {
 		int itemIndex = graphic.getItemIndexSlot(4,graphic.traderslotCol,graphic.traderslotRow);
-		if(itemIndex < inventory.size()) {
+		int i;
+		if(itemIndex < currentInteractNPC.inventory.size()) {	
 			if(gold - currentInteractNPC.inventory.get(itemIndex).price >= 0) {
-				if(inventory.size() < 42) {
-					inventory.add(currentInteractNPC.inventory.get(itemIndex));
+				if(Obtainable(currentInteractNPC.inventory.get(itemIndex)) == true) {
 					gold -= currentInteractNPC.inventory.get(itemIndex).price;
 				}
 			}
@@ -430,7 +496,17 @@ public class Player extends Character{
 	}
 	public void SellItem() {
 		int itemIndex = graphic.getItemIndexSlot(7,graphic.slotCol,graphic.slotRow);
-		gold += inventory.get(itemIndex).price/10;
-		inventory.remove(itemIndex);
+		if(itemIndex < inventory.size()) {
+			if(inventory.get(itemIndex) == OnhandWP || inventory.get(itemIndex) == Shield) {
+				//do nothing
+			}else {
+				if(inventory.get(itemIndex).amount > 1) {
+					inventory.get(itemIndex).amount --;
+				}else {
+					inventory.remove(itemIndex);
+				}
+				gold += inventory.get(itemIndex).price/10;
+			}
+		}
 	}
 }

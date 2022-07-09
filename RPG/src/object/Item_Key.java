@@ -13,6 +13,8 @@ public class Item_Key extends MasterObject{
 	public Item_Key(GamePanel gp ) {
 		this.gp = gp;
 		name = "Key";
+		stackable = false;
+		price = 5;
 		try {
 			InventoryImage = ImageIO.read(getClass().getResourceAsStream("/inventory/Key.png"));
 			utility.scaleImage(InventoryImage,gp.tileSize,gp.tileSize);

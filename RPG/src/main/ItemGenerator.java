@@ -4,6 +4,7 @@ package main;
 import character.BossSlime;
 import character.GreenSlime;
 import character.NPC_1;
+import character.NPC_Flame_Pet;
 import character.NPC_Guider;
 import character.NPC_Trader;
 import object.Item_Blood_Katana;
@@ -32,11 +33,27 @@ public class ItemGenerator {
 	
 	public void setObject() {
 		int i = 0;
+		gp.obj[0][i] = new Item_HP_Potion_S(gp);
+		gp.obj[0][i].worldX = 8 * gp.tileSize;
+		gp.obj[0][i].worldY = 8 * gp.tileSize;
+		i++;
+		gp.obj[0][i] = new Item_HP_Potion_S(gp);
+		gp.obj[0][i].worldX = 2 * gp.tileSize;
+		gp.obj[0][i].worldY = 3 * gp.tileSize;
+		i++;
+		gp.obj[0][i] = new Item_HP_Potion_S(gp);
+		gp.obj[0][i].worldX = 8 * gp.tileSize;
+		gp.obj[0][i].worldY = 9 * gp.tileSize;
+		i++;
+		gp.obj[0][i] = new Item_HP_Potion_S(gp);
+		gp.obj[0][i].worldX = 3 * gp.tileSize;
+		gp.obj[0][i].worldY = 3 * gp.tileSize;
+		i++;
+		/*
 		gp.obj[0][i] = new Item_Crusader_Shield(gp);
 		gp.obj[0][i].worldX = 19 * gp.tileSize;
 		gp.obj[0][i].worldY = 10 * gp.tileSize;
 		i++;
-		/*
 		int i = 0;
 		gp.obj[0][i] = new Item_Key(gp);
 		gp.obj[0][i].worldX = 5 * gp.tileSize;
@@ -50,14 +67,7 @@ public class ItemGenerator {
 		gp.obj[0][i].worldX = 8 * gp.tileSize;
 		gp.obj[0][i].worldY = 16 * gp.tileSize;
 		i++;
-		gp.obj[0][i] = new Item_HP_Potion_S(gp);
-		gp.obj[0][i].worldX = 8 * gp.tileSize;
-		gp.obj[0][i].worldY = 8 * gp.tileSize;
-		i++;
-		gp.obj[0][i] = new Item_HP_Potion_M(gp);
-		gp.obj[0][i].worldX = 4 * gp.tileSize;
-		gp.obj[0][i].worldY = 3 * gp.tileSize;
-		i++;
+		
 		gp.obj[0][i] = new Item_Blood_Katana(gp);
 		gp.obj[0][i].worldX = 7 * gp.tileSize;
 		gp.obj[0][i].worldY = 8 * gp.tileSize;
@@ -132,6 +142,10 @@ public class ItemGenerator {
 		gp.npc[1][i] = new NPC_Trader(gp);
 		gp.npc[1][i].worldX = gp.tileSize*25;
 		gp.npc[1][i].worldY = gp.tileSize*18;
+		i++;
+		gp.npc[0][i] = new NPC_Flame_Pet(gp);
+		gp.npc[0][i].worldX = gp.tileSize*8;
+		gp.npc[0][i].worldY = gp.tileSize*4;
 		i++;
 		/*
 		gp.npc[2][i] = new NPC_1(gp, "Markus");

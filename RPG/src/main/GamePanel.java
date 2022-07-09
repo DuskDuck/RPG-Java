@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import ai.PathFinder;
 //import character.Enemy;
 import character.Player;
+import enviroment.EnviromentManager;
 import object.MasterObject;
 import overlay_object.MasterOverlay;
 import skill.Projectile;
@@ -36,7 +37,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int maxWorldRow = 100;
 	
 	//System
-	int FPS = 60;//game's refresh rate per second
+	public static final int FPS = 60;//game's refresh rate per second
 	
 	public TileManager tile = new TileManager(this);
 	Map map = new Map(this);
@@ -52,6 +53,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public Player player = new Player(this,key);
 	public UI ui = new UI(this);
 	public PathFinder pf = new PathFinder(this);
+    EnviromentManager enviroment = new EnviromentManager(this);
 	
 	public MasterObject obj[][] = new MasterObject[10][100];
 	public MasterOverlay ovl[][] = new MasterOverlay[10][20];
@@ -84,8 +86,8 @@ public class GamePanel extends JPanel implements Runnable{
 		ItemGen.setOverlay();
 		ItemGen.setObject();
 		ItemGen.setNPC();
-		//map.loadMap("Level1.txt");
-		//playBGM(0);
+		
+		enviroment.setup();
 		GameState = titleState;
 	}
 	
@@ -212,8 +214,13 @@ public class GamePanel extends JPanel implements Runnable{
 					projectileList.get(i).draw(g2);
 				}
 			}
-		 	player.draw(g2);
+		 	
 			//Paint player component
+			
+			if(player.debugmode == false) {
+				enviroment.draw(g2);
+			}
+			player.draw(g2);
 			ui.draw(g2);
 			g2.dispose();//save memory
 			

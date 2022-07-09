@@ -3,6 +3,9 @@ package main;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import skill.Bloodslash;
+import skill.Projectile;
+
 public class KeyInput implements KeyListener{
 	public boolean up,down,left,right,idle,interactKey;
 	GamePanel gp;
@@ -65,6 +68,13 @@ public class KeyInput implements KeyListener{
 			if(code == KeyEvent.VK_SPACE) {
 				if(gp.player.attacking == false) {
 					gp.player.attacking = true;
+				}
+			}
+			//SKILL SET
+			if(code == KeyEvent.VK_1) {
+				if(gp.player.skillusing == false) {
+					gp.player.skill = 1;
+					gp.player.skillusing = true;
 				}
 			}
 		}
@@ -274,6 +284,11 @@ public class KeyInput implements KeyListener{
 				pressed = 0;
 			}
 			
+		}
+		//SKILL SET
+		if(code == KeyEvent.VK_1) {
+			gp.player.skill = 0;
+			gp.player.skillusing = false;
 		}
 	}
 	public void check() {

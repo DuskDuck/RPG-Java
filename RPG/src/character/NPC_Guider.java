@@ -109,7 +109,9 @@ public class NPC_Guider extends Character{
 		int screenY = worldY - gp.player.worldY + gp.player.screenY;
 		graphic.drawCharacter(this, g2,gp);
 		graphic.drawName(this, g2, name, gp, 15,Color.WHITE);
-		graphic.drawCollision(g2, screenX+collisionBox.x, screenY+collisionBox.y, collisionBox.width,collisionBox.height);
+		if(gp.player.debugmode == true) {
+			graphic.drawCollision(g2, screenX+collisionBox.x, screenY+collisionBox.y, collisionBox.width,collisionBox.height);
+		}
 		if(speaking == true) {
 			dialogcounter++;
 			graphic.drawDialog(g2,dialog[dialogIndex],screenX,screenY);

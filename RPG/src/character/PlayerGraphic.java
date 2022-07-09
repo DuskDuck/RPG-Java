@@ -409,7 +409,20 @@ public class PlayerGraphic {
 				g2.setColor(new Color(240,190,90));
 				g2.fillRect(slotX, slotY, 95, 95);
 			}
+			
+			//Amount of stack-able item
 			g2.drawImage(gp.player.inventory.get(i).InventoryImage, slotX, slotY,95,95, null);
+			if(gp.player.inventory.get(i).amount > 1) {
+				g2.setFont(new Font("x12y16pxMaruMonica", Font.BOLD, 24));
+				int amountX;
+				int amountY;
+				String s = "" + gp.player.inventory.get(i).amount;
+				amountX = AlignTextToRight(s,slotX+85,g2);
+			    amountY = slotY + 85;
+			    
+			    g2.setColor(Color.WHITE);
+			    g2.drawString(s,amountX,amountY);
+			}
 			slotX += 95;
 			if(i == 6 || i == 13 || i == 20 || i == 27 || i == 34 || i == 41) {
 				slotX = slotXstart;
@@ -430,6 +443,7 @@ public class PlayerGraphic {
 			g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight,10, 10);
 			
 			//Description Box
+			g2.setFont(new Font("x12y16pxMaruMonica", Font.PLAIN, 26));
 			int DframeX = 1215;
 			int DframeY = gp.tileSize*2;
 			int DframeW = 305;
@@ -548,12 +562,15 @@ public class PlayerGraphic {
 		g2.setColor(c);
 		g2.fillRect(x, y, width, height);	
 	}
-	public void drawDebug(Graphics2D g2, character.Character c) {
+	public void drawDebug(GamePanel gp,Graphics2D g2, character.Character c) {
+		//Position
 		g2.setFont(new Font("x12y16pxMaruMonica", Font.BOLD, 40));
 		g2.setColor(Color.white);
 		g2.drawString("x: "+ c.worldX/48, 500, 450);
 		g2.drawString("y: "+ c.worldY/48, 500, 500);
 		
+		//
+		g2.drawString("FPS: "+ gp.FPS, 500, 400);
 	}
 
 	public void drawTraderInventory(GamePanel gp,Graphics g2) {

@@ -129,7 +129,9 @@ public class BossSlime extends Character{
 				hpbarOn = false;
 			}
 		}
-		graphic.drawCollision(g2, screenX+collisionBox.x, screenY+collisionBox.y, collisionBox.width,collisionBox.height);
+		if(gp.player.debugmode == true) {
+			graphic.drawCollision(g2, screenX+collisionBox.x, screenY+collisionBox.y, collisionBox.width,collisionBox.height);
+		}
 	}
 	public void hitted(int dmg,int i,int knockbackpower) {
 		HP -= dmg; 

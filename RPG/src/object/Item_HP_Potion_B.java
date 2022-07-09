@@ -13,7 +13,8 @@ public class Item_HP_Potion_B extends MasterObject{
 	public Item_HP_Potion_B(GamePanel gp) {
 		
 		this.gp = gp;
-		price = 15000;
+		price = 1200;
+		stackable = true;
 		name = "Big Health Potion";
 		try {
 			InventoryImage = ImageIO.read(getClass().getResourceAsStream("/inventory/HP_Potion_B.png"));

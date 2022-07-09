@@ -21,7 +21,8 @@ public class MasterObject {
 	public Utility utility = new Utility();
 	public String downFX,upFX,leftFX,rightFX;
 	public String discription = "";
-	public int amount;
+	public int amount = 1;
+	public boolean stackable = false;
 	
 	//Stat
 	public int DEF;

@@ -5,6 +5,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import main.GamePanel;
+import skill.Bloodslash;
+import skill.Projectile;
 
 public class Item_Iron_Sword extends MasterObject{
     GamePanel gp;

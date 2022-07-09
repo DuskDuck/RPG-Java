@@ -92,8 +92,41 @@ public class SkillGraphic {
 				break;
 			}
 			g2.drawImage(image,screenX,screenY,gp.tileSize,gp.tileSize,null);
+		}
 	
 		}
+		public void draw(Graphics2D g2,GamePanel gp, Projectile c,int x,int y) {
+			BufferedImage image = null;
+			int screenX = c.x - gp.player.worldX + gp.player.screenX;
+			int screenY = c.y - gp.player.worldY + gp.player.screenY;
+			
+			//Only create object that visible on screen
+			if(c.x + gp.tileSize > gp.player.worldX - gp.player.screenX &&
+			   c.x - gp.tileSize < gp.player.worldX + gp.player.screenX &&
+			   c.y + gp.tileSize > gp.player.worldY - gp.player.screenY &&
+			   c.y - gp.tileSize < gp.player.worldY + gp.player.screenY) {
+				
+				switch(c.direction) {
+				case "up":
+					if(spriteNum == 1) {image = up1;}
+					if(spriteNum == 2) {image = up2;}
+					break;
+				case "down":
+					if(spriteNum == 1) {image = down1;}
+					if(spriteNum == 2) {image = down2;}
+					break;
+				case "left":
+					if(spriteNum == 1) {image = left1;}
+					if(spriteNum == 2) {image = left2;}
+					break;
+				case "right":
+					if(spriteNum == 1) {image = right1;}
+					if(spriteNum == 2) {image = right2;}
+					break;
+				}
+				g2.drawImage(image,screenX,screenY,x,y,null);
+		
+			}
 	}
 }
 
