@@ -551,8 +551,8 @@ public class PlayerGraphic {
 	public void drawDebug(Graphics2D g2, character.Character c) {
 		g2.setFont(new Font("x12y16pxMaruMonica", Font.BOLD, 40));
 		g2.setColor(Color.white);
-		g2.drawString("x: "+ c.worldX/48, 50, 750);
-		g2.drawString("y: "+ c.worldY/48, 50, 800);
+		g2.drawString("x: "+ c.worldX/48, 500, 450);
+		g2.drawString("y: "+ c.worldY/48, 500, 500);
 		
 	}
 

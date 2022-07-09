@@ -68,7 +68,7 @@ public class Character {
 	public void contact(Character c) {
 		
 	}
-	public void hitted(int dmg,int i) {
+	public void hitted(int dmg,int i,int knockbackpower) {
 		
 	}
 	public void TookDMG(int i) {
@@ -214,7 +214,6 @@ public class Character {
 				}
 			}
 			if(onPath == true) {
-				System.out.println(debug+" "+this.direction);
 			}
 			/*
 			int nextCol = gp.pf.pathList.get(0).col;

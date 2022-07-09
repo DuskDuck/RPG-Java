@@ -24,6 +24,7 @@ public class Player extends Character{
 	int AttackCooldown = 0;
 	public int gold;
 	public int spawnX,spawnY;
+	public boolean debugmode;
 	public character.Character currentInteractNPC;
 	
 	public ArrayList<MasterObject> inventory = new ArrayList<>();
@@ -233,7 +234,7 @@ public class Player extends Character{
 		int monsterIndex = gp.Colchecker.checkCharacter(this, gp.npc);
 		//graphic.drawCollision(g2, screenX+collisionBox.x, screenY+collisionBox.y, collisionBox.width,collisionBox.height);
 		if(monsterIndex != 999) {
-			gp.npc[gp.currentMap][monsterIndex].hitted(ATK,monsterIndex); //deal dmg
+			gp.npc[gp.currentMap][monsterIndex].hitted(ATK,monsterIndex,OnhandWP.knockbackpower); //deal dmg
 			//Get Weapon Effect
 		}
 		else {
@@ -356,7 +357,9 @@ public class Player extends Character{
 		//System.out.println(AnimCounter);
 		//System.out.println(graphic.spriteNum);
 		graphic.drawPlayer(this, g2);
-		graphic.drawDebug(g2, this);
+		if(gp.player.debugmode == true) {
+			graphic.drawDebug(g2, this);
+		}
 		//graphic.drawCollision(g2, screenX+collisionBox.x, screenY+collisionBox.y, collisionBox.width,collisionBox.height);
 		//graphic.drawName(this, g2, "Lv."+ lv, gp, 15, Color.WHITE);
 		MeleeAttack(g2);

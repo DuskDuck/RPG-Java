@@ -10,14 +10,17 @@ import skill.Projectile;
 
 public class GreenSlime extends Character{
 	public int ActionCounter;
-	int AnimCounter;
-	int AtkCounter;
+	int AnimCounter = 0;
+	int AtkCounter = 0;
+	int KnockbackCounter = 0;
 	int cooldown;
 	boolean activated = false;
 	boolean hpbarOn;
 	int hpbartimer;
 	int OnmapIndex;
 	boolean death = false;
+	int defaultspeed;
+	boolean knockback;
 	Random randomatk = new Random();
 	int j = randomatk.nextInt(120)+40;
 	public GreenSlime(GamePanel gp) {
@@ -25,6 +28,7 @@ public class GreenSlime extends Character{
 		this.name = "Green Slime";
 		direction = "down";
 		speed = 1;
+		defaultspeed = speed;
 		lv = 1;
 		MaxHP = 400;
 		HP = MaxHP;
@@ -90,18 +94,37 @@ public class GreenSlime extends Character{
 		}
 	}
 	public void update() {
-		if(activated == true) {
-			cooldown++;
-			if(cooldown == 60) {
-				activated = false;
-				cooldown = 0;
+		if(knockback == true) {
+			gp.Colchecker.checkTile(this);
+			gp.Colchecker.checkPlayer(this);
+			if(collisionOn == true) {
+				KnockbackCounter = 0;
+				knockback = false;
+				speed = defaultspeed;
 			}
+			else if(collisionOn == false){
+				graphic.updateDirection(this, 20,2);
+			}
+			KnockbackCounter++;
+			if(KnockbackCounter == 5) {
+				KnockbackCounter = 0;
+				knockback = false;
+				speed = defaultspeed;
+			}
+		}else {
+			if(activated == true) {
+				cooldown++;
+				if(cooldown == 60) {
+					activated = false;
+					cooldown = 0;
+				}
+			}
+			setAction();
+			checkDistance(5);
+			gp.Colchecker.checkTile(this);
+			gp.Colchecker.checkPlayer(this);
+			graphic.updateDirection(this, 20,2);
 		}
-		setAction();
-		checkDistance(5);
-		gp.Colchecker.checkTile(this);
-		gp.Colchecker.checkPlayer(this);
-		graphic.updateDirection(this, 20,2);
 	}
 	public void draw(Graphics2D g2) {
 
@@ -138,9 +161,14 @@ public class GreenSlime extends Character{
 				hpbarOn = false;
 			}
 		}
-		graphic.drawCollision(g2, screenX+collisionBox.x, screenY+collisionBox.y, collisionBox.width,collisionBox.height);
+		if(gp.player.debugmode == true) {
+			graphic.drawCollision(g2, screenX+collisionBox.x, screenY+collisionBox.y, collisionBox.width,collisionBox.height);
+		}
 	}
-	public void hitted(int dmg,int i) {
+	public void hitted(int dmg,int i,int knockbackpower) {
+		knockback = true;
+		speed = knockbackpower;
+		direction = gp.player.direction;
 		HP -= dmg; 
 		OnmapIndex = i;
 		hpbarOn = true;

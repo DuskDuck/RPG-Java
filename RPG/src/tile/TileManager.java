@@ -143,6 +143,9 @@ public class TileManager {
 			   worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
 				
 				g2.drawImage(tile[tileNum].image,screenX,screenY,null);
+				if(gp.player.debugmode == true) {
+					g2.drawRect(screenX, screenY, 48, 48);
+				}
 			}
 			worldcol++;
 			if(worldcol == gp.maxWorldCol) {
@@ -151,7 +154,7 @@ public class TileManager {
 			}
 			
 		}
-		//if(drawPath == true) {
+		if(gp.player.debugmode == true) {
 			g2.setColor(new Color(255,0,0,70));
 			for(int i = 0; i < gp.pf.pathList.size(); i++) {
 				int worldX = gp.pf.pathList.get(i).col * gp.tileSize;
@@ -161,7 +164,7 @@ public class TileManager {
 				
 				g2.fillRect(screenX,screenY,48,48);
 			}
-		//}
+		}
 		
 	}
 

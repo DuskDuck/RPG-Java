@@ -7,6 +7,7 @@ public class KeyInput implements KeyListener{
 	public boolean up,down,left,right,idle,interactKey;
 	GamePanel gp;
 	int counter;
+	int pressed;
 	
 	public KeyInput(GamePanel gp) {
 		this.gp = gp;
@@ -51,8 +52,15 @@ public class KeyInput implements KeyListener{
 			if(code == KeyEvent.VK_B) {
 				gp.GameState = gp.statState;
 			}
-			if(code == KeyEvent.VK_1) {
-				
+			if(code == KeyEvent.VK_T){
+				if(pressed == 0) {
+					pressed = 1;
+					gp.player.debugmode = true;
+				}
+				if(pressed == 2) {
+					gp.player.debugmode = false;
+					pressed = 3;
+				}
 			}
 			if(code == KeyEvent.VK_SPACE) {
 				if(gp.player.attacking == false) {
@@ -257,8 +265,16 @@ public class KeyInput implements KeyListener{
 		if(code == KeyEvent.VK_SPACE) {
 			//gp.player.speed = 4;
 			//gp.player.attacking = false;
-		}
+		}	
+		if(code == KeyEvent.VK_T) {
+			if(pressed == 1) {
+				pressed = 2;
+			}
+			if(pressed == 3) {
+				pressed = 0;
+			}
 			
+		}
 	}
 	public void check() {
 		System.out.println("left " +left);

@@ -27,7 +27,7 @@ public class Bloodslash extends Projectile{
 		int mobIndex = gp.Colchecker.checkCharacter(avatar, gp.npc);
 		if(mobIndex != 999) {
 			if(hitted == false) {
-				gp.npc[gp.currentMap][mobIndex].hitted(50, mobIndex);
+				gp.npc[gp.currentMap][mobIndex].hitted(50, mobIndex,0);
 				hitted = true;
 				active = false;
 			}

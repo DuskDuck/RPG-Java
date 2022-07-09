@@ -17,6 +17,7 @@ public class Item_Iron_Sword extends MasterObject{
 		rightFX = "slash4";
 		upFX = "slash7";
 		leftFX = "slash10";
+		knockbackpower = 5;
 		try {
 			InventoryImage = ImageIO.read(getClass().getResourceAsStream("/inventory/Iron_Sword.png"));
 			utility.scaleImage(InventoryImage,gp.tileSize,gp.tileSize);

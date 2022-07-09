@@ -131,11 +131,10 @@ public class BossSlime extends Character{
 		}
 		graphic.drawCollision(g2, screenX+collisionBox.x, screenY+collisionBox.y, collisionBox.width,collisionBox.height);
 	}
-	public void hitted(int dmg,int i) {
+	public void hitted(int dmg,int i,int knockbackpower) {
 		HP -= dmg; 
 		OnmapIndex = i;
 		hpbarOn = true;
-		direction = gp.player.direction;
 		gp.ui.addMessage(""+dmg);
 		hpbartimer = 0;
 		if(HP <= 0) {
