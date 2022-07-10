@@ -39,6 +39,9 @@ public class Player extends Character{
 
 	public int WPindex;
 	public int shieldindex;
+
+	public boolean parrying = false;
+	private int parrycounter = 0;
 	
 	public Player(GamePanel gp, KeyInput key) {
 		super(gp);
@@ -273,6 +276,18 @@ public class Player extends Character{
 		inventory.add(OnhandWP);
 		inventory.add(Shield);	
 	}
+	void parry(Graphics2D g2) {
+		if(parrying == true) {
+			parrycounter++;
+			if(parrycounter < 15) {
+				g2.drawImage(Shield.image, screenX, screenY, 48,48,null);
+				
+			}else {
+				parrycounter = 0;
+				parrying = false;
+			}
+		}
+	}
 	void attacking(Graphics2D g2) {
 		OnhandWP.effect(this);
 		Shield.effect(this);
@@ -399,11 +414,15 @@ public class Player extends Character{
 		}
 	}
 	public void TookDMG(int dmg) {
-		float dmgpost = 0;
-		dmgpost = (float)dmg / (1+((float)DEF / 100));//DEF equation
-		HP -= dmgpost;
-		if(HP - dmgpost < 0) {
-			HP = 0;
+		if(parrying != true) {
+			float dmgpost = 0;
+			dmgpost = (float)dmg / (1+((float)DEF / 100));//DEF equation
+			HP -= dmgpost;
+			if(HP - dmgpost < 0) {
+				HP = 0;
+			}
+		}else {
+			gp.ui.addMessage("parry successfully");
 		}
 	}
 	private void interactNPC(int i) {
@@ -428,6 +447,7 @@ public class Player extends Character{
 		//graphic.drawCollision(g2, screenX+collisionBox.x, screenY+collisionBox.y, collisionBox.width,collisionBox.height);
 		//graphic.drawName(this, g2, "Lv."+ lv, gp, 15, Color.WHITE);
 		MeleeAttack(g2);
+		parry(g2);
 		if(gp.GameState == gp.statState) {
 			graphic.drawStatHUD(gp,g2);
 			graphic.drawInventory(gp, g2, true);
@@ -473,8 +493,8 @@ public class Player extends Character{
 		gp.GameState = gp.playState;
 		HP = MaxHP;
 		MP = MaxMP;
-		worldX = gp.player.spawnX;
-		worldY = gp.player.spawnY;
+		worldX = spawnX;
+		worldY = spawnY;
 		gp.ui.i = 0;
 		gp.reset();
 	}

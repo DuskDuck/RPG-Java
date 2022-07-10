@@ -70,6 +70,10 @@ public class KeyInput implements KeyListener{
 					gp.player.attacking = true;
 				}
 			}
+			//PARRY
+			if(code == KeyEvent.VK_SHIFT) {
+				gp.player.parrying = true;
+			}
 			//SKILL SET
 			if(code == KeyEvent.VK_1) {
 				if(gp.player.skillusing == false) {

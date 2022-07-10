@@ -17,7 +17,11 @@ import object.Item_Iron_Sword;
 import object.Item_Katana;
 import object.Item_Key;
 import object.Item_LightSaber;
+import object.Item_MP_Potion_B;
+import object.Item_MP_Potion_M;
+import object.Item_MP_Potion_S;
 import object.Item_Ruin_Sword;
+import object.Item_Speed_Potion;
 import object.Item_Wooden_Shield;
 import object.MasterObject;
 
@@ -37,15 +41,19 @@ public class ItemPicker {
 		common.add(new Item_Iron_Sword(gp));
 		common.add(new Item_Wooden_Shield(gp));
 		common.add(new Item_HP_Potion_S(gp));
+		common.add(new Item_MP_Potion_S(gp));
 		//Standard item
 		standard.add(new Item_HP_Potion_M(gp));
+		standard.add(new Item_MP_Potion_M(gp));
 		standard.add(new Item_Katana(gp));
 		//Rare item
 		rare.add(new Item_HP_Potion_B(gp));
+		rare.add(new Item_MP_Potion_B(gp));
 		rare.add(new Item_Ruin_Sword(gp));
 		//Superior
 		superior.add(new Item_Key(gp));
 		superior.add(new Item_Glacier_Sword(gp));
+		superior.add(new Item_Speed_Potion(gp));
 		//High-end
 		highend.add(new Item_Crusader_Shield(gp));
 		highend.add(new Item_God_Skin_Ripper(gp));

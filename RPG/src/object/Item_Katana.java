@@ -20,6 +20,7 @@ public class Item_Katana extends MasterObject{
 		rightFX = "slash4";
 		upFX = "slash7";
 		leftFX = "slash10";
+		knockbackpower = 4;
 		try {
 			InventoryImage = ImageIO.read(getClass().getResourceAsStream("/inventory/Katana.png"));
 			utility.scaleImage(InventoryImage,gp.tileSize,gp.tileSize);

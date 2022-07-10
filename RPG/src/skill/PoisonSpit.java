@@ -12,7 +12,7 @@ public class PoisonSpit extends Projectile{
 	Graphics2D g2;
 	public PoisonSpit(GamePanel gp) {
 		super(gp);
-		speed = 10;
+		speed = 8;
 		graphic.setImage("/skill/Poison");
 		active = true;
 		// TODO Auto-generated constructor stub
@@ -28,7 +28,7 @@ public class PoisonSpit extends Projectile{
 		boolean isPlayer = gp.Colchecker.checkPlayerCol(avatar);
 		if(isPlayer == true) {
 			if(hitted == false) {
-				gp.player.TookDMG(10);
+				gp.player.TookDMG(50);
 				hitted = true;
 			}
 		}

@@ -11,6 +11,10 @@ import object.Item_HP_Potion_S;
 import object.Item_Iron_Sword;
 import object.Item_Katana;
 import object.Item_Key;
+import object.Item_MP_Potion_B;
+import object.Item_MP_Potion_M;
+import object.Item_MP_Potion_S;
+import object.Item_Speed_Potion;
 
 public class NPC_Potion_Maker extends Character{
 	
@@ -51,6 +55,10 @@ public class NPC_Potion_Maker extends Character{
 		inventory.add(new Item_HP_Potion_S(gp));
 		inventory.add(new Item_HP_Potion_M(gp));
 		inventory.add(new Item_HP_Potion_B(gp));
+		inventory.add(new Item_Speed_Potion(gp));
+		inventory.add(new Item_MP_Potion_S(gp));
+		inventory.add(new Item_MP_Potion_M(gp));
+		inventory.add(new Item_MP_Potion_B(gp));
 	}
 	public void interact() {
 		gp.GameState = gp.tradeState;

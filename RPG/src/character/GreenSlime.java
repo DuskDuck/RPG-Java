@@ -90,6 +90,11 @@ public class GreenSlime extends Character{
 	public void contact(character.Character c) {
 		if(activated == false) {
 			c.TookDMG(ATK);
+			if(gp.player.parrying == true) {
+				knockback = true;
+				speed = 10;
+				direction = gp.player.direction;
+			}
 			activated = true;
 		}
 	}

@@ -26,7 +26,9 @@ public class TileManager {
 		loadMap("/map/Level1.txt",0);
 		loadMap("/map/trader_room1.txt",1);
 		loadMap("/map/Level0.txt",2);
-		loadMap("/map/trader_room2.txt",3);
+		loadMap("/map/trader_room1.txt",3);
+		loadMap("/map/trader_room1.txt",4);
+		loadMap("/map/trader_room1.txt",5);
 	}
 	
     //get data of each type of Tile
