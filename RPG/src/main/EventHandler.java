@@ -55,7 +55,7 @@ public class EventHandler {
 		if( hit(3,25,24) == true ) {tp(2,19,15);}
 		if( hit(4,25,24) == true ) {tp(2,27,15);}
 		if( hit(2,27,14) == true ) {tp(4,25,22);}
-		if( hit(2,43,22) == true ) {tp(0,5,5);gp.player.spawnX = gp.tileSize*5;gp.player.spawnY = gp.tileSize*5;}
+		if( hit(2,43,23) == true ) {tp(0,5,5);gp.player.spawnX = gp.tileSize*5;gp.player.spawnY = gp.tileSize*5;}
 		
 		if( hit(0,5,6) == true ) {damagePit();}
 		if( hit(0,6,7) == true ) {healingWell();}
