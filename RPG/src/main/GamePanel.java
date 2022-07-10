@@ -30,7 +30,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int screenWidth = tileSize * maxScreenCol; //48x32
 	public final int screenHeight = tileSize * maxScreenRow; //48x18
 	
-	public int currentMap = 0;
+	public int currentMap = 2;
 	
 	//setting for world
 	public final int maxWorldCol = 100;
@@ -40,7 +40,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public static final int FPS = 60;//game's refresh rate per second
 	
 	public TileManager tile = new TileManager(this);
-	Map map = new Map(this);
+	public Map map = new Map(this);
 	
 	public KeyInput key = new KeyInput(this);
 	Sound BGM = new Sound();
@@ -218,7 +218,9 @@ public class GamePanel extends JPanel implements Runnable{
 			//Paint player component
 			
 			if(player.debugmode == false) {
-				enviroment.draw(g2);
+				if(currentMap == 0) {
+					enviroment.draw(g2);
+				}
 			}
 			player.draw(g2);
 			ui.draw(g2);

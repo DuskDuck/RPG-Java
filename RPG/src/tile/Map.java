@@ -4,14 +4,17 @@ import main.GamePanel;
 
 public class Map {
 	GamePanel gp;
-	//public TileManager tile = new TileManager(gp);
+	public TileManager tile = new TileManager(gp);
 	
 	public Map(GamePanel gp) {
 		this.gp = gp;
 	}
 	
-	public void loadMap(String name) {
-		//tile.loadMap("/map/"+ name,0);
+	public void loadMap(String name,int mapIndex) {
+		tile.loadMap("/map/"+ name,mapIndex);
+	}
+	public void switchmap(int mapIndex) {
+		gp.currentMap = mapIndex;
 	}
 
 }

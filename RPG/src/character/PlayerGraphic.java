@@ -404,8 +404,7 @@ public class PlayerGraphic {
 		for(int i = 0; i < gp.player.inventory.size(); i++) {
 			
 			//Highlight the equipped item.
-			if(gp.player.inventory.get(i) == gp.player.OnhandWP || 
-					gp.player.inventory.get(i) == gp.player.Shield) {
+			if(i == gp.player.WPindex || i == gp.player.shieldindex) {
 				g2.setColor(new Color(240,190,90));
 				g2.fillRect(slotX, slotY, 95, 95);
 			}

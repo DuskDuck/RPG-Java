@@ -26,6 +26,7 @@ public class TileManager {
 		loadMap("/map/Level1.txt",0);
 		loadMap("/map/trader_room1.txt",1);
 		loadMap("/map/Level0.txt",2);
+		loadMap("/map/trader_room2.txt",3);
 	}
 	
     //get data of each type of Tile
@@ -44,7 +45,7 @@ public class TileManager {
 		setup(10,"Water_Hole",true);
 		setup(11,"Water_Hole_2",true);
 		
-		//Unused
+		//Unused(old tile set)
 		setup(12,"Floor_2",false);
 		setup(13,"Floor_2_L",false);
 		setup(14,"Floor_2_R",false);
@@ -57,6 +58,7 @@ public class TileManager {
 		setup(21,"Floor_3",false);
 		setup(22,"Floor_3_Manhole",false);
 		setup(23,"Floor_1_Blob",false);
+		//
 		setup(24,"plank",false);
 		setup(25,"Floor_Gray",false);
 		setup(26,"Grass_1",false);
@@ -68,7 +70,13 @@ public class TileManager {
 		setup(31,"Stone_Path_4",false);
 		setup(32,"Grass_2",false);
 		setup(33,"Grass_1",true);// collision for house
-		setup(99,"debug",false);// tile for debugging 
+		//Map#2 fence
+		setup(34,"Fence",true);//horizontal fence
+		setup(35,"Fence_Vertical",true);
+		setup(36,"Fence_Top_L",true);
+		setup(37,"Fence_Bottom_L",true);
+		// tile for debugging
+		setup(99,"debug",false); 
 	}
 	
 	//Scale texture before hand	

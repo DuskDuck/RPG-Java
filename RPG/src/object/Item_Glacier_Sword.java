@@ -8,29 +8,29 @@ import main.GamePanel;
 import skill.Bloodslash;
 import skill.Projectile;
 
-public class Item_Blood_Katana extends MasterObject{
+public class Item_Glacier_Sword extends MasterObject{
     GamePanel gp;
     Projectile slash;
     
-	public Item_Blood_Katana(GamePanel gp) {
+	public Item_Glacier_Sword(GamePanel gp) {
 		
 		this.gp = gp;
 		downFX = "slashblood1";
 		rightFX = "slashblood2";
 		upFX = "slashblood3";
 		leftFX = "slashblood4";
-		name = "River of Blood";
+		name = "Glacier Sword";
 		try {
-			InventoryImage = ImageIO.read(getClass().getResourceAsStream("/inventory/Blood_Katana.png"));
+			InventoryImage = ImageIO.read(getClass().getResourceAsStream("/inventory/Glacier.png"));
 			utility.scaleImage(InventoryImage,gp.tileSize,gp.tileSize);
-			image = ImageIO.read(getClass().getResourceAsStream("/object/Blood_Katana.png"));
+			image = ImageIO.read(getClass().getResourceAsStream("/object/Glacier.png"));
 			utility.scaleImage(image,gp.tileSize,gp.tileSize);
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
 		collision = true;
-		ATK = 2500;
-		range = 50;
+		ATK = 100;
+		range = 38;
 		type = "weapon";
 		discription = "An Ancient cursed weapon. \nComsume user blood to \nchanneling energy.";
 	}
@@ -41,7 +41,6 @@ public class Item_Blood_Katana extends MasterObject{
 			slash.set(gp.player.worldX,gp.player.worldY,gp.player.direction,gp.player);
 			c.CostMP(10);
 		}
-		c.TookDMG(50);
 	}
 
 }

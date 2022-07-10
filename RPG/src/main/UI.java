@@ -159,9 +159,10 @@ public class UI {
 		g2.drawString(text, x, y);
 		y = 420;
 		
+		//Version
 		g2.setColor(Color.BLACK);
 		g2.setFont(new Font("x12y16pxMaruMonica", Font.BOLD, 24));
-		g2.drawString("BETA test version 0.0.3",1300,820);
+		g2.drawString("BETA test version 1.0.3",1300,820);
 		
 	}
 

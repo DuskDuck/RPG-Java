@@ -36,6 +36,9 @@ public class Player extends Character{
 	public boolean skillusing = false;
 
 	private int skillcounter;
+
+	public int WPindex;
+	public int shieldindex;
 	
 	public Player(GamePanel gp, KeyInput key) {
 		super(gp);
@@ -197,8 +200,9 @@ public class Player extends Character{
 				skillcounter++;
 				if(skillcounter == 1) {
 					Projectile ice = new Ice_Missile(gp);
+					ice.set(worldX,worldY,direction,this);
 				    gp.projectileList.add(ice);
-				    ice.set(worldX,worldY,direction,this);
+				    
 				    skillcounter = 0;
 				    skillusing = false;
 				    }	
@@ -446,10 +450,12 @@ public class Player extends Character{
 			MasterObject selectedItem = inventory.get(itemIndex);
 			if(selectedItem.type == "weapon") {
 				OnhandWP = selectedItem;
+				WPindex = itemIndex;
 				ATK = getGearStat("Weapon");			
 			}
 			if(selectedItem.type == "shield") {
 				Shield = selectedItem;
+				shieldindex = itemIndex;
 				DEF = getGearStat("Shield");
 			}
 			if(selectedItem.type == "consumable") {
@@ -476,8 +482,8 @@ public class Player extends Character{
 		gp.GameState = gp.playState;
 		HP = MaxHP;
 		MP = MaxMP;
-		worldX = gp.tileSize*5;
-		worldY = gp.tileSize*5;
+		worldX = gp.tileSize*15;
+		worldY = gp.tileSize*15;
 		gp.ui.i = 0;
 		gp.restart();
 		inventory.add(Shield);

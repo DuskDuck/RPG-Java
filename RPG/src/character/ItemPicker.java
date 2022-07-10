@@ -7,6 +7,8 @@ import main.GamePanel;
 import object.Item_Blood_Katana;
 import object.Item_Coin;
 import object.Item_Crusader_Shield;
+import object.Item_Dual_Blood_Katana;
+import object.Item_Glacier_Sword;
 import object.Item_God_Skin_Ripper;
 import object.Item_HP_Potion_B;
 import object.Item_HP_Potion_M;
@@ -15,6 +17,7 @@ import object.Item_Iron_Sword;
 import object.Item_Katana;
 import object.Item_Key;
 import object.Item_LightSaber;
+import object.Item_Ruin_Sword;
 import object.Item_Wooden_Shield;
 import object.MasterObject;
 
@@ -39,14 +42,17 @@ public class ItemPicker {
 		standard.add(new Item_Katana(gp));
 		//Rare item
 		rare.add(new Item_HP_Potion_B(gp));
+		rare.add(new Item_Ruin_Sword(gp));
 		//Superior
 		superior.add(new Item_Key(gp));
+		superior.add(new Item_Glacier_Sword(gp));
 		//High-end
 		highend.add(new Item_Crusader_Shield(gp));
 		highend.add(new Item_God_Skin_Ripper(gp));
 		//Exotic item
 		exotic.add(new Item_Blood_Katana(gp));
 		exotic.add(new Item_LightSaber(gp));
+		exotic.add(new Item_Dual_Blood_Katana(gp));
 	}
 	public MasterObject pickItem(ArrayList<MasterObject> item) {
 		int i = new Random().nextInt(item.size())+0;
