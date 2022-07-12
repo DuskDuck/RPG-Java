@@ -167,7 +167,7 @@ public class UI {
 		//Version
 		g2.setColor(Color.BLACK);
 		g2.setFont(new Font("x12y16pxMaruMonica", Font.BOLD, 24));
-		g2.drawString("BETA version 1.2.1",1300,820);
+		g2.drawString("version 1.3.0",1300,820);
 		
 	}
 
