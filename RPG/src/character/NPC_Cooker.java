@@ -4,6 +4,10 @@ package character;
 import java.awt.Graphics2D;
 import main.GamePanel;
 import object.Item_Blood_Katana;
+import object.Item_Cake;
+import object.Item_Chicken;
+import object.Item_Chocolate;
+import object.Item_Cocktail;
 import object.Item_God_Skin_Ripper;
 import object.Item_HP_Potion_B;
 import object.Item_HP_Potion_M;
@@ -11,6 +15,10 @@ import object.Item_HP_Potion_S;
 import object.Item_Iron_Sword;
 import object.Item_Katana;
 import object.Item_Key;
+import object.Item_Lolipop;
+import object.Item_Mushroom;
+import object.Item_OrangeJuice;
+import object.Item_Soda;
 
 public class NPC_Cooker extends Character{
 	
@@ -48,10 +56,14 @@ public class NPC_Cooker extends Character{
 		dialog[3] = "Best resonable price";
 	}
 	public void setItem() {
-		inventory.add(new Item_Iron_Sword(gp));
-		inventory.add(new Item_Katana(gp));
-		inventory.add(new Item_God_Skin_Ripper(gp));
-		inventory.add(new Item_Blood_Katana(gp));
+		inventory.add(new Item_Cocktail(gp));
+		inventory.add(new Item_Soda(gp));
+		inventory.add(new Item_OrangeJuice(gp));
+		inventory.add(new Item_Mushroom(gp));
+		inventory.add(new Item_Chicken(gp));
+		inventory.add(new Item_Lolipop(gp));
+		inventory.add(new Item_Chocolate(gp));
+		inventory.add(new Item_Cake(gp));
 	}
 	public void interact() {
 		gp.GameState = gp.tradeState;

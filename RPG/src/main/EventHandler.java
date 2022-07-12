@@ -58,7 +58,8 @@ public class EventHandler {
 		if( hit(0,6,38) == true ) {tp(2,37,3);gp.player.spawnX = gp.tileSize*15;gp.player.spawnY = gp.tileSize*15;}
 		if( hit(0,35,23) == true ) {System.out.println("Hello");}
 		if( hit(0,36,23) == true ) {System.out.println("Hello");}
-		
+		if( hit(2,32,14) == true ) {tp(5,25,22);}
+		if( hit(5,25,24) == true ) {tp(2,32,15);}
 		if( hit(0,5,6) == true ) {damagePit();}
 		if( hit(0,6,7) == true ) {healingWell();}
 		if( hit(0,8,8) == true ) {

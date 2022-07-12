@@ -8,6 +8,7 @@ import character.Bufalo;
 import character.GreenSlime;
 import character.NPC_1;
 import character.NPC_Cave_Guard;
+import character.NPC_Cooker;
 import character.NPC_Flame_Pet;
 import character.NPC_Guard;
 import character.NPC_Guider;
@@ -152,6 +153,10 @@ public class ItemGenerator {
 		gp.npc[4][i] = new NPC_Potion_Maker(gp);
 		gp.npc[4][i].worldX = gp.tileSize*25;
 		gp.npc[4][i].worldY = gp.tileSize*18;
+		i++;
+		gp.npc[5][i] = new NPC_Cooker(gp);
+		gp.npc[5][i].worldX = gp.tileSize*25;
+		gp.npc[5][i].worldY = gp.tileSize*18;
 		i++;
 		gp.npc[0][i] = new NPC_Flame_Pet(gp);
 		gp.npc[0][i].worldX = gp.tileSize*8;
