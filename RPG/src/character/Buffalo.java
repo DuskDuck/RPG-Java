@@ -4,16 +4,17 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import main.GamePanel;
 
-public class Bufalo extends Monster{
+public class Buffalo extends Monster{
 
-	public Bufalo(GamePanel gp) {
+	public Buffalo(GamePanel gp) {
 		super(gp);
-		MaxHP = 40;
-		HP = 40;
+		MaxHP = 1200;
+		HP = 1200;
 		name = "Buffalo"; 
-		lv = 2;
+		lv = 20;
 		direction = "down";
 		speed = 1;
+		ATK = 150;
 		
 		graphic.getImageMonster("Bufalo");
 	}

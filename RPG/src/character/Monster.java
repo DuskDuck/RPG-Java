@@ -30,11 +30,18 @@ public class Monster extends Character {
 	Random randomatk = new Random();
 	int j = randomatk.nextInt(120)+40;
 
+
+	private int KnockbackCounter;
+
+
+	private int defaultspeed;
+
 	
 	public Monster(GamePanel gp) {
 		super(gp);
 		direction = "right" ;
 		speed = 1;
+		defaultspeed = speed;
 		//Collision setting
 		collisionDefaultX = 7;
 		collisionDefaultY = 7;
@@ -45,7 +52,7 @@ public class Monster extends Character {
 
 	public void contact(character.Character c) {
 		if(activated == false) {
-			c.HP -= ATK - c.DEF ;
+			c.TookDMG(ATK);
 			activated = true;
 		}
 	}
@@ -56,12 +63,14 @@ public class Monster extends Character {
 			int goalCol = (gp.player.worldX + gp.player.collisionBox.x)/gp.tileSize;
 			int goalRow = (gp.player.worldY + gp.player.collisionBox.y)/gp.tileSize;
 			searchPath(goalCol, goalRow);
+			
 			if(AtkCounter == j) {
 				Projectile poison = new PoisonSpit(gp);
 				gp.projectileList.add(poison);
 				poison.set(worldX,worldY,direction,this);
 				AtkCounter = 0;
 			}
+			
 			
 		}else {
 			ActionCounter++;
@@ -83,9 +92,8 @@ public class Monster extends Character {
 					direction = "right";
 				}
 			}	
-		}	
+		}
 	}
-	
 	public void hitted(int dmg,int i,int knockbackpower) {
 		knockback = true;
 		speed = knockbackpower;
@@ -118,16 +126,16 @@ public class Monster extends Character {
 				graphic.AnimFX(g2,1,screenX,screenY);			
 			}
 			if(AnimCounter > 5 && AnimCounter < 15) {
-				graphic.AnimFX(g2,2,screenX,screenY);
-				
+				graphic.AnimFX(g2,2,screenX,screenY);	
 			}
 			if(AnimCounter >= 15 && AnimCounter < 20) {
 				graphic.AnimFX(g2,3,screenX,screenY);
 			}
 			if(AnimCounter >= 20) {
 				AnimCounter = 0;
-				CheckDrop(40,40,40,40,100,100);
-				gp.mob[gp.currentMap][OnmapIndex] = null;
+				CheckDrop(40,65,80,90,97,100);
+				//CheckDrop(40,40,40,40,100,100);
+				gp.npc[gp.currentMap][OnmapIndex] = null;
 			}
 		}
 		if(hpbarOn == true) {
@@ -138,19 +146,41 @@ public class Monster extends Character {
 				hpbarOn = false;	
 			}
 		}
+		if(gp.player.debugmode == true) {
+			graphic.drawCollision(g2, screenX+collisionBox.x, screenY+collisionBox.y, collisionBox.width,collisionBox.height);
+		}
 	}
 	public void update() {
-		if(activated == true) {
-			cooldown++;
-			if(cooldown == 60) {
-				activated = false;
-				cooldown = 0;
+		if(knockback == true) {
+			gp.Colchecker.checkTile(this);
+			gp.Colchecker.checkPlayer(this);
+			if(collisionOn == true) {
+				KnockbackCounter = 0;
+				knockback = false;
+				speed = defaultspeed;
 			}
+			else if(collisionOn == false){
+				graphic.updateDirection(this, 20,2);
+			}
+			KnockbackCounter++;
+			if(KnockbackCounter == 5) {
+				KnockbackCounter = 0;
+				knockback = false;
+				speed = defaultspeed;
+			}
+		}else {
+			if(activated == true) {
+				cooldown++;
+				if(cooldown == 60) {
+					activated = false;
+					cooldown = 0;
+				}
+			}
+			setAction();
+			checkDistance(5);
+			gp.Colchecker.checkTile(this);
+			gp.Colchecker.checkPlayer(this);
+			graphic.updateDirection(this, 20,2);
 		}
-		setAction();
-		checkDistance(5);
-		gp.Colchecker.checkTile(this);
-		gp.Colchecker.checkPlayer(this);
-		graphic.updateDirection(this, 20,2);
 	}
 }

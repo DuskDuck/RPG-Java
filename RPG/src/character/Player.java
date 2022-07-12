@@ -3,13 +3,18 @@ package character;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 
 import main.GamePanel;
 import main.KeyInput;
 import object.Item_Iron_Sword;
 import object.Item_Wooden_Shield;
 import object.MasterObject;
+import skill.Bullet;
 import skill.Ice_Missile;
 import skill.PoisonSpit;
 import skill.Projectile;
@@ -42,6 +47,8 @@ public class Player extends Character{
 
 	public boolean parrying = false;
 	private int parrycounter = 0;
+
+	public boolean gun;
 	
 	public Player(GamePanel gp, KeyInput key) {
 		super(gp);
@@ -93,6 +100,11 @@ public class Player extends Character{
 		graphic.right2 = graphic.setup("/player/duckboy_R2");
 		graphic.idle1 = graphic.setup("/player/duckboy_1");
 		graphic.idle2 = graphic.setup("/player/duckboy_2");
+		
+		graphic.gunImageUp = graphic.setup("/object/Sniper_up");
+		graphic.gunImageDown = graphic.setup("/object/Sniper_down");
+		graphic.gunImageL = graphic.setup("/object/Sniper_Left");
+		graphic.gunImageR = graphic.setup("/object/Sniper");
 		graphic.getAtkImage("/player");
 	}
 	//Spawn default information
@@ -215,7 +227,10 @@ public class Player extends Character{
 				    }	
 				}
 			}
-			}
+		}
+		if(skill == 2) {
+			gun = true;
+		}
 			
 	}
 	
@@ -331,33 +346,53 @@ public class Player extends Character{
 		collisionBox.width = collisionBoxW;
 		collisionBox.height = collisionBoxH;
 	}
+	public void shooting() {
+		Projectile bullet = new Bullet(gp);
+		bullet.set(worldX,worldY,direction,this);
+	    gp.projectileList.add(bullet);
+	}
 	public void MeleeAttack(Graphics2D g2) {
 		if(attacking == true) {
 		switch(direction) {
         case "up":
     			AnimCounter++;
-    			if(AnimCounter == 1) {
-					attacking(g2);
+    			if(gun == true) {
+    				if(AnimCounter == 10) {
+    					shooting();
+    					AnimCounter = 0;
+    				}
+				}else {
+					if(AnimCounter == 1) {
+	    				attacking(g2);	
+					}
+	    			if(AnimCounter <= 5) {
+	    				//graphic.attack(g2,7,this,-24,-72);
+	    				graphic.SpecialAtkFX(g2,OnhandWP.upFX,this,-24,-72);
+	    			}
+	    			if(AnimCounter > 5 && AnimCounter < 15) {
+	    				graphic.attack(g2,8,this,-24,-72);
+	    			}
+	    			if(AnimCounter >= 15 && AnimCounter < 20) {
+	    				graphic.attack(g2,9,this,-24,-72);
+	    			}
+	    			if(AnimCounter >= 20) {
+	    				AnimCounter = 0;
+	    				attacking = false;
+	    			}
 				}
-    			if(AnimCounter <= 5) {
-    				//graphic.attack(g2,7,this,-24,-72);
-    				graphic.SpecialAtkFX(g2,OnhandWP.upFX,this,-24,-72);
-    			}
-    			if(AnimCounter > 5 && AnimCounter < 15) {
-    				graphic.attack(g2,8,this,-24,-72);
-    			}
-    			if(AnimCounter >= 15 && AnimCounter < 20) {
-    				graphic.attack(g2,9,this,-24,-72);
-    			}
-    			if(AnimCounter >= 20) {
-    				AnimCounter = 0;
-    				attacking = false;
-    			}
 			break;
 		case "down":
     			AnimCounter++;
-    			if(AnimCounter == 1) {
-					attacking(g2);
+    			if(gun == true) {
+    				if(AnimCounter == 10) {
+    					shooting();
+    					AnimCounter = 0;
+    				}
+    			}else {
+    				if(AnimCounter == 1) {
+    			    	
+    					attacking(g2);
+   
 				}
     			if(AnimCounter <= 5) {
     				//graphic.attack(g2,1,this,-24,15);
@@ -373,11 +408,20 @@ public class Player extends Character{
     				AnimCounter = 0;
     				attacking = false;
     			}
+    			}
 			break;
 		case "left":
-    			AnimCounter++;
-    			if(AnimCounter == 1) {
-					attacking(g2);
+    			AnimCounter++;    
+    			if(gun == true) {
+    				if(AnimCounter == 10) {
+    					shooting();
+    					AnimCounter = 0;
+    				}
+    			}else {
+    				if(AnimCounter == 1) {
+        				
+    					attacking(g2);
+    		
 				}
     			if(AnimCounter <= 5) {
     				//graphic.attack(g2,10,this,-68,-24);
@@ -394,11 +438,21 @@ public class Player extends Character{
     				AnimCounter = 0;
     				attacking = false;
     			}
+    			}
+    			
 			break;
 		case "right":
     			AnimCounter++;
-    			if(AnimCounter == 1) {
-					attacking(g2);
+    			if(gun == true) {
+    				if(AnimCounter == 10) {
+    					shooting();
+    					AnimCounter = 0;
+    				}
+    			}else {
+    				if(AnimCounter == 1) {
+        				
+    					attacking(g2);
+    				
 				}
     			if(AnimCounter <= 5) {
     				//graphic.attack(g2,4,this,15,-24);
@@ -415,6 +469,8 @@ public class Player extends Character{
     				AnimCounter = 0;
     				attacking = false;
     			}
+    			}
+    			
 			break;
 		    }
 		}
@@ -446,6 +502,7 @@ public class Player extends Character{
 	public void draw(Graphics2D g2) {
 		//System.out.println(AnimCounter);
 		//System.out.println(graphic.spriteNum);
+		
 		graphic.drawPlayer(this, g2);
 		if(gp.player.debugmode == true) {
 			graphic.drawDebug(gp,g2, this);
@@ -460,6 +517,9 @@ public class Player extends Character{
 		}
 		if(gp.GameState == gp.tradeState) {
 			graphic.drawTraderInventory(gp, g2);
+		}
+		if(gun == true) {
+			graphic.SetGunDirection(g2, direction, screenX, screenY);
 		}
 	}
 	public void LevelUp() {

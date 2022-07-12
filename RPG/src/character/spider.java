@@ -8,12 +8,13 @@ public class spider extends Monster{
 
 	public spider(GamePanel gp) {
 		super(gp);
-		MaxHP = 25;
-		HP = 25;
+		MaxHP = 800;
+		HP = 800;
 		name = "spider";
 		lv = 2;
 		direction = "down";
-		speed = 1;
+		speed = 2;
+		ATK = 80;
 		
 		graphic.getImageMonster("spider");
 	}

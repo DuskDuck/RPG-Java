@@ -6,12 +6,13 @@ public class Bat extends Monster{
 
 	public Bat(GamePanel gp) {
 		super(gp);
-		MaxHP = 20;
-		HP = 20; 
+		MaxHP = 200;
+		HP = 200; 
 		direction = "down";
 		name = "Bat";
-		lv = 2;
-		speed = 1;
+		lv = 16;
+		speed = 3;
+		ATK = 50;
 		
 		graphic.getImageMonster("Bat");
 	}

@@ -4,7 +4,7 @@ package main;
 import character.Bat;
 import character.BossFinal;
 import character.BossSlime;
-import character.Bufalo;
+import character.Buffalo;
 import character.GreenSlime;
 import character.NPC_1;
 import character.NPC_Cave_Guard;
@@ -180,27 +180,39 @@ public class ItemGenerator {
 		gp.npc[2][i].worldY = gp.tileSize*18;
 		i++;
 		*/
-		gp.npc[0][i] = new GreenSlime(gp);
-		gp.npc[0][i].worldX = gp.tileSize*17;
-		gp.npc[0][i].worldY = gp.tileSize*18;
+		//Dungeon Map
+		gp.npc[0][i] = new Bat(gp);
+		gp.npc[0][i].worldX = gp.tileSize*7;
+		gp.npc[0][i].worldY = gp.tileSize*8;
 		i++;
-		gp.npc[0][i] = new GreenSlime(gp);
-		gp.npc[0][i].worldX = gp.tileSize*16;
-		gp.npc[0][i].worldY = gp.tileSize*18;
-		i++;
-		gp.npc[0][i] = new GreenSlime(gp);
+		gp.npc[0][i] = new Bat(gp);
 		gp.npc[0][i].worldX = gp.tileSize*5;
+		gp.npc[0][i].worldY = gp.tileSize*5;
+		i++;
+		gp.npc[0][i] = new Bat(gp);
+		gp.npc[0][i].worldX = gp.tileSize*20;
 		gp.npc[0][i].worldY = gp.tileSize*9;
 		i++;
-		gp.npc[0][i] = new GreenSlime(gp);
+		gp.npc[0][i] = new Buffalo(gp);
+		gp.npc[0][i].worldX = gp.tileSize*19;
+		gp.npc[0][i].worldY = gp.tileSize*8;
+		i++;
+		gp.npc[0][i] = new Buffalo(gp);
 		gp.npc[0][i].worldX = gp.tileSize*18;
 		gp.npc[0][i].worldY = gp.tileSize*18;
 		i++;
-		gp.npc[0][i] = new GreenSlime(gp);
-		gp.npc[0][i].worldX = gp.tileSize*7;
-		gp.npc[0][i].worldY = gp.tileSize*7;
+		gp.npc[0][i] = new spider(gp);
+		gp.npc[0][i].worldX = gp.tileSize*19;
+		gp.npc[0][i].worldY = gp.tileSize*18;
 		i++;
-		
+		gp.npc[0][i] = new flame(gp);
+		gp.npc[0][i].worldX = gp.tileSize*35;
+		gp.npc[0][i].worldY = gp.tileSize*4;
+		i++;
+		gp.npc[0][i] = new BossSlime(gp);
+		gp.npc[0][i].worldX = gp.tileSize*36;
+		gp.npc[0][i].worldY = gp.tileSize*5;
+		i++;
 		gp.npc[0][i] = new BossSlime(gp);
 		gp.npc[0][i].worldX = gp.tileSize*19;
 		gp.npc[0][i].worldY = gp.tileSize*8;
@@ -209,6 +221,7 @@ public class ItemGenerator {
 		gp.npc[0][i].worldX = gp.tileSize*6;
 		gp.npc[0][i].worldY = gp.tileSize*6;
 		i++;
+		
 		
 		//Village map
 		//In Village NPC

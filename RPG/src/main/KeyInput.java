@@ -81,6 +81,13 @@ public class KeyInput implements KeyListener{
 					gp.player.skillusing = true;
 				}
 			}
+			if(code == KeyEvent.VK_2) {
+				if(gp.player.skillusing == false) {
+					gp.player.gun = true;
+
+				}
+			}
+			
 		}
 		//Pause State
 		else if(gp.GameState == gp.pauseState || gp.GameState == gp.statState) {
@@ -294,6 +301,7 @@ public class KeyInput implements KeyListener{
 			interactKey = false;
 		}
 		if(code == KeyEvent.VK_SPACE) {
+			gp.player.gun = false;
 			//gp.player.speed = 4;
 			//gp.player.attacking = false;
 		}	
@@ -308,6 +316,10 @@ public class KeyInput implements KeyListener{
 		}
 		//SKILL SET
 		if(code == KeyEvent.VK_1) {
+			gp.player.skill = 0;
+			gp.player.skillusing = false;
+		}
+		if(code == KeyEvent.VK_2) {
 			gp.player.skill = 0;
 			gp.player.skillusing = false;
 		}

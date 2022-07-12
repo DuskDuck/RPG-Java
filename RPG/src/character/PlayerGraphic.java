@@ -18,6 +18,7 @@ public class PlayerGraphic {
 	private static final String OnHand = null;
 	public BufferedImage up1,up2,down1,down2,left1,left2,right1,right2,idle1,idle2;
 	public BufferedImage atkup1,atkup2,atkdown1,atkdown2,atkleft1,atkleft2,atkright1,atkright2;
+	public BufferedImage gunImageR,gunImageL,gunImageUp,gunImageDown;
 	public BufferedImage coin;
 	public int spriteCounter = 0;
 	public int spriteNum = 1;
@@ -658,6 +659,22 @@ public class PlayerGraphic {
 			g2.drawImage(image, screenX, screenY,gp.tileSize,gp.tileSize,null);
 		}
 
+	}
+	public void SetGunDirection(Graphics2D g2,String direction,int screenX,int screenY) {
+		switch(direction) {
+		case "up":
+			g2.drawImage(gunImageUp, screenX+30, screenY-15,21,66,null);
+			break;
+		case "down":
+			g2.drawImage(gunImageDown, screenX, screenY+15,21,66,null);
+			break;
+		case "left":
+			g2.drawImage(gunImageL, screenX-30, screenY+25,66,21,null);
+			break;
+		case "right":
+			g2.drawImage(gunImageR, screenX+15, screenY+25,66,21,null);
+			break;
+		}
 	}
 
 	private void trade_select(GamePanel gp,Graphics g2) {
