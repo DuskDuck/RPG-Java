@@ -199,7 +199,11 @@ public class Player extends Character{
 		//System.out.println(direction);
 		//SKILL
 		if(skill == 1) {
-			if(skillusing == true) {
+			if(MP < 20) {
+				
+			}else {
+				MP -= 20;
+				if(skillusing == true) {
 				skillcounter++;
 				if(skillcounter == 1) {
 					Projectile ice = new Ice_Missile(gp);
@@ -211,6 +215,8 @@ public class Player extends Character{
 				    }	
 				}
 			}
+			}
+			
 	}
 	
 	//Effect when pick up Items 
@@ -505,6 +511,7 @@ public class Player extends Character{
 		worldX = gp.tileSize*15;
 		worldY = gp.tileSize*15;
 		gp.ui.i = 0;
+		inventory.clear();
 		gp.restart();
 		inventory.add(Shield);
 		inventory.add(OnhandWP);

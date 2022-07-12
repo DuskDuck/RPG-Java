@@ -44,7 +44,6 @@ public class MasterObject {
 			
 			g2.drawImage(image,screenX,screenY,gp.tileSize,gp.tileSize,null);
 		}
-		
 	}
 	public void interact(int i) {
 		

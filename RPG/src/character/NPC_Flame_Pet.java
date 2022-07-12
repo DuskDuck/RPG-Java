@@ -39,7 +39,6 @@ public class NPC_Flame_Pet extends Character{
 		if(onPath == true) {
 			int goalCol = (gp.player.worldX + gp.player.collisionBox.x)/gp.tileSize;
 			int goalRow = (gp.player.worldY + gp.player.collisionBox.y)/gp.tileSize;
-			
 			searchPath(goalCol, goalRow);
 		}
 	}

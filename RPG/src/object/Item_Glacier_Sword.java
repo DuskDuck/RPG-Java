@@ -6,6 +6,7 @@ import javax.imageio.ImageIO;
 
 import main.GamePanel;
 import skill.Bloodslash;
+import skill.Ice_Missile;
 import skill.Projectile;
 
 public class Item_Glacier_Sword extends MasterObject{
@@ -36,7 +37,7 @@ public class Item_Glacier_Sword extends MasterObject{
 	}
 	public void effect(character.Character c) {
 		if(c.MP > 10) {
-			Projectile slash = new Bloodslash(gp);
+			Projectile slash = new Ice_Missile(gp);
 			gp.projectileList.add(slash);
 			slash.set(gp.player.worldX,gp.player.worldY,gp.player.direction,gp.player);
 			c.CostMP(10);

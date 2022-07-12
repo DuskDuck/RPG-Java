@@ -33,8 +33,8 @@ public class GamePanel extends JPanel implements Runnable{
 	public int currentMap = 2;
 	
 	//setting for world
-	public final int maxWorldCol = 100;
-	public final int maxWorldRow = 100;
+	public final int maxWorldCol = 50;
+	public final int maxWorldRow = 50;
 	
 	//System
 	public static final int FPS = 60;//game's refresh rate per second
@@ -71,6 +71,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int gameoverState = 5;
 	public final int titleState = 6;
 	public final int tradeState = 7;
+	public final int finishState = 8;
 	
 	
 	public GamePanel() {
@@ -251,7 +252,11 @@ public class GamePanel extends JPanel implements Runnable{
 	public void restart() {
 		ItemGen.setObject();
 		ItemGen.setNPC();
-		player.inventory.clear();
+		currentMap = 2;
+		for(int i = 0; i < 100; i++) {
+			obj[0][i] = null;
+			obj[2][i] = null;
+		}
 	}
 	
 }

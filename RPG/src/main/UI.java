@@ -72,22 +72,26 @@ public class UI {
 			drawTitle();
 		}
 		if(gp.GameState == gp.playState) {
-			drawHUD();
+			drawHUD();//	HP,MP,Lv
 			drawMessage();
 		}
 		if(gp.GameState == gp.pauseState) {
-			drawPauseScreen();
-			drawHUD();
-		}
-		if(gp.GameState == gp.dialogState) {
-			drawDialogScreen();
+			drawPauseScreen(); //
 			drawHUD();
 		}
 		if(gp.GameState == gp.statState) {
-			drawHUD();
+			drawHUD(); //Inventory
 		}
 		if(gp.GameState == gp.tradeState) {
 			//drawHUD();
+		}
+		if(gp.GameState == gp.finishState) {
+			if(i == 255) {
+				//stop count	
+				}else {
+					i+=3;
+				}
+			drawFinishScreen(i);
 		}
 		if(gp.GameState == gp.gameoverState) {
 			if(i == 255) {
@@ -113,6 +117,7 @@ public class UI {
 		//Title
 		g2.drawImage(background, 0, 0,48*32,48*18, null);
 		g2.setFont(new Font("x12y16pxMaruMonica", Font.BOLD, 180));
+		
 		String text = "DUCKBOY ADVENTURE";
 		
 		int x = 100;
@@ -162,13 +167,13 @@ public class UI {
 		//Version
 		g2.setColor(Color.BLACK);
 		g2.setFont(new Font("x12y16pxMaruMonica", Font.BOLD, 24));
-		g2.drawString("BETA test version 1.0.3",1300,820);
+		g2.drawString("BETA version 1.2.1",1300,820);
 		
 	}
 
 	private void drawGameOver(int i) {
 		// TODO Auto-generated method stub
-		g2.setColor(new Color(0,0,0,i));
+		g2.setColor(new Color(0,0,0,i)); 
 		g2.fillRect(0, 0, gp.screenWidth,gp.screenHeight);
 		int x;
 		int y;
@@ -211,6 +216,56 @@ public class UI {
 				g2.drawRoundRect(x-145, y+220, 200, 40, 10, 10);
 			}
 			if(SelectionCount == 2) {
+				g2.drawRoundRect(x+275, y+220, 200, 40, 10, 10);
+			}
+		}
+	}
+	private void drawFinishScreen(int i) {
+		g2.setColor(new Color(0,0,0,i)); 
+		g2.fillRect(0, 0, gp.screenWidth,gp.screenHeight);
+		int x;
+		int y;
+		
+		String text;
+		g2.setFont(new Font("x12y16pxMaruMonica", Font.PLAIN, 120));
+		text = "YOU WON";
+		x = 600;
+		y = gp.tileSize * 8;
+		g2.setColor(Color.DARK_GRAY);
+		g2.drawString(text, x, y);
+		g2.setColor(Color.YELLOW);
+		g2.drawString(text, x-4, y-4);
+		
+		if(i == 255) {
+			//Instruction
+			g2.drawImage(A,30, 750, 35, 35, null);
+			g2.drawImage(D,70, 750, 35, 35, null);
+			g2.drawImage(ENTER,240, 750, 35, 35, null);
+			g2.setColor(Color.WHITE);
+			g2.setFont(new Font("x12y16pxMaruMonica", Font.PLAIN, 26));
+			g2.drawString("Move Cursor", 110, 775);
+			g2.drawString("Select", 280, 775);
+			//Text winning
+			g2.setFont(new Font("x12y16pxMaruMonica", Font.BOLD, 46));
+			g2.drawString("You have successfully saved the village", x-150, y+60);
+			//Button
+			g2.setColor(new Color(230,146,6));
+			g2.fillRoundRect(x-145, y+220, 200, 40, 10, 10);
+			g2.fillRoundRect(x+275, y+220, 200, 40, 10, 10);
+			g2.setColor(Color.BLACK);
+			g2.setFont(new Font("Teko", Font.PLAIN, 35));
+			text = "RESTART";
+			g2.drawString(text, x-100, y+250);
+			text = "EXIT TO TITLE";
+			g2.drawString(text, x+310, y+250);
+			
+			//Outline current choice
+			((Graphics2D) g2).setStroke(new BasicStroke(5));
+			g2.setColor(new Color(255,205,34));
+			if(SelectionCount == 5) {
+				g2.drawRoundRect(x-145, y+220, 200, 40, 10, 10);
+			}
+			if(SelectionCount == 6) {
 				g2.drawRoundRect(x+275, y+220, 200, 40, 10, 10);
 			}
 		}
@@ -302,14 +357,15 @@ public class UI {
 	}
 	public void PlayerHUD(Graphics2D g2) {
 
-		//Health bar
+		//HP bar
 		double hpscale = (double)gp.tileSize*10/gp.player.MaxHP;
 		double hpbarValue = hpscale*gp.player.HP;
 		g2.setColor(new Color(130,0,0,200));
 		g2.fillRect(100, 35, gp.tileSize*10, 20);
 		g2.setColor(new Color(215,0,0));
 		g2.fillRect(100, 35, (int)hpbarValue, 20);
-		//Mana bar
+		
+		//MP bar
 		double mpscale = (double)gp.tileSize*6/gp.player.MaxMP;
 		double mpbarValue = mpscale*gp.player.MP;
 		g2.setColor(new Color(0,24,83,200));
@@ -317,19 +373,5 @@ public class UI {
 		g2.setColor(new Color(14,86,254));
 		g2.fillRect(100, 60, (int)mpbarValue, 10);
 		g2.setColor(Color.white);
-	}
-	public void animation(Graphics2D g2,String directory,int x,int y,BufferedImage image,int interval,int NumIndex) {
-		g2.drawImage(image,x,y,null);
-		counter++;
-		if(counter > interval) {
-			spriteNum++;
-			if(spriteNum > NumIndex) {
-				spriteNum = 1; 
-			}
-		}
-		switch(NumIndex) {
-		case 1:
-			g2.drawImage(image,x,y,null);
-		}
 	}
 }

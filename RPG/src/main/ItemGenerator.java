@@ -1,14 +1,21 @@
 package main;
 
 
+import character.Bat;
+import character.BossFinal;
 import character.BossSlime;
+import character.Bufalo;
 import character.GreenSlime;
 import character.NPC_1;
+import character.NPC_Cave_Guard;
 import character.NPC_Flame_Pet;
+import character.NPC_Guard;
 import character.NPC_Guider;
 import character.NPC_Potion_Maker;
 import character.NPC_Trader;
 import character.NPC_Weapon_Smith;
+import character.flame;
+import character.spider;
 import object.Item_Blood_Katana;
 import object.Item_Coin;
 import object.Item_Crusader_Shield;
@@ -19,6 +26,7 @@ import object.Item_I_Crate;
 import object.Item_Key;
 import object.Item_LightSaber;
 import object.Item_Speed_Potion;
+import overlay_object.Dungeon_Entrance;
 import overlay_object.Forest_1;
 import overlay_object.Forest_2;
 import overlay_object.Hut;
@@ -50,6 +58,10 @@ public class ItemGenerator {
 		gp.obj[0][i].worldX = 3 * gp.tileSize;
 		gp.obj[0][i].worldY = 3 * gp.tileSize;
 		i++;
+		gp.obj[0][i] = new Item_Blood_Katana(gp);
+		gp.obj[0][i].worldX = 7 * gp.tileSize;
+		gp.obj[0][i].worldY = 8 * gp.tileSize;
+		i++;
 		/*
 		gp.obj[0][i] = new Item_Crusader_Shield(gp);
 		gp.obj[0][i].worldX = 19 * gp.tileSize;
@@ -69,10 +81,7 @@ public class ItemGenerator {
 		gp.obj[0][i].worldY = 16 * gp.tileSize;
 		i++;
 		
-		gp.obj[0][i] = new Item_Blood_Katana(gp);
-		gp.obj[0][i].worldX = 7 * gp.tileSize;
-		gp.obj[0][i].worldY = 8 * gp.tileSize;
-		i++;
+		
 		gp.obj[0][i] = new Item_LightSaber(gp);
 		gp.obj[0][i].worldX = 17 * gp.tileSize;
 		gp.obj[0][i].worldY = 8 * gp.tileSize;
@@ -93,10 +102,6 @@ public class ItemGenerator {
 	}
 	public void setOverlay() {
 		int i = 0;
-		gp.ovl[0][i] = new Hut();
-		gp.ovl[0][i].worldX = 80;
-		gp.ovl[0][i].worldY = gp.tileSize*0;
-		i++;
 		gp.ovl[2][i] = new Forest_1();
 		gp.ovl[2][i].worldX = 0;
 		gp.ovl[2][i].worldY = 0;
@@ -107,14 +112,6 @@ public class ItemGenerator {
 		i++;
 		gp.ovl[2][i] = new Forest_2();
 		gp.ovl[2][i].worldX = 400;
-		gp.ovl[2][i].worldY = 0;
-		i++;
-		gp.ovl[2][i] = new Forest_2();
-		gp.ovl[2][i].worldX = 1200;
-		gp.ovl[2][i].worldY = 0;
-		i++;
-		gp.ovl[2][i] = new Forest_2();
-		gp.ovl[2][i].worldX = 2000;
 		gp.ovl[2][i].worldY = 0;
 		i++;
 		gp.ovl[2][i] = new Hut();
@@ -136,6 +133,10 @@ public class ItemGenerator {
 		gp.ovl[2][i] = new Hut();
 		gp.ovl[2][i].worldX = 1195;
 		gp.ovl[2][i].worldY = 860;
+		i++;
+		gp.ovl[2][i] = new Dungeon_Entrance();
+		gp.ovl[2][i].worldX = 1290;
+		gp.ovl[2][i].worldY = 0;
 		i++;
 	}
 	public void setNPC() {
@@ -174,15 +175,10 @@ public class ItemGenerator {
 		gp.npc[2][i].worldY = gp.tileSize*18;
 		i++;
 		*/
-		gp.npc[2][i] = new NPC_Guider(gp,"Oldman");
-		gp.npc[2][i].worldX = gp.tileSize*22;
-		gp.npc[2][i].worldY = gp.tileSize*18;
-		i++;
 		gp.npc[0][i] = new GreenSlime(gp);
 		gp.npc[0][i].worldX = gp.tileSize*17;
 		gp.npc[0][i].worldY = gp.tileSize*18;
 		i++;
-		/*
 		gp.npc[0][i] = new GreenSlime(gp);
 		gp.npc[0][i].worldX = gp.tileSize*16;
 		gp.npc[0][i].worldY = gp.tileSize*18;
@@ -199,11 +195,7 @@ public class ItemGenerator {
 		gp.npc[0][i].worldX = gp.tileSize*7;
 		gp.npc[0][i].worldY = gp.tileSize*7;
 		i++;
-		gp.npc[0][i] = new GreenSlime(gp);
-		gp.npc[0][i].worldX = gp.tileSize*7;
-		gp.npc[0][i].worldY = gp.tileSize*17;
-		i++;
-		*/
+		
 		gp.npc[0][i] = new BossSlime(gp);
 		gp.npc[0][i].worldX = gp.tileSize*19;
 		gp.npc[0][i].worldY = gp.tileSize*8;
@@ -211,6 +203,59 @@ public class ItemGenerator {
 		gp.npc[0][i] = new NPC_Guider(gp,"Oldman");
 		gp.npc[0][i].worldX = gp.tileSize*6;
 		gp.npc[0][i].worldY = gp.tileSize*6;
+		i++;
+		
+		//Village map
+		//In Village NPC
+		gp.npc[2][i] = new NPC_Guard(gp,"Guard");
+		gp.npc[2][i].worldX = gp.tileSize*17;
+		gp.npc[2][i].worldY = gp.tileSize*31;
+		i++;
+		gp.npc[2][i] = new NPC_Guard(gp,"Guard");
+		gp.npc[2][i].worldX = gp.tileSize*21;
+		gp.npc[2][i].worldY = gp.tileSize*31;
+		i++;
+		gp.npc[2][i] = new NPC_Cave_Guard(gp);
+		gp.npc[2][i].worldX = gp.tileSize*40;
+		gp.npc[2][i].worldY = gp.tileSize*7;
+		i++;
+		gp.npc[2][i] = new NPC_Guider(gp,"Oldman");
+		gp.npc[2][i].worldX = gp.tileSize*22;
+		gp.npc[2][i].worldY = gp.tileSize*18;
+		i++;
+		gp.npc[0][i] = new BossFinal(gp);
+		gp.npc[0][i].worldX = gp.tileSize*40;
+		gp.npc[0][i].worldY = gp.tileSize*30;
+		i++;
+		
+		//Bottom area Monster
+		gp.npc[2][i] = new BossSlime(gp);
+		gp.npc[2][i].worldX = gp.tileSize*20;
+		gp.npc[2][i].worldY = gp.tileSize*45;
+		i++;
+		gp.npc[2][i] = new GreenSlime(gp);
+		gp.npc[2][i].worldX = gp.tileSize*15;
+		gp.npc[2][i].worldY = gp.tileSize*40;
+		i++;
+		gp.npc[2][i] = new GreenSlime(gp);
+		gp.npc[2][i].worldX = gp.tileSize*15;
+		gp.npc[2][i].worldY = gp.tileSize*40;
+		i++;
+		gp.npc[2][i] = new GreenSlime(gp);
+		gp.npc[2][i].worldX = gp.tileSize*15;
+		gp.npc[2][i].worldY = gp.tileSize*40;
+		i++;
+		gp.npc[2][i] = new GreenSlime(gp);
+		gp.npc[2][i].worldX = gp.tileSize*15;
+		gp.npc[2][i].worldY = gp.tileSize*40;
+		i++;
+		gp.npc[2][i] = new GreenSlime(gp);
+		gp.npc[2][i].worldX = gp.tileSize*15;
+		gp.npc[2][i].worldY = gp.tileSize*40;
+		i++;
+		gp.npc[2][i] = new GreenSlime(gp);
+		gp.npc[2][i].worldX = gp.tileSize*15;
+		gp.npc[2][i].worldY = gp.tileSize*40;
 		i++;
     }
 }

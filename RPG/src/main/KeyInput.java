@@ -180,7 +180,23 @@ public class KeyInput implements KeyListener{
 				}
 			}
 		}
-		
+		//Finish Screen state
+		if(gp.GameState == gp.finishState) {
+			if(code == KeyEvent.VK_A) {
+				gp.ui.SelectionCount = 5;
+			}
+			if(code == KeyEvent.VK_D) {
+				gp.ui.SelectionCount = 6;
+			}
+			if(code == KeyEvent.VK_ENTER) {
+				if(gp.ui.SelectionCount == 5) {//RESTART
+					gp.player.restart();
+				}
+				if(gp.ui.SelectionCount == 6) {//EXIT TO TITLE
+					gp.GameState = gp.titleState;
+				}
+			}
+		}
 		//Show Inventory
 		if(gp.GameState == gp.statState) {
 			if(code == KeyEvent.VK_W) {
@@ -232,6 +248,7 @@ public class KeyInput implements KeyListener{
 				}
 			}
 		}
+		//Death State
 		if(gp.GameState == gp.gameoverState) {
 			if(code == KeyEvent.VK_A) {
 				gp.ui.SelectionCount = 1;

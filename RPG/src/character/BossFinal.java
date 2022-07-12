@@ -1,56 +1,56 @@
 package character;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.Random;
 
 import main.GamePanel;
+import object.Item_Coin;
+import skill.Bloodslash;
+import skill.Ice_Missile;
 import skill.PoisonSpit;
 import skill.Projectile;
 
-public class GreenSlime extends Character{
+public class BossFinal extends Character{
 	public int ActionCounter;
-	int AnimCounter = 0;
-	int AtkCounter = 0;
-	int KnockbackCounter = 0;
+	int AnimCounter;
+	int AtkCounter;
 	int cooldown;
 	boolean activated = false;
 	boolean hpbarOn;
 	int hpbartimer;
 	int OnmapIndex;
 	boolean death = false;
-	int defaultspeed;
-	boolean knockback;
 	Random randomatk = new Random();
-	int j = randomatk.nextInt(120)+40;
-	public GreenSlime(GamePanel gp) {
+	int j = randomatk.nextInt(40)+20;
+	public BossFinal(GamePanel gp) {
 		super(gp);
-		this.name = "Green Slime";
+		this.name = "Boss Slime";
 		direction = "down";
-		speed = 1;
-		defaultspeed = speed;
+		speed = 2;
 		lv = 1;
-		MaxHP = 400;
+		MaxHP = 800;
 		HP = MaxHP;
-		ATK = 100;
-		//Collision setting
-		collisionDefaultX = 7;
-		collisionDefaultY = 7;
-		collisionBox.width = 36;
+		ATK = 250;
+		
+		collisionBox.x = 12;
+		collisionBox.y = 16;
+		collisionDefaultX = collisionBox.x;
+		collisionDefaultY = collisionBox.y;
+		collisionBox.width = 24;
 		collisionBox.height = 32;
-		
+	
 		//Set Image
-		graphic.up1 = graphic.setup("/monster/slime1");
-		graphic.up2 = graphic.setup("/monster/slime2");
-		graphic.down1 = graphic.setup("/monster/slime1");
-		graphic.down2 = graphic.setup("/monster/slime2");
-		graphic.left1 = graphic.setup("/monster/slime1");
-		graphic.left2 = graphic.setup("/monster/slime2");
-		graphic.right1 = graphic.setup("/monster/slime1");
-		graphic.right2 = graphic.setup("/monster/slime2");
-		graphic.idle1 = graphic.setup("/monster/slime1");
-		graphic.idle2 = graphic.setup("/monster/slime2");
-		
+		int size = 48;
+		graphic.up1 = graphic.setup("/npc/Nagato_1",size,size);
+		graphic.up2 = graphic.setup("/npc/Nagato_2",size,size);
+		graphic.down1 = graphic.setup("/npc/Nagato_1",size,size);
+		graphic.down2 = graphic.setup("/npc/Nagato_2",size,size);
+		graphic.left1 = graphic.setup("/npc/Nagato_1",size,size);
+		graphic.left2 = graphic.setup("/npc/Nagato_2",size,size);
+		graphic.right1 = graphic.setup("/npc/Nagato_1",size,size);
+		graphic.right2 = graphic.setup("/npc/Nagato_2",size,size);
+		graphic.idle1 = graphic.setup("/npc/Nagato_1",size,size);
+		graphic.idle2 = graphic.setup("/npc/Nagato_2",size,size);
 	}
 	public void setAction() {
 		if(onPath == true) {
@@ -62,7 +62,7 @@ public class GreenSlime extends Character{
 			if(AtkCounter == j) {
 				Projectile poison = new PoisonSpit(gp);
 				gp.projectileList.add(poison);
-				poison.set(worldX,worldY,direction,this);
+				poison.set(worldX,worldY,direction,this);	
 				AtkCounter = 0;
 			}
 			
@@ -91,47 +91,22 @@ public class GreenSlime extends Character{
 	}
 	public void contact(character.Character c) {
 		if(activated == false) {
-			c.TookDMG(ATK);
-			if(gp.player.parrying == true) {
-				knockback = true;
-				speed = 10;
-				direction = gp.player.direction;
-			}
 			activated = true;
 		}
 	}
 	public void update() {
-		if(knockback == true) {
-			gp.Colchecker.checkTile(this);
-			gp.Colchecker.checkPlayer(this);
-			if(collisionOn == true) {
-				KnockbackCounter = 0;
-				knockback = false;
-				speed = defaultspeed;
+		if(activated == true) {
+			cooldown++;
+			if(cooldown == 60) {
+				activated = false;
+				cooldown = 0;
 			}
-			else if(collisionOn == false){
-				graphic.updateDirection(this, 20,2);
-			}
-			KnockbackCounter++;
-			if(KnockbackCounter == 5) {
-				KnockbackCounter = 0;
-				knockback = false;
-				speed = defaultspeed;
-			}
-		}else {
-			if(activated == true) {
-				cooldown++;
-				if(cooldown == 60) {
-					activated = false;
-					cooldown = 0;
-				}
-			}
-			setAction();
-			checkDistance(5);
-			gp.Colchecker.checkTile(this);
-			gp.Colchecker.checkPlayer(this);
-			graphic.updateDirection(this, 20,2);
 		}
+		setAction();
+		checkDistance(10);
+		gp.Colchecker.checkTile(this);
+		gp.Colchecker.checkPlayer(this);
+		graphic.updateDirection(this, 20,2);
 	}
 	public void draw(Graphics2D g2) {
 
@@ -139,9 +114,8 @@ public class GreenSlime extends Character{
 		int screenY = worldY - gp.player.worldY + gp.player.screenY;
 		if(HP > 0) {
 			graphic.drawCharacter(this, g2,gp);
-			graphic.drawName(this, g2, name, gp, 22,Color.WHITE);
-			graphic.drawLv(this, g2, lv, gp);
 		}else {
+			
 			//Death Animation
 			AnimCounter++;
 			if(AnimCounter <= 5 ) {
@@ -155,8 +129,18 @@ public class GreenSlime extends Character{
 			}
 			if(AnimCounter >= 20) {
 				AnimCounter = 0;
-				CheckDrop(40,65,80,90,97,100);
-				//CheckDrop(40,40,40,40,100,100);
+				CheckDrop(0,15,60,85,95,100);
+				CheckDrop(0,15,60,85,95,100);
+				CheckDrop(0,15,60,80,95,100);
+				DropItem(new Item_Coin(gp),worldX+10,worldY+17);
+				DropItem(new Item_Coin(gp),worldX+17,worldY+25);
+				DropItem(new Item_Coin(gp),worldX+10,worldY+38);
+				DropItem(new Item_Coin(gp),worldX+24,worldY+12);
+				DropItem(new Item_Coin(gp),worldX+26,worldY+28);
+				DropItem(new Item_Coin(gp),worldX+25,worldY+34);
+				DropItem(new Item_Coin(gp),worldX+37,worldY+18);
+				DropItem(new Item_Coin(gp),worldX+30,worldY+28);
+				DropItem(new Item_Coin(gp),worldX+32,worldY+39);
 				gp.npc[gp.currentMap][OnmapIndex] = null;
 			}
 		}
@@ -173,16 +157,13 @@ public class GreenSlime extends Character{
 		}
 	}
 	public void hitted(int dmg,int i,int knockbackpower) {
-		knockback = true;
-		speed = knockbackpower;
-		direction = gp.player.direction;
 		HP -= dmg; 
 		OnmapIndex = i;
 		hpbarOn = true;
-		onPath = true;
 		gp.ui.addMessage(""+dmg);
 		hpbartimer = 0;
 		if(HP <= 0) {
+			gp.GameState = gp.finishState;
 			gp.player.exp += 2*lv;
 			gp.player.LevelUp();
 			gp.ui.addMessage("+ "+ 2*lv+" exp");

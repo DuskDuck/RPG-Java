@@ -12,7 +12,7 @@ import object.Item_Iron_Sword;
 import object.Item_Katana;
 import object.Item_Key;
 
-public class NPC_Weapon_Smith extends Character{
+public class NPC_Cooker extends Character{
 	
 	public int ActionCounter;
 	String dialog[] = new String[20];
@@ -22,7 +22,7 @@ public class NPC_Weapon_Smith extends Character{
 	//public ArrayList<MasterObject> inventorytrader = new ArrayList<>();
 	public final int InventorySize = 16;
 	
-	public NPC_Weapon_Smith(GamePanel gp) {
+	public NPC_Cooker(GamePanel gp) {
 		super(gp);
 		direction = "down";
 		speed = 0;
@@ -60,8 +60,6 @@ public class NPC_Weapon_Smith extends Character{
 		gp.player.graphic.subState = 0;
 	}
 	public void update() {
-		gp.Colchecker.checkTile(this);
-		gp.Colchecker.checkPlayer(this);
 		graphic.updateDirection(this,40,2);
 	}
 	public void draw(Graphics2D g2) {

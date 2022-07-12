@@ -31,16 +31,16 @@ public class NPC_Potion_Maker extends Character{
 		direction = "down";
 		speed = 0;
 		
-		graphic.up1 = graphic.setup("/npc/Trader1",72,72);
-		graphic.up2 = graphic.setup("/npc/Trader2",72,72);
-		graphic.down1 = graphic.setup("/npc/Trader1",72,72);
-		graphic.down2 = graphic.setup("/npc/Trader2",72,72);
-		graphic.left1 = graphic.setup("/npc/Trader1",72,72);
-		graphic.left2 = graphic.setup("/npc/Trader2",72,72);
-		graphic.right1 = graphic.setup("/npc/Trader1",72,72);
-		graphic.right2 = graphic.setup("/npc/Trader2",72,72);
-		graphic.idle1 = graphic.setup("/npc/Trader1",72,72);
-		graphic.idle2 = graphic.setup("/npc/Trader2",72,72);
+		graphic.up1 = graphic.setup("/npc/Usope_1",48,48);
+		graphic.up2 = graphic.setup("/npc/Usope_2",48,48);
+		graphic.down1 = graphic.setup("/npc/Usope_1",48,48);
+		graphic.down2 = graphic.setup("/npc/Usope_2",48,48);
+		graphic.left1 = graphic.setup("/npc/Usope_1",48,48);
+		graphic.left2 = graphic.setup("/npc/Usope_2",72,48);
+		graphic.right1 = graphic.setup("/npc/Usope_1",48,48);
+		graphic.right2 = graphic.setup("/npc/Usope_2",48,48);
+		graphic.idle1 = graphic.setup("/npc/Usope_1",48,48);
+		graphic.idle2 = graphic.setup("/npc/Usope_2",48,48);
 
 		setDialog();
 		setItem();

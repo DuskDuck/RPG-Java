@@ -8,7 +8,7 @@ import main.GamePanel;
 import skill.PoisonSpit;
 import skill.Projectile;
 
-public class GreenSlime extends Character{
+public class FinalBoss extends Character{
 	public int ActionCounter;
 	int AnimCounter = 0;
 	int AtkCounter = 0;
@@ -23,7 +23,7 @@ public class GreenSlime extends Character{
 	boolean knockback;
 	Random randomatk = new Random();
 	int j = randomatk.nextInt(120)+40;
-	public GreenSlime(GamePanel gp) {
+	public FinalBoss(GamePanel gp) {
 		super(gp);
 		this.name = "Green Slime";
 		direction = "down";
@@ -34,22 +34,25 @@ public class GreenSlime extends Character{
 		HP = MaxHP;
 		ATK = 100;
 		//Collision setting
-		collisionDefaultX = 7;
-		collisionDefaultY = 7;
-		collisionBox.width = 36;
+		collisionBox.x = 12;
+		collisionBox.y = 16;
+		collisionDefaultX = collisionBox.x;
+		collisionDefaultY = collisionBox.y;
+		collisionBox.width = 24;
 		collisionBox.height = 32;
-		
+	
 		//Set Image
-		graphic.up1 = graphic.setup("/monster/slime1");
-		graphic.up2 = graphic.setup("/monster/slime2");
-		graphic.down1 = graphic.setup("/monster/slime1");
-		graphic.down2 = graphic.setup("/monster/slime2");
-		graphic.left1 = graphic.setup("/monster/slime1");
-		graphic.left2 = graphic.setup("/monster/slime2");
-		graphic.right1 = graphic.setup("/monster/slime1");
-		graphic.right2 = graphic.setup("/monster/slime2");
-		graphic.idle1 = graphic.setup("/monster/slime1");
-		graphic.idle2 = graphic.setup("/monster/slime2");
+		int size = 48;
+		graphic.up1 = graphic.setup("/npc/Nagato_1",size,size);
+		graphic.up2 = graphic.setup("/npc/Nagato_2",size,size);
+		graphic.down1 = graphic.setup("/npc/Nagato_1",size,size);
+		graphic.down2 = graphic.setup("/npc/Nagato_2",size,size);
+		graphic.left1 = graphic.setup("/npc/Nagato_1",size,size);
+		graphic.left2 = graphic.setup("/npc/Nagato_2",size,size);
+		graphic.right1 = graphic.setup("/npc/Nagato_1",size,size);
+		graphic.right2 = graphic.setup("/npc/Nagato_2",size,size);
+		graphic.idle1 = graphic.setup("/npc/Nagato_1",size,size);
+		graphic.idle2 = graphic.setup("/npc/Nagato_2",size,size);
 		
 	}
 	public void setAction() {

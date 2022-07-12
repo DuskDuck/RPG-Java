@@ -70,28 +70,6 @@ public class NPC_Guider extends Character{
 		dialog[3] = "Bye!";
 		dialog[4] = "Stop bugging me!";
 	}
-	public void speak() {
-		switch(gp.player.direction) {
-		case "up":
-			direction = "down";
-			break;
-		case "down":
-			direction = "up";
-			break;
-		case "left":
-			direction = "right";
-			break;
-		case "right":
-			direction = "left";
-			break;
-		}
-		if(dialog[dialogIndex] == null) {
-			dialogIndex = 0;
-		}
-		gp.ui.currentDialog = dialog[dialogIndex];
-		dialogIndex++;//next call will load next dialog
-
-	}
 	public void interact() {
 		//gp.GameState = gp.dialogState;
 		speaking = true;

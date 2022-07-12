@@ -81,7 +81,7 @@ public class Character {
 		}
 	}
 	public void DropItem(MasterObject item) {
-		for(int i = 0; i <gp.obj[1].length;i++) {
+		for(int i = 0; i < gp.obj[1].length;i++) {
 			if(gp.obj[gp.currentMap][i] == null) {
 				gp.obj[gp.currentMap][i] = item;
 				gp.obj[gp.currentMap][i].worldX = worldX; 

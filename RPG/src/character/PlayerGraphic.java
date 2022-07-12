@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
+import main.Content;
 import main.GamePanel;
 import main.Utility;
 
@@ -27,6 +28,7 @@ public class PlayerGraphic {
 	public int SelectionCount = 1;
 	public int traderslotCol = 2;
 	public int traderslotRow = 0;
+	private BufferedImage[][] sprite1;
 	
 	public PlayerGraphic() {
 	}
@@ -71,45 +73,6 @@ public class PlayerGraphic {
 		right2 = setup(filename + "/idle_R_2");
 		idle1 = setup(filename + "/idle1");
 		idle2 = setup(filename + "/idle_2");
-	}
-	public void getImage(String filename, String type) {
-		switch(type) {
-		case "humanoid":
-			up1 = setup(filename + "/back_1");
-			up2 = setup(filename + "/back_2");
-			down1 = setup(filename + "/idle_2");
-			down2 = setup(filename + "/idle_3");
-			left1 = setup(filename + "/idle_L");
-			left2 = setup(filename + "/idle_L_2");
-			right1 = setup(filename + "/idle_R");
-			right2 = setup(filename + "/idle_R_2");
-			idle1 = setup(filename + "/idle1");
-			idle2 = setup(filename + "/idle_2");
-			break;
-		case "slime":
-			up1 = setup(filename + "/slime1");
-			up2 = setup(filename + "/slime2");
-			down1 = setup(filename + "/slime1");
-			down2 = setup(filename + "/slime2");
-			left1 = setup(filename + "/slime1");
-			left2 = setup(filename + "/slime2");
-			right1 = setup(filename + "/slime1");
-			right2 = setup(filename + "/slime2");
-			idle1 = setup(filename + "/slime1");
-			idle2 = setup(filename + "/slime2");
-			break;
-		case "MC":
-			up1 = setup(filename + "/idle1");
-			up2 = setup(filename + "/idle2");
-			down1 = setup(filename + "/idle1");
-			down2 = setup(filename + "/idle2");
-			left1 = setup(filename + "/idle1");
-			left2 = setup(filename + "/idle2");
-			right1 = setup(filename + "/idle1");
-			right2 = setup(filename + "/idle2");
-			idle1 = setup(filename + "/idle1");
-			idle2 = setup(filename + "/idle2");
-		}
 	}
 	public void getAtkImage(String filename) {
 		atkup1 = setup(filename + "/back_1",96,96);
@@ -428,8 +391,10 @@ public class PlayerGraphic {
 				slotY += 95;
 			}
 		}
+		//Gold
 		g2.drawString(""+gp.player.gold, 570, gp.tileSize*4+10);
 		g2.drawImage(coin,520,gp.tileSize*4-20,50,50,null);
+		
 		if(cursor == true) {
 			//Cursor
 			int cursorX = slotXstart + (95 * slotCol);
@@ -447,6 +412,7 @@ public class PlayerGraphic {
 			int DframeY = gp.tileSize*2;
 			int DframeW = 305;
 			int DframeH = gp.tileSize*8;
+			
 			//description text
 			int textY = gp.tileSize*2+120;
 			int itemIndex = getItemIndexSlot(7,slotCol,slotRow);
@@ -532,8 +498,8 @@ public class PlayerGraphic {
 			g2.drawRect(1225, DframeY+gp.tileSize*8+20, DframeW-20, gp.tileSize*2-20);
 		}
 	}
-	public int getItemIndexSlot(int maxrow,int col,int row) {
-		int itemIndex = col + (row*maxrow);
+	public int getItemIndexSlot(int maxcol,int col,int row) {
+		int itemIndex = col + (row*maxcol);
 		return itemIndex;
 	}
 	public int AlignTextToRight(String text, int tailX, Graphics g2) {
@@ -545,13 +511,13 @@ public class PlayerGraphic {
 		int textY = y;
 		g2.setFont(new Font("x12y16pxMaruMonica", Font.BOLD, 13));
 		g2.setColor(new Color(0,0,0,180));
-		g2.fillRoundRect(x, y-80, 120, 60,10, 10);
+		g2.fillRoundRect(x-30, y-80, 120, 60,10, 10);
 		g2.setColor(Color.white);
 		((Graphics2D) g2).setStroke(new BasicStroke(3));
-		g2.drawRoundRect(x, y-80, 120, 60, 10, 10);
+		g2.drawRoundRect(x-30, y-80, 120, 60, 10, 10);
 	    textY -= 95;
 		for(String line: text.split("\n")) {
-			g2.drawString(line, x+10,textY+32);
+			g2.drawString(line, x-25,textY+32);
 			textY += 12;
 		}
 	}
@@ -587,6 +553,111 @@ public class PlayerGraphic {
 
 	private void trade_sell(GamePanel gp,Graphics g2) {
 		drawInventory(gp,g2,true);
+	}
+	public void getImageMonster(String name) {
+		switch(name) {
+		case "spider":
+			sprite1 = new BufferedImage[4][3];
+			for(int i = 0;i < 4 ; i++){
+				for(int j = 0; j < 3; j++){
+					sprite1[i][j] = Content.MONSTER1[i][j];
+				}
+			}
+			break;
+		case "flame":
+			sprite1 = new BufferedImage[4][3];
+			for(int i = 0;i < 4 ; i++){
+				for(int j = 9; j < 12; j++){
+					sprite1[i][j-9] = Content.MONSTER1[i][j];	
+				}
+			}
+			break;
+		case "bird":
+			sprite1 = new BufferedImage[4][3];
+			for(int i = 4;i < 8 ; i++){
+				for(int j = 0; j < 3; j++){
+					sprite1[i-4][j] = Content.MONSTER1[i][j];
+				}
+			}
+			break;
+		case "Bat":
+			sprite1 = new BufferedImage[4][3];
+			for(int i = 0;i < 4 ; i++){ 
+				for(int j = 0; j < 3; j++){
+					sprite1[i][j] = Content.MONSTER[i][j];
+				}
+			}
+			break;
+		case "Bufalo":
+			sprite1 = new BufferedImage[4][3];
+			for(int i = 0;i < 4 ; i++){
+				for(int j = 0; j < 3; j++){
+					sprite1[i][j] = Content.MONSTER2[i][j];
+				}
+			}
+			break;
+		}
+	}
+	
+	public void drawMonster(Character c ,Graphics2D g2, GamePanel gp,int UP,int DOWN,int LEFT,int RIGHT) {
+		
+		int screenX = c.worldX - gp.player.worldX + gp.player.screenX;
+		int screenY = c.worldY - gp.player.worldY + gp.player.screenY;
+		BufferedImage image = null;	
+		//Only create object that visible on screen
+		if(c.worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
+		   c.worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
+		   c.worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
+		   c.worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
+			switch(c.direction) {
+			case "up":
+				if(spriteNum == 1) {
+					image = sprite1[UP][0];
+				}
+				if(spriteNum == 2) {
+					image = sprite1[UP][1];
+				}
+				if(spriteNum == 3) {
+					image = sprite1[UP][2];
+				}
+				break;
+			case "down":
+				if(spriteNum == 1) {
+					image = sprite1[DOWN][0];
+				}
+				if(spriteNum == 2) {
+					image = sprite1[DOWN][1];
+				}
+				if(spriteNum == 3) {
+					image = sprite1[DOWN][2];
+				}
+				break;
+			case "left":
+				if(spriteNum == 1) {
+					image = sprite1[LEFT][0];
+				}
+				if(spriteNum == 2) {
+					image = sprite1[LEFT][1];
+				}
+				if(spriteNum == 3) {
+					image = sprite1[LEFT][2];
+				}
+				break;
+			case "right":
+				if(spriteNum == 1) {
+					image = sprite1[RIGHT][0];
+				}
+				if(spriteNum == 2) {
+					image = sprite1[RIGHT][1];
+				}
+				if(spriteNum == 3) {
+					image = sprite1[RIGHT][2];
+				}
+				break;
+			}
+			g2.drawImage(image, screenX, screenY,gp.tileSize,gp.tileSize,null);
+		}
+
 	}
 
 	private void trade_select(GamePanel gp,Graphics g2) {

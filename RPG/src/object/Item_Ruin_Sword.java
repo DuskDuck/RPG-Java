@@ -15,7 +15,7 @@ public class Item_Ruin_Sword extends MasterObject{
 	public Item_Ruin_Sword(GamePanel gp) {
 		
 		this.gp = gp;
-		name = "Ruin Swrod";
+		name = "Ruin Sword";
 		downFX = "slash1";
 		rightFX = "slash4";
 		upFX = "slash7";

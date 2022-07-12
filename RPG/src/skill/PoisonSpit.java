@@ -34,7 +34,11 @@ public class PoisonSpit extends Projectile{
 		}
 	}
 	public void draw(Graphics2D g2) {
+		//
 		graphic.draw(g2, gp, this);
+		
+		
+		//
 		if(hitted == true) {
 			AnimCounter++;
 			speed = 0;
@@ -56,10 +60,11 @@ public class PoisonSpit extends Projectile{
 	}
 	public void set(int x,int y, String direction, character.Character p) {
 		avatar.direction = p.direction;
+		this.direction = direction;
 		active = true;
 		this.x = x;
 		this.y = y;
-		this.direction = direction;
+		
 	}
 	
 }

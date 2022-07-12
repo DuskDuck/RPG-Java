@@ -56,8 +56,6 @@ public class NPC_Trader extends Character{
 		gp.player.graphic.subState = 0;
 	}
 	public void update() {
-		gp.Colchecker.checkTile(this);
-		gp.Colchecker.checkPlayer(this);
 		graphic.updateDirection(this,40,2);
 	}
 	public void draw(Graphics2D g2) {

@@ -16,14 +16,15 @@ public class Bloodslash extends Projectile{
 		direction = gp.player.direction;
 		// TODO Auto-generated constructor stub
 	}
-	public void update() {
+	public void update() { //60 times per sec
 		counter++;
-		if(counter > 120) {
+		if(counter > 120) { //2s
 			active = false;
 		}
 		graphic.UpdateDirection(this, 12, 2);
 		avatar.worldX = x;
 		avatar.worldY = y;
+		//Check collision
 		int mobIndex = gp.Colchecker.checkCharacter(avatar, gp.npc);
 		if(mobIndex != 999) {
 			if(hitted == false) {

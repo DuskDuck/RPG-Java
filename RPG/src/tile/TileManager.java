@@ -77,6 +77,12 @@ public class TileManager {
 		setup(35,"Fence_Vertical",true);
 		setup(36,"Fence_Top_L",true);
 		setup(37,"Fence_Bottom_L",true);
+		setup(38,"Fence_End_L",true);
+		setup(39,"Fence_End_R",true);
+		setup(40,"Fence_Top_R",true);
+		setup(41,"Fence_Bottom_R",true);
+		//Map#2 bush
+		setup(42,"Bush",true);
 		// tile for debugging
 		setup(99,"debug",false); 
 	}
